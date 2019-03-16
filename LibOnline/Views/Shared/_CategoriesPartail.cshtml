@@ -1,0 +1,40 @@
+﻿
+    <div class="span3 sidebar page-left-sidebar">
+
+        <div class="input-append">
+            <form action="#">
+                <input id="appendedInputButton" size="16" type="text" placeholder="Поиск"><button class="btn" type="button"><i class="icon-search"></i></button>
+            </form>
+        </div>
+
+        <h5 class="title-bg">Жанры</h5>
+        <ul class="post-category-list" id="ulAllCategories">
+            @*TO DO - НЕ ЗАБЫТЬ УДАЛИТЬ ПРИМЕР!!!*@
+            @*<li><a href="#"><i class="icon-plus-sign"></i>HOME</a></li>*@
+        </ul>
+    </div><!-- End sidebar column -->
+
+
+
+    <script>
+    $(document).ready(function () {
+        $.ajax({
+            // Для обращение к методам одного контроллера из любого друго
+            url: '@Url.Content("~/Home/GetAllCategories")',
+            success: function (result) {
+                RenderCategoriesList(result);
+            },
+        });
+
+        function RenderCategoriesList(result) {
+            debugger;
+            var categoriesHTML = '';
+            $.each(result, function () {
+                var idCat = this.idCategory;
+                categoriesHTML += '<li><a href="/BooksCategories/BooksCategories?idCategory=' + this.idCategory +'"><i class="icon-plus-sign"></i>' + this.categoryName + '</a></li>';
+                });
+            $('#ulAllCategories').html(categoriesHTML);
+        }//RenderCategoriesList
+
+    });// document.ready
+    </script>

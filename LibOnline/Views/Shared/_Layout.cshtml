@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - LibOnline</title>
+
+    <environment include="Development">
+
+        <script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
+        <script src="~/js/bootstrap.js"></script>
+        <script src="~/js/jquery.custom.js"></script>
+        <script src="~/js/jquery.prettyPhoto.js"></script>
+
+
+        <link href="~/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/css/bootstrap-responsive.css" rel="stylesheet" />
+        <link href="~/css/custom-styles.css" rel="stylesheet" />
+        <link href="~/css/flexslider.css" rel="stylesheet" />
+        <link href="~/css/prettyPhoto.css" rel="stylesheet" />
+
+        <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+    </environment>
+    <environment exclude="Development">
+
+        <script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
+        <script src="~/js/bootstrap.js"></script>
+        <script src="~/js/jquery.custom.js"></script>
+        <script src="~/js/jquery.prettyPhoto.js"></script>
+
+        <link href="~/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/css/bootstrap-responsive.css" rel="stylesheet" />
+        <link href="~/css/custom-styles.css" rel="stylesheet" />
+        <link href="~/css/flexslider.css" rel="stylesheet" />
+        <link href="~/css/prettyPhoto.css" rel="stylesheet" />
+
+        <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+    </environment>
+</head>
+<body>
+    <div class="color-bar-1"></div>
+    <div class="color-bar-2 color-bg"></div>
+    
+    
+    <div class="container main-container">
+        <div class="row">
+            @Html.Partial("_HeaderPartial")
+            @*@Html.Partial("_CategoriesPartail")*@
+            @RenderBody()
+            @Html.Partial("_FooterPartial")
+         </div>
+     </div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+﻿<div class="row header">
+    <!-- Begin Header -->
+    <!-- Logo
+    ================================================== -->
+    <div class="span5 logo">
+        <a asp-controller="Home" asp-action="Index"><img src="~/img1/piccolo-logo.png" alt="" /></a>
+        <h4>Читай любимые книги бесплатно</h4>
+    </div>
+
+
+     @*Main Navigation*@
+    <nav class="navigation">
+
+        <div class="navbar">
+
+            <ul class="nav">
+                <li class="active"><a asp-controller="Home" asp-action="Index">Главная</a></li>
+                <li><a asp-controller="UserPage" asp-action="UserPage">Избанное</a></li>
+                <li class="dropdown">
+                <li><a asp-controller="BooksCategories" asp-action="BooksCategories">Топ 100</a></li>
+                <li><a asp-controller="BooksCategories" asp-action="BooksCategories">Популярное</a></li>
+                <li><a asp-controller="BooksCategories" asp-action="BooksCategories">Новое</a></li>
+                <li><a asp-controller="Account" asp-action="Login">Вход</a></li>
+                @*<li><a asp-controller="Login" asp-action="LogOut"><b>(user_name)</b> Выход</a></li>*@
+            </ul>
+        </div>
+    </nav> 
+
+</div><!-- End Header -->

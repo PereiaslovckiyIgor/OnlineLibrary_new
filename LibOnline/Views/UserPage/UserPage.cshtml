@@ -1,0 +1,57 @@
+﻿@Html.Partial("_CategoriesPartail")
+
+<div class="span9 blog">
+
+    @for (int i = 0; i < 5; i++)
+    {
+    <article class="clearfix">
+        <a asp-controller="BooksDescription" asp-action="BooksDescription">
+            <img src="~/img/Sherlock.jpg" alt="Post Thumb" class="align-left img_userPage">
+        </a>
+
+        <h4 class="title-bg"><a asp-controller="BooksDescription" asp-action="BooksDescription">Шерлок Холмс <small> Казнь Шерлока Холмса </small></a></h4>
+        
+        <p align="justify">
+            Давно опустевшая, предназначенная под снос Ньюгейтская тюрьма вдруг получила долгожданного узника, и это не кто иной, как Шерлок Холмс! 
+            Вступившие в сговор преступники похитили великого сыщика и заточили в мрачные стены, чтобы устроить над ним суд. 
+            Легко догадаться, каким будет результат этого судилища: по длинному коридору, куда выходят пятнадцать камер для 
+            смертников, через арку с изречением "Оставь надежду, всяк сюда входящий" приговоренного потащат во двор, 
+            где сооружен эшафот… Дональд Томас считается лучшим автором шерлокианы после Артура Конан Дойла. 
+            Почтительное и бережное отношение к канону он сочетает с глубоким знанием Викторианской и 
+            Эдвардианской эпохи. Благодаря его увлекательным книгам в мире постоянно растет число поклонников 
+            гениального детектива.
+        </p>
+        <button class="btn btn-large btn-inverse" type="button">Продолжить чтение</button>
+        <button class="btn btn-large btn-danger" type="button">Удалить</button>
+        <div class="post-summary-footer"    >
+            <ul class="post-data-3">
+                <li><i class="icon-calendar"></i> 09/02/19</li>
+                <li><i class="icon-user"></i> 
+                    <a asp-controller="BooksCategories" asp-action="BooksCategories">Имя Автора</a>
+                </li>
+                <li><i class="icon-comment"></i> 
+                    <a asp-controller="BooksDescription" asp-action="BooksDescription" asp-fragment="comments">5 Отзывов</a>
+                </li>
+                <li><i class="icon-tags"></i> 
+                    <a asp-controller="BooksCategories" asp-action="BooksCategories">Детектив</a>, 
+                    <a asp-controller="BooksCategories" asp-action="BooksCategories">Приключения</a>
+                </li>
+            </ul>
+        </div>
+    </article>
+    }
+
+
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <ul>
+            <li class="active"><a href="#">Prev</a></li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">Next</a></li>
+        </ul>
+    </div>
+</div>

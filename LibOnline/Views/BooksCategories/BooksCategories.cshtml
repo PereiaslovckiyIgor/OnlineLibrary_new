@@ -1,0 +1,33 @@
+﻿
+@Html.Partial("_CategoriesPartail")
+
+<div class="span8 gallery">
+    <h2 class="title-bg">Название категории</h2>
+
+
+    <div class="row clearfix">
+        <ul class="gallery-post-grid holder">
+            @for (var i = 0; i < 24; i++)
+            {
+                <li class="span2 gallery-item" data-id="id-1" data-type="illustration">
+                    <a asp-controller="BooksDescription" asp-action="BooksDescription"><img src="~/img/Sherlock.jpg" alt="Gallery"></a>
+                    <span class="project-details"><a asp-controller="BooksDescription" asp-action="BooksDescription">Шерлок Холмс</a>Казнь Шерлока Холмса</span>
+                </li>
+            }
+
+        </ul>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <ul>
+            <li class="active"><a href="#">Назад</a></li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">Вперед</a></li>
+        </ul>
+    </div>
+
+</div><!-- End gallery list-->

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace LibOnline.Models
 {
+    [Table("Roles", Schema = "access")]
     public class Role
     {
         public int Id { get; set; }

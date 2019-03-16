@@ -1,4 +1,16 @@
-﻿<div class="row header">
+﻿
+@functions
+{
+    public bool IsAuthenticated()
+    {
+        return Context.User.Identity.IsAuthenticated;
+    }
+
+}
+
+
+
+<div class="row header">
     <!-- Begin Header -->
     <!-- Logo
     ================================================== -->
@@ -7,12 +19,9 @@
         <h4>Читай любимые книги бесплатно</h4>
     </div>
 
-
-     @*Main Navigation*@
+    @*Main Navigation*@
     <nav class="navigation">
-
         <div class="navbar">
-
             <ul class="nav">
                 <li class="active"><a asp-controller="Home" asp-action="Index">Главная</a></li>
                 <li><a asp-controller="UserPage" asp-action="UserPage">Избанное</a></li>
@@ -20,10 +29,21 @@
                 <li><a asp-controller="BooksCategories" asp-action="BooksCategories">Топ 100</a></li>
                 <li><a asp-controller="BooksCategories" asp-action="BooksCategories">Популярное</a></li>
                 <li><a asp-controller="BooksCategories" asp-action="BooksCategories">Новое</a></li>
-                <li><a asp-controller="Account" asp-action="Login">Вход</a></li>
-                @*<li><a asp-controller="Login" asp-action="LogOut"><b>(user_name)</b> Выход</a></li>*@
+
+                @if (!IsAuthenticated())
+                {
+                    <li><a asp-controller="Account" asp-action="Login">Вход</a></li>
+                }
+                else
+                {
+                    <li><a asp-controller="Login" asp-action="LogOut"><b>(@Context.User.Identity.Name)</b> Выход</a></li>
+                }
             </ul>
         </div>
-    </nav> 
+    </nav>
 
+
+
+
+   
 </div><!-- End Header -->

@@ -62,9 +62,11 @@ namespace LibOnline.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 User user = await _context.Users
                     .Include(u => u.Role)
-                    .FirstOrDefaultAsync(u => u.Login == model.Ligin && u.Password == model.Password);
+                    .FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password);
+
                 if (user != null)
                 {
                     await Authenticate(user); // аутентификация
@@ -80,7 +82,8 @@ namespace LibOnline.Controllers
             // создаем один claim
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                //new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name)
             };
             // создаем объект ClaimsIdentity

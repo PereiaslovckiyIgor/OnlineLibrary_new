@@ -8,7 +8,7 @@ namespace LibOnline.Models
     //    public string Email { get; set; }
 
         [Required(ErrorMessage = "Не указан Login")]
-        public string Ligin { get; set; }
+        public string Login { get; set; }
 
         [Required(ErrorMessage = "Не указан пароль")]
         [DataType(DataType.Password)]

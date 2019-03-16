@@ -33,7 +33,7 @@ namespace LibOnline
             //    .AddEntityFrameworkStores<ApplicationDbContext>()
             //    .AddDefaultTokenProviders();
 
-            string connection = "Server=(localdb)\\mssqllocaldb;Database=rolestoredb;Trusted_Connection=True;";
+            string connection = @"Server = IGORPC\MSSQL_IGOR; Database = LibOnline; User ID = sa; Password = 793638bujhm; MultipleActiveResultSets=true;";
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

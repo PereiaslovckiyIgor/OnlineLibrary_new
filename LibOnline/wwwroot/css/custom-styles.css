@@ -577,7 +577,7 @@ p.side {margin-bottom: 20px;}
  	z-index: 10;
 }
 .footer-row { margin-top: 30px;}
-.footer-col {color:#ababab; font-size: 11px;}
+.footer-col {color: #ababab;font-size: 11px;}
 .footer-col a {color:#dcdcdc; font-weight: bold;}
 .footer-col a:hover {color:#d8450b; text-decoration: none;}
 .footer-col h5, .footer-col strong {color:#f9f9f9; text-shadow:none;}
@@ -805,7 +805,6 @@ a.accordion-toggle{background: #f5f5f5;}
 
 
 @media only screen and (max-width:500px) {
-
     .img_userPage {
         width: 100%;
         height: 100%;

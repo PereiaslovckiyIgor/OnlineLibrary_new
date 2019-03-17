@@ -19,6 +19,7 @@ namespace LibOnline.Controllers
             _context = context;
         }//AccountController
 
+        #region Register
         [HttpGet]
         public IActionResult Register()
         {
@@ -34,11 +35,13 @@ namespace LibOnline.Controllers
                 if (user == null)
                 {
                     // добавляем пользователя в бд
-                    user = new User { Login = model.Login, Email = model.Email, Password = model.Password };
+                    user = new User { Login = model.Login, Email = model.Email, Password = model.ConvertPasswosdToMD5(model.Password)};
                     Role userRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Reader");
                     if (userRole != null)
+                    {
                         user.Role = userRole;
-
+                        user.IsActive = 1;
+                    }//if
                     _context.Users.Add(user);
                     await _context.SaveChangesAsync();
 
@@ -52,6 +55,9 @@ namespace LibOnline.Controllers
             return View(model);
         }
         [HttpGet]
+        #endregion 
+
+        #region Login
         public IActionResult Login()
         {
             return View();
@@ -62,22 +68,33 @@ namespace LibOnline.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 User user = await _context.Users
-                    .Include(u => u.Role)
-                    .FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password);
+                            .Include(u => u.Role)
+                            .FirstOrDefaultAsync(u => 
+                                                 u.Login == model.Login && 
+                                                 u.Password == model.ConvertPasswosdToMD5(model.Password) &&
+                                                 u.IsActive == 1);
+            if (user != null)
+            {
+                await Authenticate(user); // аутентификация
 
-                if (user != null)
-                {
-                    await Authenticate(user); // аутентификация
-
-                    return RedirectToAction("Index", "Home");
-                }
-                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                return RedirectToAction("Index", "Home");
             }
+            ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+        }
             return View(model);
         }//Login
+        #endregion
 
+        #region LogOut
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync("Cookies");
+            return RedirectToAction("Index", "Home");
+        }// LogOut
+        #endregion 
+
+        #region Аутентификация в Claim
         // Аутентификация в Claim
         private async Task Authenticate(User user)
         {
@@ -94,11 +111,7 @@ namespace LibOnline.Controllers
             // установка аутентификационных куки
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }//Authenticate
+        #endregion
 
-        public async Task<IActionResult> LogOut()
-        {
-            await HttpContext.SignOutAsync("Cookies");
-            return RedirectToAction("Index", "Home");
-        }// LogOut
     }// AccountController
 }// namsespace

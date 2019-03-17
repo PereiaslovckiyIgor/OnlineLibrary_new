@@ -1,12 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LibOnline.Models.Account;
+using System.ComponentModel.DataAnnotations;
 
 namespace LibOnline.Models
 {
-    public class LoginModel
+    public class LoginModel: AccountMD5
     {
-    //    [Required(ErrorMessage = "Не указан Email")]
-    //    public string Email { get; set; }
-
         [Required(ErrorMessage = "Не указан Login")]
         public string Login { get; set; }
 

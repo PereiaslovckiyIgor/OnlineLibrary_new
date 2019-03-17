@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using LibOnline.Models.Account;
 
 namespace LibOnline.Models
 {
-    public class RegisterModel
+    public class RegisterModel: AccountMD5
     {
         [Required(ErrorMessage = "Не указан Email")]
         public string Email { get; set; }

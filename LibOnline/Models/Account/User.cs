@@ -15,6 +15,7 @@ namespace LibOnline.Models
         public string Password { get; set; }
 
         public int? RoleId { get; set; }
+        public int IsActive { get; set; }
         public Role Role { get; set; }
     }
 }

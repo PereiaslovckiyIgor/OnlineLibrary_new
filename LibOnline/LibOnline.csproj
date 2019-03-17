@@ -12,6 +12,10 @@
     <None Remove="wwwroot\fonts\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Views\Account\Register.cshtml~RF41a7d89.TMP" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />

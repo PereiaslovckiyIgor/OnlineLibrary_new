@@ -35,7 +35,7 @@ namespace LibOnline.Controllers
                 {
                     // добавляем пользователя в бд
                     user = new User { Login = model.Login, Email = model.Email, Password = model.Password };
-                    Role userRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "user");
+                    Role userRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Reader");
                     if (userRole != null)
                         user.Role = userRole;
 
@@ -55,7 +55,7 @@ namespace LibOnline.Controllers
         public IActionResult Login()
         {
             return View();
-        }
+        }//Login
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel model)
@@ -76,7 +76,9 @@ namespace LibOnline.Controllers
                 ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
             return View(model);
-        }
+        }//Login
+
+        // Аутентификация в Claim
         private async Task Authenticate(User user)
         {
             // создаем один claim
@@ -91,6 +93,12 @@ namespace LibOnline.Controllers
                 ClaimsIdentity.DefaultRoleClaimType);
             // установка аутентификационных куки
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
-        }
-    }
-}
+        }//Authenticate
+
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync("Cookies");
+            return RedirectToAction("Index", "Home");
+        }// LogOut
+    }// AccountController
+}// namsespace

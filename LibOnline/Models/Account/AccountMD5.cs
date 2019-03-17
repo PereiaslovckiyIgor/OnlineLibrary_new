@@ -9,6 +9,7 @@ namespace LibOnline.Models.Account
 {
     public class AccountMD5
     {
+        // Метод наследник для шифрования паролей
         public string ConvertPasswosdToMD5(string pass) {
             //переводим строку в байт-массим  
             byte[] bytes = Encoding.Unicode.GetBytes(pass);

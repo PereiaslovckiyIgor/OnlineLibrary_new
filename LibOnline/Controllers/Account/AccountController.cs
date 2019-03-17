@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using LibOnline.Models.Account;
 
 namespace LibOnline.Controllers
 {
@@ -25,6 +26,7 @@ namespace LibOnline.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterModel model)
@@ -40,7 +42,7 @@ namespace LibOnline.Controllers
                     if (userRole != null)
                     {
                         user.Role = userRole;
-                        user.IsActive = 1;
+                        user.IsActive = true;
                     }//if
                     _context.Users.Add(user);
                     await _context.SaveChangesAsync();
@@ -55,7 +57,40 @@ namespace LibOnline.Controllers
             return View(model);
         }
         [HttpGet]
-        #endregion 
+        #endregion
+
+        #region Recovery
+        public IActionResult Recovery()
+        {
+            return View();
+        }//Login
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Recovery(RecoveryModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                User user = await _context.Users
+                            .Include(u => u.Role)
+                            .FirstOrDefaultAsync(u =>
+                                                 u.Email == model.Email &&
+                                                 u.IsActive == true);
+                if (user != null)
+                {
+                    user.Password = model.ConvertPasswosdToMD5(model.Password);
+
+                    _context.Users.Update(user);
+                    await _context.SaveChangesAsync();
+
+                    await Authenticate(user); // аутентификация
+
+                    return RedirectToAction("Index", "Home");
+                }
+                ModelState.AddModelError("", "Некорректные E-mail и(или) пароль");
+            }
+            return View(model);
+        }//Login
+        #endregion
 
         #region Login
         public IActionResult Login()
@@ -73,7 +108,7 @@ namespace LibOnline.Controllers
                             .FirstOrDefaultAsync(u => 
                                                  u.Login == model.Login && 
                                                  u.Password == model.ConvertPasswosdToMD5(model.Password) &&
-                                                 u.IsActive == 1);
+                                                 u.IsActive == true);
             if (user != null)
             {
                 await Authenticate(user); // аутентификация

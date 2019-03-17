@@ -1,9 +1,8 @@
-﻿@model LibOnline.Models.LoginModel
+﻿@model LibOnline.Models.Account.LoginModel
 
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
-    <title>Paper Stack</title>
     <link rel="stylesheet" type="text/css" href="~/css/loginPage.css" />
 </head>
     
@@ -22,8 +21,8 @@
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Войти" class="btn" />
-                    <a href="#" style="color:#d8450b">Забыли пароль?</a>
-                    <a  asp-controller="Account" asp-action="Register" style="color:#d8450b">Регистрация</a>
+                    <a asp-controller="Account" asp-action="Recovery" style="color:#d8450b">Забыли пароль?</a>
+                    <a asp-controller="Account" asp-action="Register" style="color:#d8450b">Регистрация</a>
                 </div>
             </form><!-- form -->
         </section><!-- content -->

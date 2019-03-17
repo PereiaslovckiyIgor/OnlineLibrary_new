@@ -1,7 +1,7 @@
 ﻿using LibOnline.Models.Account;
 using System.ComponentModel.DataAnnotations;
 
-namespace LibOnline.Models
+namespace LibOnline.Models.Account
 {
     public class LoginModel: AccountMD5
     {

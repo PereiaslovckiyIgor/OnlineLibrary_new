@@ -1,6 +1,5 @@
 ﻿@model LibOnline.Models.Account.RegisterModel
 
-
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
@@ -10,7 +9,7 @@
 <div class="container">
     <section id="content">
         <form asp-action="Register" asp-controller="Account" asp-anti-forgery="true">
-            <div class="validation" asp-validation-summary="ModelOnly"></div>
+            @*<div class="validation" asp-validation-summary="ModelOnly"></div>*@
             <h1>Регистрация</h1>
             <div class="form-group">
                 <input type="text" asp-for="Login" placeholder="Логин" />
@@ -38,11 +37,16 @@
     </section><!-- content -->
 </div><!-- container -->
 
-
 <script>
     $(document).ready(function () {
 
         debugger;
+
+        let msg = '@ViewBag.result';
+        if (msg === "error")
+            swal("Ошибка", "Пользователь не был зарагестрирован", msg);
+
+
         let WinhHeight = $(window).height();
         let DocHeight = $(document).height();
 

@@ -21,6 +21,8 @@
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.1" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" PrivateAssets="All" />
+    <PackageReference Include="SweetAlert" Version="1.0.0" />
+    <PackageReference Include="SweetAlert.Base" Version="1.1.3" />
   </ItemGroup>
 
   <ItemGroup>

@@ -26,7 +26,6 @@ namespace LibOnline.Controllers
         {
             return View();
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterModel model)
@@ -37,7 +36,7 @@ namespace LibOnline.Controllers
                 if (user == null)
                 {
                     // добавляем пользователя в бд
-                    user = new User { Login = model.Login, Email = model.Email, Password = model.ConvertPasswosdToMD5(model.Password)};
+                    user = new User { Login = model.Login, Email = model.Email, Password = model.ConvertPasswosdToMD5(model.Password) };
                     Role userRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Reader");
                     if (userRole != null)
                     {
@@ -51,9 +50,10 @@ namespace LibOnline.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
-                else
-                    ModelState.AddModelError("", "Некорректные логин и(или) пароль");
-            }
+                //ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+            }//if
+
+            ViewBag.result = "error";
             return View(model);
         }
         [HttpGet]
@@ -85,9 +85,12 @@ namespace LibOnline.Controllers
                     await Authenticate(user); // аутентификация
 
                     return RedirectToAction("Index", "Home");
-                }
-                ModelState.AddModelError("", "Некорректные E-mail и(или) пароль");
-            }
+                }//if
+              
+                //ModelState.AddModelError("", "Некорректные E-mail и(или) пароль");
+            }//if
+
+            ViewBag.result = "error";
             return View(model);
         }//Login
         #endregion
@@ -109,14 +112,18 @@ namespace LibOnline.Controllers
                                                  u.Login == model.Login && 
                                                  u.Password == model.ConvertPasswosdToMD5(model.Password) &&
                                                  u.IsActive == true);
-            if (user != null)
-            {
-                await Authenticate(user); // аутентификация
+                if (user != null)
+                {
+                    await Authenticate(user); // аутентификация
 
-                return RedirectToAction("Index", "Home");
-            }
-            ModelState.AddModelError("", "Некорректные логин и(или) пароль");
-        }
+                    return RedirectToAction("Index", "Home");
+                }//if
+            
+                //ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+            }//if
+
+
+            ViewBag.result = "error";
             return View(model);
         }//Login
         #endregion

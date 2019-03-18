@@ -31,7 +31,7 @@
             var categoriesHTML = '';
             $.each(result, function () {
                 var idCat = this.idCategory;
-                categoriesHTML += '<li><a href="/BooksCategories/BooksCategories?idCategory=' + this.idCategory +'"><i class="icon-plus-sign"></i>' + this.categoryName + '</a></li>';
+                categoriesHTML += '<li><a href="/BooksCategories/GetBooksCategories?idCategory=' + this.idCategory +'&pageNumber=1"><i class="icon-plus-sign"></i>' + this.categoryName + '</a></li>';
                 });
             $('#ulAllCategories').html(categoriesHTML);
         }//RenderCategoriesList

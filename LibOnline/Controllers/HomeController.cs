@@ -20,6 +20,7 @@ namespace LibOnline.Controllers
         {
             ViewBag.popularBooks = getPopulars();
             ViewBag.newBooks = getNewBooks();
+            ViewBag.recentlyAddedBooks = getRecentlyAddedBooks();
 
             return View();
         }//Index
@@ -36,7 +37,8 @@ namespace LibOnline.Controllers
 
 
         //  Популярные книги 
-        private List<BooksCatogoriesToShow> getPopulars() {
+        private List<BooksCatogoriesToShow> getPopulars()
+        {
 
             List<BooksCategories> populars = new List<BooksCategories>();
             List<BooksCatogoriesToShow> books = new List<BooksCatogoriesToShow>();
@@ -59,6 +61,21 @@ namespace LibOnline.Controllers
 
             using (ApplicationContext db = new ApplicationContext())
                 newBooks = db.booksCategories.FromSql("EXECUTE [books].[GetNewBooksByReleasedDate]").ToList();
+
+            newBooks.ForEach(item => books.Add(new BooksCatogoriesToShow(item)));
+
+            return books;
+        }//getNewBooks
+
+
+        // Новые книги по дате добавления
+        private List<BooksCatogoriesToShow> getRecentlyAddedBooks()
+        {
+            List<BooksCategories> newBooks = new List<BooksCategories>();
+            List<BooksCatogoriesToShow> books = new List<BooksCatogoriesToShow>();
+
+            using (ApplicationContext db = new ApplicationContext())
+                newBooks = db.booksCategories.FromSql("EXECUTE [books].[GetNewBooksByAddedDate]").ToList();
 
             newBooks.ForEach(item => books.Add(new BooksCatogoriesToShow(item)));
 

@@ -1,20 +1,16 @@
 ﻿@using LibOnline.Models.BooksCategories;
 @using LibOnline.Models.Authors;
-
 @{
     ViewData["Title"] = "Home Page";
 }
-
 @Html.Partial("_CategoriesPartail")
 @*http://coderhs.com/archive/raty_star*@
 <!-- Page Content
 ================================================== -->
-
 <div class="span6">
     <!--Begin page content column-->
-    <h2 class="title-bg">Самые читаемые</h2>
+    <h2 class="title-bg">Самое читаемые</h2>
     <div class="row clearfix">
-
         <ul class="gallery-post-grid holder">
             @for (int i = 0; i < 6; i++)
             {
@@ -27,11 +23,9 @@
                                 Без него не прогружается Image, хоть путь и правильный
                             *@
                             <img asp-append-version="true" src="@item.ImagePath" alt="Gallery">
-
                         </a>
                         <div class="project-details">
                             <a asp-controller="BooksDescription" asp-action="BooksDescription" style="text-align:center" asp-route-IdAuthor="@item.IdBook">@item.BookName</a>
-
                             <p style="text-align:center;margin-top:5px;margin-bottom:5px;">
                                 @foreach (Author author in item.BookAuthors)
                                 {
@@ -42,7 +36,6 @@
                     </li>
                 }
             }
-
             @*@for (var i = 0; i < 6; i++)
                 {
                     <li class="span2 gallery-item" >
@@ -54,8 +47,7 @@
         <h5><a asp-controller="BooksCategories" asp-action="BooksCategories" class="pull-right"><i class="icon-th"></i>Полностью</a></h5>
     </div>
 
-
-    <h2 class="title-bg">Новые</h2>
+    <h2 class="title-bg">Новое</h2>
     <div class="row clearfix">
         <ul class="gallery-post-grid holder">
             @for (int i = 0; i < 6; i++)
@@ -69,11 +61,9 @@
                                 Без него не прогружается Image, хоть путь и правильный
                             *@
                             <img asp-append-version="true" src="@item.ImagePath" alt="Gallery">
-
                         </a>
                         <div class="project-details">
                             <a asp-controller="BooksDescription" asp-action="BooksDescription" style="text-align:center" asp-route-IdAuthor="@item.IdBook">@item.BookName</a>
-
                             <p style="text-align:center;margin-top:5px;margin-bottom:5px;">
                                 @foreach (Author author in item.BookAuthors)
                                 {
@@ -91,19 +81,35 @@
 <!-- Page Right Sidebar
 ================================================== -->
 
-
 <div class="span3 sidebar page-rigth-sidebar">
     <!--Latest News-->
     <h5 class="title-bg">Новое на сайте</h5>
     <ul class="span2 popular-posts">
-        @for (var i = 0; i < 3; i++)
+
+        @for (int i = 0; i < 3; i++)
         {
-            <li>
-                <a asp-controller="BooksDescription" asp-action="BooksDescription"><img src="~/img/Sherlock.jpg" alt="Popular Post"></a>
-                <h6><a asp-controller="BooksDescription" asp-action="BooksDescription">Шерлок Холмс<br>Казнь Шерлока Холмса</a></h6>
-                <em>Добавленно 08/02/19</em>
-            </li>
+            @foreach (BooksCatogoriesToShow item in ViewBag.recentlyAddedBooks)
+            {
+                <li class="span2 gallery-item">
+                    <em style="display:block; text-align:center">Добавленно @item.AddedDate.Day/@item.AddedDate.Month/@item.AddedDate.Year</em>
+                    <a asp-controller="BooksDescription" asp-action="BooksDescription" asp-route-IdBook="@item.IdBook">
+                        @*
+                            asp-append-version: если имеет значение true, то к пути к файлу скрипта добавляется номер версии
+                            Без него не прогружается Image, хоть путь и правильный
+                        *@
+                        <img asp-append-version="true" src="@item.ImagePath" alt="Gallery">
+                    </a>
+                    <div class="project-details">
+                        <a asp-controller="BooksDescription" asp-action="BooksDescription" style="text-align:center" asp-route-IdAuthor="@item.IdBook">@item.BookName</a>
+                        <p style="text-align:center;margin-top:5px;margin-bottom:5px;">
+                            @foreach (Author author in item.BookAuthors)
+                            {
+                                <em>@author.AuthorFullName</em>
+                            }
+                        </p>
+                    </div>
+                </li>
+            }
         }
     </ul>
-
 </div><!-- End sidebar column -->

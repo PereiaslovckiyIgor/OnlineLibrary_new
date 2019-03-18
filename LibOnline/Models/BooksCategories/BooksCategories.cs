@@ -17,8 +17,10 @@ namespace LibOnline.Models.BooksCategories
         //public int IdAuthor { get; set; }
         //public string AuthorFullName { get; set; }
         public int RatingValue { get; set; }
+        public string BooksDescription { get; set; }
         public string ImagePath { get; set; }
-
+        public DateTime ReleasedData { get; set; }
+        public DateTime AddedDate { get; set; }
     }//BooksCategories
 
 
@@ -30,7 +32,10 @@ namespace LibOnline.Models.BooksCategories
         public string BookName { get; set; }
         public List<Author> BookAuthors { get; set; }
         public int RatingValue { get; set; }
+        public string BooksDescription { get; set; }
         public string ImagePath { get; set; }
+        public DateTime ReleasedData { get; set; }
+        public DateTime AddedDate { get; set; }
 
         public BooksCatogoriesToShow(BooksCategories item)
         {
@@ -40,6 +45,9 @@ namespace LibOnline.Models.BooksCategories
             BookName = item.BookName;
             RatingValue = item.RatingValue;
             ImagePath = item.ImagePath;
+            BooksDescription = item.BooksDescription;
+            ReleasedData = item.ReleasedData;
+            AddedDate = item.AddedDate;
         }//c-tor
 
         public void AddAuthor(int IdAuthor, string AuthorFullName)
@@ -48,7 +56,8 @@ namespace LibOnline.Models.BooksCategories
         }//AddAuthor
 
 
-        private List<Author> AuthorsFromXML(string xmlAuthorsInfo) {
+        private List<Author> AuthorsFromXML(string xmlAuthorsInfo)
+        {
             List<Author> authors = new List<Author>();
 
             XmlDocument xmlDoc = new XmlDocument();

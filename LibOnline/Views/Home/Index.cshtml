@@ -1,8 +1,24 @@
 ﻿@using LibOnline.Models.BooksCategories;
 @using LibOnline.Models.Authors;
+
+
 @{
     ViewData["Title"] = "Home Page";
 }
+
+
+@functions
+{
+public bool IsAuthenticated()
+{
+    return Context.User.Identity.IsAuthenticated;
+}
+
+}
+
+
+
+
 @Html.Partial("_CategoriesPartail")
 @*http://coderhs.com/archive/raty_star*@
 <!-- Page Content
@@ -44,7 +60,7 @@
                     </li>
                 }*@
         </ul>
-        <h5><a asp-controller="BooksCategories" asp-action="BooksCategories" class="pull-right"><i class="icon-th"></i>Полностью</a></h5>
+        <h5><a asp-controller="BooksCategories" asp-action="GetPopularBooks" asp-route-pageNumber="1" class="pull-right"><i class="icon-th"></i>Полностью</a></h5>
     </div>
 
     <h2 class="title-bg">Новое</h2>
@@ -75,7 +91,7 @@
                 }
             }
         </ul>
-        <h5><a asp-controller="BooksCategories" asp-action="BooksCategories" class="pull-right"><i class="icon-th"></i>Полностью</a></h5>
+        <h5><a asp-controller="BooksCategories" asp-action="GetNewBooks" asp-route-pageNumber="1" class="pull-right"><i class="icon-th"></i>Полностью</a></h5>
     </div>
 </div> <!--End page content column-->
 <!-- Page Right Sidebar

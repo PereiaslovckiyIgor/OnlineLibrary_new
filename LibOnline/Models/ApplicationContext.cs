@@ -16,6 +16,9 @@ namespace LibOnline.Models
         // Книги 
         public DbSet<Categories.AllCategories> allCategories { get; set; }
         public DbSet<BooksCategories.BooksCategories> booksCategories { get; set; }
+        public DbSet<Categories.CategoriesPagination> categoriesPagination { get; set; }
+        public DbSet<Categories.MenuPagination> menuPagination { get; set; }
+
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
            : base(options)

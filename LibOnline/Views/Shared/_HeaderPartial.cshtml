@@ -1,10 +1,10 @@
 ﻿
 @functions
 {
-    public bool IsAuthenticated()
-    {
-        return Context.User.Identity.IsAuthenticated;
-    }
+public bool IsAuthenticated()
+{
+    return Context.User.Identity.IsAuthenticated;
+}
 
 }
 
@@ -24,11 +24,9 @@
         <div class="navbar">
             <ul class="nav">
                 <li class="active"><a asp-controller="Home" asp-action="Index">Главная</a></li>
-                <li><a asp-controller="UserPage" asp-action="UserPage">Избанное</a></li>
-                <li class="dropdown">
-                <li><a asp-controller="BooksCategories" asp-action="BooksCategories">Топ 100</a></li>
-                <li><a asp-controller="BooksCategories" asp-action="BooksCategories">Популярное</a></li>
-                <li><a asp-controller="BooksCategories" asp-action="BooksCategories">Новое</a></li>
+                @*<li><a asp-controller="BooksCategories" asp-action="BooksCategories" asp-route-pageNumber="1">Топ 100</a></li>*@
+                <li><a asp-controller="BooksCategories" asp-action="GetPopularBooks" asp-route-pageNumber="1">Популярное</a></li>
+                <li><a asp-controller="BooksCategories" asp-action="GetNewBooks" asp-route-pageNumber="1">Новое</a></li>
 
                 @if (!IsAuthenticated())
                 {
@@ -36,6 +34,7 @@
                 }
                 else
                 {
+                    <li><a asp-controller="UserPage" asp-action="UserPage">Избанное</a></li>
                     <li><a asp-controller="Account" asp-action="LogOut"><b>(@Context.User.Identity.Name)</b> Выход</a></li>
                 }
             </ul>

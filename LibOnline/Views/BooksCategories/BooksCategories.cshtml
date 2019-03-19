@@ -2,9 +2,11 @@
 @using LibOnline.Models.Authors;
 
 
+
+
 @Html.Partial("_CategoriesPartail")
 <div class="span8 gallery">
-    <h2 class="title-bg">Название категории</h2>
+    <h2 class="title-bg">@ViewBag.pagination.CategoryName</h2>
 
     <div class="row clearfix">
         <ul class="gallery-post-grid holder">

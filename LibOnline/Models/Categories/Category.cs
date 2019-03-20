@@ -7,11 +7,17 @@ using System.Threading.Tasks;
 
 namespace LibOnline.Models.Categories
 {
-    public class AllCategories
+    public class Category
     {
         // Поля для обьекта из процедуры
         [Key]
         public int IdCategory { get; set; }
         public string CategoryName { get; set; }
-    }//CategoryImage
+
+        public Category(int IdCategory, string CategoryName)
+        {
+            this.IdCategory = IdCategory;
+            this.CategoryName = CategoryName;
+        }//c-tor
+    }//Category
 }//CategoryImage

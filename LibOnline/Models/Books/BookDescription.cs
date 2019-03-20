@@ -1,60 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 using LibOnline.Models.Authors;
+using LibOnline.Models.Categories;
 using System.Xml;
+using System.ComponentModel.DataAnnotations;
 
-namespace LibOnline.Models.BooksCategories
+namespace LibOnline.Models.Books
 {
-    public class BooksCategories
+    public class BookDescription
     {
         [Key]
         public int IdBook { get; set; }
         public string BookName { get; set; }
-        public string AuthorsInfo { get; set; }
-        //public int IdAuthor { get; set; }
-        //public string AuthorFullName { get; set; }
-        public int RatingValue { get; set; }
         public string BooksDescription { get; set; }
-        public string ImagePath { get; set; }
         public DateTime ReleasedData { get; set; }
-        public DateTime AddedDate { get; set; }
-    }//BooksCategories
+        public string AuthorsInfo { get; set; }
+        public string BookCategories { get; set; }
+        public int RatingValue { get; set; }
+        public string ImagePath { get; set; }
+    }//BookDescription
 
 
-
-
-    public class BooksCatogoriesToShow
+    public class BookDescriptionToShow
     {
         public int IdBook { get; set; }
         public string BookName { get; set; }
-        public List<Author> BookAuthors { get; set; }
-        public int RatingValue { get; set; }
         public string BooksDescription { get; set; }
-        public string ImagePath { get; set; }
         public DateTime ReleasedData { get; set; }
-        public DateTime AddedDate { get; set; }
+        public List<Author> BookAuthors { get; set; }
+        public List<Category> BookCategories { get; set; }
+        public int RatingValue { get; set; }
+        public string ImagePath { get; set; }
 
-        public BooksCatogoriesToShow(BooksCategories item)
+
+
+        public BookDescriptionToShow(BookDescription item)
         {
             BookAuthors = AuthorsFromXML(item.AuthorsInfo);
+            BookCategories = CategoriesFromXML(item.BookCategories);
 
             IdBook = item.IdBook;
             BookName = item.BookName;
-            RatingValue = item.RatingValue;
-            ImagePath = item.ImagePath;
             BooksDescription = item.BooksDescription;
             ReleasedData = item.ReleasedData;
-            AddedDate = item.AddedDate;
+            RatingValue = item.RatingValue;
+            ImagePath = item.ImagePath;
         }//c-tor
-
-        public void AddAuthor(int IdAuthor, string AuthorFullName)
-        {
-            BookAuthors.Add(new Author(IdAuthor, AuthorFullName));
-        }//AddAuthor
-
 
         private List<Author> AuthorsFromXML(string xmlAuthorsInfo)
         {
@@ -77,5 +68,27 @@ namespace LibOnline.Models.BooksCategories
             return authors;
         }//AuthorsFromXML
 
-    }//BooksCatogoriesToShow
-}
+        private List<Category> CategoriesFromXML(string xmlCategories)
+        {
+            List<Category> categories = new List<Category>();
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml("<xml>" + xmlCategories + "</xml>");
+
+            XmlNodeList authorsInfo = xmlDoc.GetElementsByTagName("categories");
+
+            int id;
+            string fullName;
+            foreach (XmlNode xn in authorsInfo)
+            {
+                id = int.Parse(xn["IdCategory"].InnerText);
+                fullName = xn["CategoryName"].InnerText;
+                categories.Add(new Category(id, fullName));
+            }//foreach
+
+            return categories;
+        }//CategoriesFromXML
+
+    }//BookDescriptionToShow
+
+}//Books Namespace

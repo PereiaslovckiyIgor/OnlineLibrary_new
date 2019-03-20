@@ -30,3 +30,15 @@
 @*</div>*@
     <!-- Scroll to Top -->
     <div id="toTop" class="hidden-phone hidden-tablet">Back to Top</div>
+
+
+    <script>
+        let WinhHeight = $(window).height();
+        let DocHeight = $(document).height();
+
+        if (WinhHeight + 50 > DocHeight) {
+            $("#idFooter").css({ position: 'fixed', top: '90%' });
+        } else {
+            $("#idFooter").css({ position: '', top: '' });
+        }
+    </script>

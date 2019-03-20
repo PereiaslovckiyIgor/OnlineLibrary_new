@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using LibOnline.Models;
 using LibOnline.Models.Categories;
 using Microsoft.EntityFrameworkCore;
-using LibOnline.Models.BooksCategories;
+using LibOnline.Models.Books;
 using System.Data.SqlClient;
 
 namespace LibOnline.Controllers
@@ -28,7 +28,7 @@ namespace LibOnline.Controllers
         // Получит все жанры книг
         public JsonResult GetAllCategories()
         {
-            List<AllCategories> list = new List<AllCategories>();
+            List<Category> list = new List<Category>();
             using (ApplicationContext db = new ApplicationContext())
                 list = db.allCategories.FromSql("EXECUTE [general].[GetAllCategories]").ToList();
 

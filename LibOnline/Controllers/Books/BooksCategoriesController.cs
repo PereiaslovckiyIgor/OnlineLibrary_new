@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using LibOnline.Models;
-using LibOnline.Models.BooksCategories;
+using LibOnline.Models.Books;
 using LibOnline.Models.Categories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +19,7 @@ namespace LibOnline.Controllers
         public IActionResult BooksCategories()
         {
             return View();
-        }
+        }//BooksCategories
 
 
         # region BooksCategories жанры
@@ -111,5 +111,35 @@ namespace LibOnline.Controllers
         }//GetNewBooks
         #endregion
 
+        #region Книги по Автору из страницы описания книги
+        public IActionResult GetBooksAuthors(int IdAuthor, int pageNumber, string AuthorFullName)
+        {
+
+            List<BooksCategories> newBooks = new List<BooksCategories>();
+            List<BooksCatogoriesToShow> books = new List<BooksCatogoriesToShow>();
+            List<MenuPagination> menuPagination = new List<MenuPagination>();
+
+            SqlParameter idAuthor = new SqlParameter("@IdAuthor", IdAuthor);
+            SqlParameter pNumber = new SqlParameter("@PageNumber", pageNumber);
+            SqlParameter rowPage = new SqlParameter("@RowspPage", pageElems);
+
+
+            using (ApplicationContext db = new ApplicationContext())
+                newBooks = db.booksCategories.FromSql($"EXECUTE [books].[GetBooksByAuthors] {idAuthor}, {pNumber}, {rowPage}").ToList();
+
+            newBooks.ForEach(item => books.Add(new BooksCatogoriesToShow(item)));
+
+
+            using (ApplicationContext db = new ApplicationContext())
+                menuPagination = db.menuPagination.FromSql($"EXECUTE books.MenuPadination {pageNumber}, {pageElems}").ToList();
+
+
+            ViewBag.booksCategories = books;
+            ViewBag.pagination = menuPagination[0];
+            ViewBag.pagination.CategoryName = AuthorFullName;
+
+            return View("BooksCategories");
+        }//GetBooksAuthors
+        #endregion
     }
 }

@@ -31,20 +31,8 @@
 
 <script>
     $(document).ready(function () {
-
-        debugger;
-
         let msg = '@ViewBag.result';
         if (msg === "error")
             swal("Вход не выполнен", "Проверте имя пользователя или пароль", msg);
-
-        let WinhHeight = $(window).height();
-        let DocHeight = $(document).height();
-
-        if (WinhHeight < DocHeight) {
-            $("#idFooter").css({ position: 'fixed', top: '87%' });
-        } else {
-            $("#idFooter").css({ position: '', top: '' });
-        }
     });
 </script>

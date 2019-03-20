@@ -1,4 +1,4 @@
-﻿@using LibOnline.Models.BooksCategories;
+﻿@using LibOnline.Models.Books;
 @using LibOnline.Models.Authors;
 
 
@@ -15,7 +15,7 @@
                 @foreach (BooksCatogoriesToShow item in ViewBag.booksCategories)
                 {
                     <li class="span2 gallery-item">
-                        <a asp-controller="BooksDescription" asp-action="BooksDescription" asp-route-IdBook="@item.IdBook">
+                        <a asp-controller="BooksDescription" asp-action="GetBookDescription" asp-route-IdBook="@item.IdBook">
                             @*
                                 asp-append-version: если имеет значение true, то к пути к файлу скрипта добавляется номер версии
                                 Без него не прогружается Image, хоть путь и правильный

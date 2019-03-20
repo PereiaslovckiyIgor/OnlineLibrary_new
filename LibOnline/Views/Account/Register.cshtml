@@ -40,20 +40,8 @@
 <script>
     $(document).ready(function () {
 
-        debugger;
-
         let msg = '@ViewBag.result';
         if (msg === "error")
             swal("Ошибка", "Пользователь не был зарагестрирован", msg);
-
-
-        let WinhHeight = $(window).height();
-        let DocHeight = $(document).height();
-
-        if (WinhHeight > DocHeight) {
-            $("#idFooter").css({ position: 'fixed', top: '87%' });
-        } else {
-            $("#idFooter").css({ position: '', top: '' });
-        }
     });
 </script>

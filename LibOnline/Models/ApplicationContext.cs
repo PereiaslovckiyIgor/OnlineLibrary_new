@@ -1,8 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LibOnline.Models
 {
@@ -18,6 +14,7 @@ namespace LibOnline.Models
         public DbSet<Books.BooksCategories> booksCategories { get; set; }
         public DbSet<Books.BookDescription> bookDescriptions { get; set; }
         public DbSet<Books.Page> booksPage { get; set; }
+        public DbSet<General.PageFontSizes> pageFontSizes { get; set; }
         public DbSet<Categories.CategoriesPagination> categoriesPagination { get; set; }
         public DbSet<Categories.MenuPagination> menuPagination { get; set; }
 

@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using LibOnline.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using LibOnline.Models.General;
 
 namespace LibOnline.Controllers.Books
 {
@@ -40,8 +41,19 @@ namespace LibOnline.Controllers.Books
 
 
             ViewBag.Page = pageContetnt[0];
+            ViewData["FonSizesArray"] = GetAllFontSizesValues();
 
             return View("BooksPage");
         }//GetPageContent
+
+
+        public JsonResult GetAllFontSizesValues()
+        {
+            List<PageFontSizes> sizes = new List<PageFontSizes>();
+            using (ApplicationContext db = new ApplicationContext())
+                sizes = db.pageFontSizes.ToList();
+
+            return Json(sizes);
+        }//GetAllFontSizesValues
     }
 }

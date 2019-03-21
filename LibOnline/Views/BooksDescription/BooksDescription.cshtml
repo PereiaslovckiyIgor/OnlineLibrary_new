@@ -6,8 +6,17 @@
     BookDescriptionToShow description = ViewBag.booksDescription;
 }
 
-@Html.Partial("_CategoriesPartail")
+@functions
+{
+public bool IsAuthenticated()
+{
+    return Context.User.Identity.IsAuthenticated;
+}
 
+}
+
+
+@Html.Partial("_CategoriesPartail")
 
 
 <div class="span9 gallery-single">
@@ -46,9 +55,10 @@
                     <h6>Жанр:</h6>
                     @foreach (Category category in description.BookCategories)
                     {
-                        <a asp-controller="BooksCategories" asp-action="GetBooksCategories" 
-                           asp-route-IdCategory="@category.IdCategory" 
-                           asp-route-pageNumber="1">@category.CategoryName
+                        <a asp-controller="BooksCategories" asp-action="GetBooksCategories"
+                           asp-route-IdCategory="@category.IdCategory"
+                           asp-route-pageNumber="1">
+                            @category.CategoryName
                         </a>
                         if (category != description.BookCategories.Last())
                         {
@@ -59,7 +69,10 @@
                 <li><h6>Рейтинг:</h6>"Звездный" Виджет (1-5 звезд) : @description.RatingValue</li>
             </ul>
             <button id="btnReadBook" class="btn btn-large btn-inverse span2" type="button">Читать</button>
-            <button class="btn btn-large btn-warning span2" type="button">В избранное</button>
+            @if (IsAuthenticated())
+            {
+                <button class="btn btn-large btn-warning span2" type="button">В избранное</button>
+            }
         </div>
     </div>
     <!-- Post Comments
@@ -124,7 +137,8 @@
 
     // Ссылка обращается в метод конроллера
     $('#btnReadBook').click(function () {
-        var Url = '@Url.Action("BooksPage", "BooksPage")';
-        $(location).attr('href', Url);
+        debugger;
+        var Url = "@Url.Action("GetPageContent", "BooksPage", new { IdBook = ViewBag.booksDescription.IdBook, PageNumber = 1 })";
+        $(location).attr('href', Url.replace(/&amp;/g, "&"));
     });
 </script>

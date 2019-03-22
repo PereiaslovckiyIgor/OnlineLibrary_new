@@ -34,7 +34,7 @@ public bool IsAuthenticated()
                 }
                 else
                 {
-                    <li><a asp-controller="UserPage" asp-action="UserPage">Избанное</a></li>
+                    <li><a asp-controller="UserPage" asp-action="UserPage" asp-route-pageNumber="1">Избанное</a></li>
                     <li><a asp-controller="Account" asp-action="LogOut"><b>(@Context.User.Identity.Name)</b> Выход</a></li>
                 }
             </ul>

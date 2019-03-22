@@ -40,8 +40,13 @@ namespace LibOnline.Controllers.Books
             using (ApplicationContext db = new ApplicationContext())
                 pageContetnt = db.booksPage.FromSql($"EXECUTE [books].[GetBookPage] {idBook}, {pageNumber}, {userName}").ToList();
 
+            // Пагинация
+            List<PagePagination> pagePagination = new List<PagePagination>();
+            using (ApplicationContext db = new ApplicationContext())
+                pagePagination = db.pagePaginations.FromSql($"EXECUTE [books].[PagePadination] {idBook}, {pageNumber}").ToList();
 
             ViewBag.Page = pageContetnt[0];
+            ViewBag.pagePagination = pagePagination[0];
 
             return View("BooksPage");
         }//GetPageContent

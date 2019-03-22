@@ -23,7 +23,7 @@
             </a>
 
             <h4 class="title-bg">
-                <a asp-controller="BooksDescription" asp-action="GetBookDescription" asp-route-IdBook="@item.IdBook">@item.BookName</a>
+                <a asp-controller="BooksDescription" asp-action="GetBooksAuthors" asp-route-IdBook="@item.IdBook">@item.BookName</a>
             </h4>
             <p align="justify">@item.BooksDescription</p>
 
@@ -37,7 +37,10 @@
                         @foreach (Author author in item.BookAuthors)
                         {
 
-                            <a asp-controller="BooksCategories" asp-action="BooksCategories" asp-route-IdAuthor="@author.IdAuthor">
+                            <a asp-controller="BooksCategories" asp-action="GetBooksAuthors"
+                               asp-route-IdAuthor="@author.IdAuthor"
+                               asp-route-pageNumber="1"
+                               asp-route-AuthorFullName="@author.AuthorFullName">
                                 @author.AuthorFullName
                             </a>
                             if (author != item.BookAuthors.Last())
@@ -55,7 +58,9 @@
                         <i class="icon-user"></i>
                         @foreach (Category category in item.BookCategories)
                         {
-                            <a asp-controller="BooksCategories" asp-action="BooksCategories" asp-route-IdCategory="@category.IdCategory">
+                            <a asp-controller="BooksCategories" asp-action="GetBooksCategories"
+                               asp-route-IdCategory="@category.IdCategory"
+                               asp-route-pageNumber="1">
                                 @category.CategoryName
                             </a>
                             if (category != item.BookCategories.Last())
@@ -68,49 +73,6 @@
             </div>
         </article>
     }
-
-
-    @*<article class="clearfix">
-            <a asp-controller="BooksDescription" asp-action="BooksDescription">
-                <img src="~/img/Sherlock.jpg" alt="Post Thumb" class="align-left img_userPage">
-            </a>
-
-            <h4 class="title-bg"><a asp-controller="BooksDescription" asp-action="BooksDescription">Шерлок Холмс <small> Казнь Шерлока Холмса </small></a></h4>
-
-            <p align="justify">
-                Давно опустевшая, предназначенная под снос Ньюгейтская тюрьма вдруг получила долгожданного узника, и это не кто иной, как Шерлок Холмс!
-                Вступившие в сговор преступники похитили великого сыщика и заточили в мрачные стены, чтобы устроить над ним суд.
-                Легко догадаться, каким будет результат этого судилища: по длинному коридору, куда выходят пятнадцать камер для
-                смертников, через арку с изречением "Оставь надежду, всяк сюда входящий" приговоренного потащат во двор,
-                где сооружен эшафот… Дональд Томас считается лучшим автором шерлокианы после Артура Конан Дойла.
-                Почтительное и бережное отношение к канону он сочетает с глубоким знанием Викторианской и
-                Эдвардианской эпохи. Благодаря его увлекательным книгам в мире постоянно растет число поклонников
-                гениального детектива.
-            </p>
-            <button class="btn btn-large btn-inverse" type="button">Продолжить чтение</button>
-            <button class="btn btn-large btn-danger" type="button">Удалить</button>
-            <div class="post-summary-footer">
-                <ul class="post-data-3">
-                    <li><i class="icon-calendar"></i> 09/02/19</li>
-                    <li>
-                        <i class="icon-user"></i>
-                        <a asp-controller="BooksCategories" asp-action="BooksCategories">Имя Автора</a>
-                    </li>
-                    <li>
-                        <i class="icon-comment"></i>
-                        <a asp-controller="BooksDescription" asp-action="BooksDescription" asp-fragment="comments">5 Отзывов</a>
-                    </li>
-                    <li>
-                        <i class="icon-tags"></i>
-                        <a asp-controller="BooksCategories" asp-action="BooksCategories">Детектив</a>,
-                        <a asp-controller="BooksCategories" asp-action="BooksCategories">Приключения</a>
-                    </li>
-                </ul>
-            </div>
-        </article>*@
-
-
-
 
     <!-- Pagination -->
     <div class="pagination">

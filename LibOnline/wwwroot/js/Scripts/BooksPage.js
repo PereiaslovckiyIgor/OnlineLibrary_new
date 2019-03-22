@@ -50,7 +50,6 @@ $(document).ready(function () {
         }//if
     });
 
-
     // Кнока сохранения настроек
     $("#btnSaveUserSettings").click(function () {
         $.ajax({

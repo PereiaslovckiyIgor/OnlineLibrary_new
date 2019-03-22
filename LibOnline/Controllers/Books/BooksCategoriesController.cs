@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LibOnline.Models;
 using LibOnline.Models.Books;
-using LibOnline.Models.Categories;
+using LibOnline.Models.General;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -111,7 +111,7 @@ namespace LibOnline.Controllers
         }//GetNewBooks
         #endregion
 
-        #region Книги по Автору из страницы описания книги
+        #region Книги по Автору
         public IActionResult GetBooksAuthors(int IdAuthor, int pageNumber, string AuthorFullName)
         {
 

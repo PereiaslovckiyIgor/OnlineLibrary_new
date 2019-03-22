@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LibOnline.Models.Categories
+namespace LibOnline.Models.General
 {
     public class CategoriesPagination
     {
@@ -22,8 +22,12 @@ namespace LibOnline.Models.Categories
         public int PageNumber { get; set; }
         public int CountPages { get; set; }
         public string CategoryName { get; set; }
-
     }//CategoriesPagination
 
-
+    public class PagePagination
+    {
+        [Key]
+        public int PageNumber { get; set; }
+        public int CountPages { get; set; }
+    }//CategoriesPagination
 }

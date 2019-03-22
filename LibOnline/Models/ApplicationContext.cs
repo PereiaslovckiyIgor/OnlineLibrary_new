@@ -16,8 +16,9 @@ namespace LibOnline.Models
         public DbSet<Books.Page> booksPage { get; set; }
         public DbSet<Books.UserBook> userBooks { get; set; }
         public DbSet<General.PageFontSizes> pageFontSizes { get; set; }
-        public DbSet<Categories.CategoriesPagination> categoriesPagination { get; set; }
-        public DbSet<Categories.MenuPagination> menuPagination { get; set; }
+        public DbSet<General.CategoriesPagination> categoriesPagination { get; set; }
+        public DbSet<General.MenuPagination> menuPagination { get; set; }
+        public DbSet<General.PagePagination> pagePaginations { get; set; }
 
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)

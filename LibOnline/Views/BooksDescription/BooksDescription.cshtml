@@ -45,7 +45,7 @@ public bool IsAuthenticated()
                            asp-route-AuthorFullName="@author.AuthorFullName">
                             @author.AuthorFullName
                         </a>
-                        if (@author != description.BookAuthors.Last())
+                        if (author != description.BookAuthors.Last())
                         {
                             @Html.Raw(", ")
                         }

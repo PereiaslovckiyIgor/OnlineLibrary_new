@@ -29,6 +29,8 @@ namespace LibOnline.Controllers.Books
                 bookDescriptions = db.bookDescriptions.FromSql($"EXECUTE [books].[GetBooksDescription] {idBook}").ToList();
 
 
+
+
             ViewBag.booksDescription = new BookDescriptionToShow(bookDescriptions[0]);
 
             return View("BooksDescription");

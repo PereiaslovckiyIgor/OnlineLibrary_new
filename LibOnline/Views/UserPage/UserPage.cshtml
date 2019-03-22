@@ -1,45 +1,114 @@
-﻿@Html.Partial("_CategoriesPartail")
+﻿@using LibOnline.Models.Books;
+@using LibOnline.Models.Authors;
+@using LibOnline.Models.Categories;
+
+
+
+@{
+    List<UserBookToShow> userBooks = ViewBag.UserBooks;
+}
+
+
+
+@Html.Partial("_CategoriesPartail")
 
 <div class="span9 blog">
 
-    @for (int i = 0; i < 5; i++)
-    {
-    <article class="clearfix">
-        <a asp-controller="BooksDescription" asp-action="BooksDescription">
-            <img src="~/img/Sherlock.jpg" alt="Post Thumb" class="align-left img_userPage">
-        </a>
 
-        <h4 class="title-bg"><a asp-controller="BooksDescription" asp-action="BooksDescription">Шерлок Холмс <small> Казнь Шерлока Холмса </small></a></h4>
-        
-        <p align="justify">
-            Давно опустевшая, предназначенная под снос Ньюгейтская тюрьма вдруг получила долгожданного узника, и это не кто иной, как Шерлок Холмс! 
-            Вступившие в сговор преступники похитили великого сыщика и заточили в мрачные стены, чтобы устроить над ним суд. 
-            Легко догадаться, каким будет результат этого судилища: по длинному коридору, куда выходят пятнадцать камер для 
-            смертников, через арку с изречением "Оставь надежду, всяк сюда входящий" приговоренного потащат во двор, 
-            где сооружен эшафот… Дональд Томас считается лучшим автором шерлокианы после Артура Конан Дойла. 
-            Почтительное и бережное отношение к канону он сочетает с глубоким знанием Викторианской и 
-            Эдвардианской эпохи. Благодаря его увлекательным книгам в мире постоянно растет число поклонников 
-            гениального детектива.
-        </p>
-        <button class="btn btn-large btn-inverse" type="button">Продолжить чтение</button>
-        <button class="btn btn-large btn-danger" type="button">Удалить</button>
-        <div class="post-summary-footer"    >
-            <ul class="post-data-3">
-                <li><i class="icon-calendar"></i> 09/02/19</li>
-                <li><i class="icon-user"></i> 
-                    <a asp-controller="BooksCategories" asp-action="BooksCategories">Имя Автора</a>
-                </li>
-                <li><i class="icon-comment"></i> 
-                    <a asp-controller="BooksDescription" asp-action="BooksDescription" asp-fragment="comments">5 Отзывов</a>
-                </li>
-                <li><i class="icon-tags"></i> 
-                    <a asp-controller="BooksCategories" asp-action="BooksCategories">Детектив</a>, 
-                    <a asp-controller="BooksCategories" asp-action="BooksCategories">Приключения</a>
-                </li>
-            </ul>
-        </div>
-    </article>
+    @foreach (var item in userBooks)
+    {
+        <article class="clearfix">
+            <a asp-controller="BooksDescription" asp-action="GetBookDescription" asp-route-IdBook="@item.IdBook">
+                <img asp-append-version="true" src="@item.ImagePath" alt="Post Thumb" class="align-left img_userPage">
+            </a>
+
+            <h4 class="title-bg">
+                <a asp-controller="BooksDescription" asp-action="GetBookDescription" asp-route-IdBook="@item.IdBook">@item.BookName</a>
+            </h4>
+            <p align="justify">@item.BooksDescription</p>
+
+            <button class="btn btn-large btn-inverse" type="button">Продолжить чтение</button>
+            <button class="btn btn-large btn-danger" type="button">Удалить</button>
+            <div class="post-summary-footer">
+                <ul class="post-data-3">
+                    <li><i class="icon-calendar"></i> @item.ReleasedData.Day/@item.ReleasedData.Month/@item.ReleasedData.Year</li>
+                    <li>
+                        <i class="icon-user"></i>
+                        @foreach (Author author in item.BookAuthors)
+                        {
+
+                            <a asp-controller="BooksCategories" asp-action="BooksCategories" asp-route-IdAuthor="@author.IdAuthor">
+                                @author.AuthorFullName
+                            </a>
+                            if (author != item.BookAuthors.Last())
+                            {
+                                @Html.Raw(", ")
+                            }
+                        }
+
+                    </li>
+                    <li>
+                        <i class="icon-comment"></i>
+                        <a asp-controller="BooksDescription" asp-action="BooksDescription" asp-fragment="comments">5 Отзывов</a>
+                    </li>
+                    <li>
+                        <i class="icon-user"></i>
+                        @foreach (Category category in item.BookCategories)
+                        {
+                            <a asp-controller="BooksCategories" asp-action="BooksCategories" asp-route-IdCategory="@category.IdCategory">
+                                @category.CategoryName
+                            </a>
+                            if (category != item.BookCategories.Last())
+                            {
+                                @Html.Raw(", ")
+                            }
+                        }
+                    </li>
+                </ul>
+            </div>
+        </article>
     }
+
+
+    @*<article class="clearfix">
+            <a asp-controller="BooksDescription" asp-action="BooksDescription">
+                <img src="~/img/Sherlock.jpg" alt="Post Thumb" class="align-left img_userPage">
+            </a>
+
+            <h4 class="title-bg"><a asp-controller="BooksDescription" asp-action="BooksDescription">Шерлок Холмс <small> Казнь Шерлока Холмса </small></a></h4>
+
+            <p align="justify">
+                Давно опустевшая, предназначенная под снос Ньюгейтская тюрьма вдруг получила долгожданного узника, и это не кто иной, как Шерлок Холмс!
+                Вступившие в сговор преступники похитили великого сыщика и заточили в мрачные стены, чтобы устроить над ним суд.
+                Легко догадаться, каким будет результат этого судилища: по длинному коридору, куда выходят пятнадцать камер для
+                смертников, через арку с изречением "Оставь надежду, всяк сюда входящий" приговоренного потащат во двор,
+                где сооружен эшафот… Дональд Томас считается лучшим автором шерлокианы после Артура Конан Дойла.
+                Почтительное и бережное отношение к канону он сочетает с глубоким знанием Викторианской и
+                Эдвардианской эпохи. Благодаря его увлекательным книгам в мире постоянно растет число поклонников
+                гениального детектива.
+            </p>
+            <button class="btn btn-large btn-inverse" type="button">Продолжить чтение</button>
+            <button class="btn btn-large btn-danger" type="button">Удалить</button>
+            <div class="post-summary-footer">
+                <ul class="post-data-3">
+                    <li><i class="icon-calendar"></i> 09/02/19</li>
+                    <li>
+                        <i class="icon-user"></i>
+                        <a asp-controller="BooksCategories" asp-action="BooksCategories">Имя Автора</a>
+                    </li>
+                    <li>
+                        <i class="icon-comment"></i>
+                        <a asp-controller="BooksDescription" asp-action="BooksDescription" asp-fragment="comments">5 Отзывов</a>
+                    </li>
+                    <li>
+                        <i class="icon-tags"></i>
+                        <a asp-controller="BooksCategories" asp-action="BooksCategories">Детектив</a>,
+                        <a asp-controller="BooksCategories" asp-action="BooksCategories">Приключения</a>
+                    </li>
+                </ul>
+            </div>
+        </article>*@
+
 
 
 

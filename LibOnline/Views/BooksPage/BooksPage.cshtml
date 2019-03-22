@@ -1,11 +1,16 @@
 ﻿
+<script src="~/js/Scripts/BooksPage.js"></script>
+
 @functions
 {
-    public bool IsAuthenticated()
-    {
-        return Context.User.Identity.IsAuthenticated;
-    }
+public bool IsAuthenticated()
+{
+    return Context.User.Identity.IsAuthenticated;
 }
+}
+<!-- Для чтения получения данных из ViewBag в фале скриптов -->
+<input type="hidden" id="idBook" data-value="@ViewBag.Page.IdBook" />
+<input type="hidden" id="idPage" data-value="@ViewBag.Page.IdPage" />
 
 <div class="span10 offset1">
 
@@ -26,11 +31,11 @@
     @if (IsAuthenticated())
     {
         <h6 class="title-bg title-bg-white" style="height:25px;">
-            <button class="btn btn-small btn-warning">Закладка <i class="icon-bookmark"></i></button>
+            <button id="btnUserBookmark" class="btn btn-small btn-warning">Закладка <i class="icon-bookmark"></i></button>
             <span class="right btn-group">
                 <button id="btnIncreaseTextSize" class="btn btn-small btn-inverse">Aa+</button>
                 <button id="btnReduceTextSize" class="btn btn-small btn-inverse">Aa-</button>
-                <button class="btn btn-small btn-inverse">Сохранить</button>
+                <button id="btnSaveUserSettings" class="btn btn-small btn-inverse">Сохранить</button>
             </span>
         </h6>
     }
@@ -64,56 +69,3 @@
 
 </div>
 
-
-<script>
-    $(document).ready(function () {
-
-        // Возможные размеры 
-        let FontSizesArray;
-
-         $.ajax({
-             // Для обращение к методам одного контроллера из любого друго
-             url: '@Url.Content("~/BooksPage/GetAllFontSizesValues")',
-             success: function (result) {
-                 FontSizesArray = result;
-            },
-        });
-
-        // Конопка увеличения шрифта
-        $("#btnIncreaseTextSize").click(function () {
-
-            let currFontSize = $("#PageText").css("font-size");
-            let lastValue = FontSizesArray[FontSizesArray.length - 1].fontSizeValue;
-
-            if (currFontSize != lastValue) {
-                for (var i = 0; i <= FontSizesArray.length-1; i++) {
-                    if (FontSizesArray[i].fontSizeValue == currFontSize) {
-                        let size = FontSizesArray[i+1].fontSizeValue;
-                        $("#PageText").css("font-size", size);
-                        break;
-                    }//if
-                }//for
-
-            }//if
-        });
-
-        // Конопка уменьшения шрифта
-        $("#btnReduceTextSize").click(function () {
-            let currFontSize = $("#PageText").css("font-size");
-            let firstValue = FontSizesArray[0].fontSizeValue;
-
-            if (currFontSize != firstValue) {
-                for (var i = 0; i <= FontSizesArray.length-1; i++) {
-                    var t = FontSizesArray[i].fontSizeValue;
-                    if ( t == currFontSize) {
-                        let size = FontSizesArray[i-1].fontSizeValue;
-                        $("#PageText").css("font-size", size);
-                        break;
-                    }//if
-                }//for
-
-            }//if
-        });
-      
-    });// $(document).ready
-</script>

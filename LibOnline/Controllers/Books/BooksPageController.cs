@@ -24,12 +24,13 @@ namespace LibOnline.Controllers.Books
         {
             string UserName = "";
 
-            // ПОЛУЧИТЬ РОЛЬ ПОЛЬЗОВАТЕЛЯ
+            // ПОЛУЧИТЬ ИМЯ И РОЛЬ ПОЛЬЗОВАТЕЛЯ
             if (User.Identity.IsAuthenticated)
             {
                 //string role = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
                 UserName = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultNameClaimType).Value;
             }
+
             List<Page> pageContetnt = new List<Page>();
 
             SqlParameter idBook = new SqlParameter("@IdBook", IdBook);
@@ -41,12 +42,11 @@ namespace LibOnline.Controllers.Books
 
 
             ViewBag.Page = pageContetnt[0];
-            ViewData["FonSizesArray"] = GetAllFontSizesValues();
 
             return View("BooksPage");
         }//GetPageContent
 
-
+        // Получить список шрифтов через AJAX
         public JsonResult GetAllFontSizesValues()
         {
             List<PageFontSizes> sizes = new List<PageFontSizes>();
@@ -55,5 +55,76 @@ namespace LibOnline.Controllers.Books
 
             return Json(sizes);
         }//GetAllFontSizesValues
-    }
-}
+
+
+        // Сохранить настройки польователя AJAX
+        public IActionResult SaveUserSettings(string fs_Value)
+        {
+
+            string UserName = "", ResponseText;
+            bool IsSuccess;
+
+            // ПОЛУЧИТЬ ИМЯ ПОЛЬЗОВАТЕЛЯ
+            if (User.Identity.IsAuthenticated)
+            {
+                UserName = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultNameClaimType).Value;
+            }//if
+
+            SqlParameter userName = new SqlParameter("@UserName", UserName);
+            SqlParameter fsValue = new SqlParameter("@fsValue", fs_Value);
+
+            try
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                    db.Database.ExecuteSqlCommand($"books.SaveUsersSetting {userName}, {fsValue}");
+
+                IsSuccess = true;
+                ResponseText = "Настройки сохранены";
+            }
+            catch
+            {
+
+                IsSuccess = false;
+                ResponseText = "Настройки не сохранены";
+            } //try-catch
+
+            return Json(new { success = IsSuccess, responseText = ResponseText });
+        }//SaveUserSettings
+
+
+        // Добавление пользователем закладки
+        public IActionResult AddUserBookmark(int IdBook, int IdPage)
+        {
+            string UserName = "", ResponseText;
+            bool IsSuccess;
+
+            // ПОЛУЧИТЬ ИМЯ ПОЛЬЗОВАТЕЛЯ
+            if (User.Identity.IsAuthenticated)
+            {
+                UserName = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultNameClaimType).Value;
+            }//if
+
+            SqlParameter userName = new SqlParameter("@UserName", UserName);
+            SqlParameter idBook = new SqlParameter("@IdBook", IdBook);
+            SqlParameter idPage = new SqlParameter("@IdPage", 2);
+
+            try
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                    db.Database.ExecuteSqlCommand($"books.AddUserBookmark {userName}, {idBook}, {idPage}");
+
+                IsSuccess = true;
+                ResponseText = "Закладка добавленна";
+            }
+            catch
+            {
+                IsSuccess = false;
+                ResponseText = "Закладка не добавлена";
+            } //try-catch
+
+            return Json(new { success = IsSuccess, responseText = ResponseText });
+        }//AddUserBookmark
+
+
+    }//BooksPageController 
+}//namespace

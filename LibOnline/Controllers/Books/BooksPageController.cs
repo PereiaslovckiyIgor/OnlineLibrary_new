@@ -19,7 +19,7 @@ namespace LibOnline.Controllers.Books
             return View();
         }//BooksPage
 
-
+        #region GetPageContent
         public IActionResult GetPageContent(int IdBook, int PageNumber)
         {
             string UserName = "";
@@ -50,7 +50,9 @@ namespace LibOnline.Controllers.Books
 
             return View("BooksPage");
         }//GetPageContent
+        #endregion
 
+        # region Получить список шрифтов через AJAX
         // Получить список шрифтов через AJAX
         public JsonResult GetAllFontSizesValues()
         {
@@ -60,8 +62,9 @@ namespace LibOnline.Controllers.Books
 
             return Json(sizes);
         }//GetAllFontSizesValues
+        #endregion
 
-
+        #region Сохранить настройки польователя AJAX
         // Сохранить настройки польователя AJAX
         public IActionResult SaveUserSettings(string fs_Value)
         {
@@ -95,8 +98,9 @@ namespace LibOnline.Controllers.Books
 
             return Json(new { success = IsSuccess, responseText = ResponseText });
         }//SaveUserSettings
+        #endregion
 
-
+        #region Добавление пользователем закладки
         // Добавление пользователем закладки
         public IActionResult AddUserBookmark(int IdBook, int IdPage)
         {
@@ -111,7 +115,7 @@ namespace LibOnline.Controllers.Books
 
             SqlParameter userName = new SqlParameter("@UserName", UserName);
             SqlParameter idBook = new SqlParameter("@IdBook", IdBook);
-            SqlParameter idPage = new SqlParameter("@IdPage", 2);
+            SqlParameter idPage = new SqlParameter("@IdPage", IdPage);
 
             try
             {
@@ -129,7 +133,7 @@ namespace LibOnline.Controllers.Books
 
             return Json(new { success = IsSuccess, responseText = ResponseText });
         }//AddUserBookmark
-
+        #endregion
 
     }//BooksPageController 
 }//namespace

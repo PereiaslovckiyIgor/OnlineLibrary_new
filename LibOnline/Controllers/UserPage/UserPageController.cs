@@ -14,7 +14,7 @@ namespace LibOnline.Controllers.UserPage
 {
     public class UserPageController : Controller
     {
-
+        #region Получить список Избраного
         public IActionResult UserPage(int pageNumber)
         {
             string UserName = "";
@@ -50,6 +50,41 @@ namespace LibOnline.Controllers.UserPage
             ViewBag.userPagePagination = userPagePagination[0];
             return View("UserPage");
         }//UserPage
+        #endregion
+        
+        #region Удалить книгу из Избраного
+        // Удалить книгу из Избранного
+        public IActionResult RemoveUserBook(int IdBook)
+        {
+            string UserName = "", ResponseText;
+            bool IsSuccess;
 
-    }
-}
+            // ПОЛУЧИТЬ ИМЯ ПОЛЬЗОВАТЕЛЯ
+            if (User.Identity.IsAuthenticated)
+            {
+                UserName = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultNameClaimType).Value;
+            }//if
+
+            SqlParameter userName = new SqlParameter("@UserName", UserName);
+            SqlParameter idBook = new SqlParameter("@IdBook", IdBook);
+
+            try
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                    db.Database.ExecuteSqlCommand($"books.RemoveUserBook {userName}, {idBook}");
+
+                IsSuccess = true;
+                ResponseText = "Книга удалена из избранного";
+            }
+            catch
+            {
+                IsSuccess = false;
+                ResponseText = "Книга не была удалена из избранного";
+            } //try-catch
+
+            return Json(new { success = IsSuccess, responseText = ResponseText });
+
+        }//RemoveUserBook
+        #endregion
+    }//UserPageController
+}//Namespace

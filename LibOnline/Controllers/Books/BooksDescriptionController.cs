@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using LibOnline.Models.Books;
 using LibOnline.Models;
 using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using LibOnline.Models.General;
 
 namespace LibOnline.Controllers.Books
 {
@@ -30,15 +29,13 @@ namespace LibOnline.Controllers.Books
                 bookDescriptions = db.bookDescriptions.FromSql($"EXECUTE [books].[GetBooksDescription] {idBook}").ToList();
 
 
-
-
             ViewBag.booksDescription = new BookDescriptionToShow(bookDescriptions[0]);
 
             return View("BooksDescription");
         }//GetBookDescription
         #endregion
 
-
+        #region Добавление книги в Избранное
         public IActionResult AddInUserBooks(int IdBook) {
 
             string UserName = "", ResponseText;
@@ -50,9 +47,9 @@ namespace LibOnline.Controllers.Books
                 UserName = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultNameClaimType).Value;
             }//if
 
-            int idUser;
-            using (ApplicationContext db = new ApplicationContext())
-                idUser = db.Users.First(u => u.Login == UserName).Id;
+            // Получит ID пользователя
+            int idUser = new Utils().GetUserIdByUserName(UserName);
+
 
             if (IsBookInUserBooks(IdBook, idUser))
             {
@@ -77,7 +74,9 @@ namespace LibOnline.Controllers.Books
 
             return Json(new { success = IsSuccess, responseText = ResponseText });
         }//AddInUserBooks
+        #endregion
 
+        #region Проверка на наличие уже добавленной книги
         // Проверка на наличие уже добавленной книги
         private bool IsBookInUserBooks(int IdBook, int idUser)
         {
@@ -87,7 +86,7 @@ namespace LibOnline.Controllers.Books
 
             return (ub != null) ? true : false;
         }//IsBookInUserBooks
-
+        #endregion
 
     }//BooksDescriptionController
 }//Books Namespace

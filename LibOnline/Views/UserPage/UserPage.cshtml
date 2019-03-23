@@ -12,6 +12,8 @@
 
 @Html.Partial("_CategoriesPartail")
 
+
+
 <div class="span9 blog">
 
 
@@ -27,8 +29,8 @@
             </h4>
             <p align="justify">@item.BooksDescription</p>
 
-            <button class="btn btn-large btn-inverse" type="button">Продолжить чтение</button>
-            <button class="btn btn-large btn-danger" type="button">Удалить</button>
+            <button class="btn btn-large btn-inverse" type="button" onclick="ContinueToRead(@item.IdBook, @item.IdPage)">Продолжить чтение</button>
+            <button class="btn btn-large btn-danger" type="button"  onclick="RemoveUserBook(@item.IdBook)">Удалить</button>
             <div class="post-summary-footer">
                 <ul class="post-data-3">
                     <li><i class="icon-calendar"></i> @item.ReleasedData.Day/@item.ReleasedData.Month/@item.ReleasedData.Year</li>
@@ -86,3 +88,36 @@
         </ul>
     </div>
 </div>
+
+<script>
+    // Переход на страницу книги
+    function ContinueToRead(BookId, PageId) {
+        let Url = '@Url.Action("GetPageContent", "BooksPage")?IdBook=' + BookId + '&PageNumber=' + PageId;
+        $(location).attr('href', Url.replace(/&amp;/g, "&"));
+    }//ContinueToRead
+
+    // Удаление книги из избранного
+    function RemoveUserBook(IdBook) {
+        $.ajax({
+            url: '/UserPage/RemoveUserBook',
+            dataType: "json",
+            data: {
+                IdBook: IdBook
+            },
+            success: function (result) {
+                if (result.success === true)
+                    swal(result.responseText, "", "success").then(okay => {
+                        if (okay) {
+                            window.location.reload();
+                        }
+                    });
+                else
+                    swal("Ошибка", result.responseText, "error");
+            },
+            complete: function () {
+
+            }
+        });//ajax
+    }//RemoveUserBook
+
+</script>

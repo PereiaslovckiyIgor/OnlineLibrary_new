@@ -74,7 +74,7 @@ $(document).ready(function () {
             IdBook: $("#idBook").data("value"),
             IdPage: $("#idPage").data("value")
         };
-        console.log(data);
+
         $.ajax({
             // Для обращение к методам одного контроллера из любого друго
             url: '/BooksPage/AddUserBookmark',

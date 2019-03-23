@@ -24,6 +24,7 @@ namespace LibOnline.Models.Books
     public class UserBook
     {
         [Key]
+        public int IdUserBook { get; set; }
         public int IdBook { get; set; }
         public string BookName { get; set; }
         public string BooksDescription { get; set; }
@@ -36,6 +37,7 @@ namespace LibOnline.Models.Books
 
     public class UserBookToShow
     {
+        public int IdUserBook { get; set; }
         public int IdBook { get; set; }
         public string BookName { get; set; }
         public string BooksDescription { get; set; }
@@ -51,6 +53,7 @@ namespace LibOnline.Models.Books
             BookAuthors = AuthorsFromXML(item.AuthorsInfo);
             BookCategories = CategoriesFromXML(item.BookCategories);
 
+            IdUserBook = item.IdUserBook;
             IdBook = item.IdBook;
             BookName = item.BookName;
             BooksDescription = item.BooksDescription;

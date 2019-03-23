@@ -11,7 +11,7 @@ $(document).ready(function () {
         url: '/BooksPage/GetAllFontSizesValues',
         success: function (result) {
             FontSizesArray = result;
-        },
+        }
     });
 
     // Конопка увеличения шрифта
@@ -85,7 +85,7 @@ $(document).ready(function () {
                     swal(result.responseText, "", "success");
                 else
                     swal("Ошибка", result.responseText, "error");
-            },
+            }
         });//ajax
     });//click event    
 

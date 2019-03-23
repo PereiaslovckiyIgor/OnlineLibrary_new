@@ -3,12 +3,24 @@ using LibOnline.Models.Categories;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml;
 
 namespace LibOnline.Models.Books
 {
+    [Table("UserBooks", Schema = "books")]
+    public class GetUsersBooks
+    {
+        [Key]
+        public int IdUserBook { get; set; }
+        public int IdUser { get; set; }
+        public int IdBook { get; set; }
+        public int IdPage { get; set; }
+    }//GetUsersBooks
+
+
     public class UserBook
     {
         [Key]

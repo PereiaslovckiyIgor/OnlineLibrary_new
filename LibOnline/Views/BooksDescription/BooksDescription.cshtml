@@ -18,6 +18,7 @@ public bool IsAuthenticated()
 
 @Html.Partial("_CategoriesPartail")
 
+<input type="hidden" id="idBook" data-value="@ViewBag.booksDescription.IdBook"/>
 
 <div class="span9 gallery-single">
     <div class="row">
@@ -71,7 +72,7 @@ public bool IsAuthenticated()
             <button id="btnReadBook" class="btn btn-large btn-inverse span2" type="button">Читать</button>
             @if (IsAuthenticated())
             {
-                <button class="btn btn-large btn-warning span2" type="button">В избранное</button>
+                <button id="btnAddInUserBooks" class="btn btn-large btn-warning span2" type="button">В избранное</button>
             }
         </div>
     </div>
@@ -137,8 +138,31 @@ public bool IsAuthenticated()
 
     // Ссылка обращается в метод конроллера
     $('#btnReadBook').click(function () {
-        debugger;
         var Url = "@Url.Action("GetPageContent", "BooksPage", new { IdBook = ViewBag.booksDescription.IdBook, PageNumber = 1 })";
         $(location).attr('href', Url.replace(/&amp;/g, "&"));
     });
+
+     // Ссылка обращается в метод конроллера
+    $('#btnAddInUserBooks').click(function () {
+
+        let data = {
+            IdBook: $("#idBook").data("value")
+        };
+
+        console.log(data);
+        $.ajax({
+            // Для обращение к методам одного контроллера из любого друго
+            url: '/BooksDescription/AddInUserBooks',
+            dataType: "json",
+            data: data,
+            success: function (result) {
+                if (result.success === true)
+                    swal(result.responseText, "", "success");
+                else
+                    swal("", result.responseText, "error");
+            }
+        });//ajax
+      
+    });
+
 </script>

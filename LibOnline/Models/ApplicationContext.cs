@@ -9,19 +9,20 @@ namespace LibOnline.Models
         public DbSet<Role> Roles { get; set; }
 
 
-        // Книги 
+
         public DbSet<Categories.Category> allCategories { get; set; }
+
         public DbSet<Books.BooksCategories> booksCategories { get; set; }
         public DbSet<Books.BookDescription> bookDescriptions { get; set; }
         public DbSet<Books.Page> booksPage { get; set; }
         public DbSet<Books.UserBook> userBooks { get; set; }
-
         public DbSet<Books.GetUsersBooks> getUserBooks { get; set; }
-        public DbSet<General.PageFontSizes> pageFontSizes { get; set; }
 
+        public DbSet<General.PageFontSizes> pageFontSizes { get; set; }
         public DbSet<General.CategoriesPagination> categoriesPagination { get; set; }
         public DbSet<General.MenuPagination> menuPagination { get; set; }
         public DbSet<General.PagePagination> pagePaginations { get; set; }
+        public DbSet<General.Comment> comments { get; set; }
 
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)

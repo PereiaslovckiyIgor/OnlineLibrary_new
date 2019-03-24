@@ -505,7 +505,11 @@ ul.post-data li:last-child {padding-right: 0px;}
 	font-style: italic;
 	clear: both;
 }
-.comment-content { clear:both; padding-top:10px; }
+.comment-content {
+    clear: both;
+    padding-top: 10px;
+    white-space: pre;
+}
 .comment-form-container input,
 #contact-form input {margin-bottom: 12px;}
 .comment-form-container textarea,

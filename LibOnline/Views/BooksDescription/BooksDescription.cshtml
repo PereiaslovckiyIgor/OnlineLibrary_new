@@ -1,24 +1,27 @@
-﻿@using LibOnline.Models.Books;
+﻿<script src="~/js/Scripts/BookDescription.js"></script>
+
+@using LibOnline.Models.Books;
 @using LibOnline.Models.Authors;
 @using LibOnline.Models.Categories;
+@using LibOnline.Models.General;
 
 @{
     BookDescriptionToShow description = ViewBag.booksDescription;
+    List<Comment> comments = ViewBag.booksComments;
 }
 
 @functions
 {
-public bool IsAuthenticated()
-{
-    return Context.User.Identity.IsAuthenticated;
-}
-
+        public bool IsAuthenticated()
+        {
+            return Context.User.Identity.IsAuthenticated;
+        }
 }
 
 
 @Html.Partial("_CategoriesPartail")
 
-<input type="hidden" id="idBook" data-value="@ViewBag.booksDescription.IdBook"/>
+<input type="hidden" id="idBook" data-value="@ViewBag.booksDescription.IdBook" />
 
 <div class="span9 gallery-single">
     <div class="row">
@@ -76,54 +79,31 @@ public bool IsAuthenticated()
             }
         </div>
     </div>
+
     <!-- Post Comments
         ================================================== -->
     <section class="comments" name="comments">
-        <h4 class="title-bg"><a name="comments"></a>Всего 5 отзывов </h4>
+        <h4 class="title-bg"><a name="comments"></a>Всего отзывов:  @ViewBag.booksComments.Count </h4>
         <ul>
-            <li>
-                @*<img src="img/user-avatar.jpg" alt="Image" />*@
-                <span class="comment-name">Имя Пользователя</span>
-                <span class="comment-date">Февраль 04, 2019 | <a href="#">Отверить</a></span>
-                <div class="comment-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam venenatis, ligula quis sagittis euismod, odio ante molestie tortor, eget ullamcorper lacus nunc a ligula. Donec est lacus, aliquet in interdum id, rutrum ac tellus. Ut rutrum, justo et lobortis commodo, est metus ornare tortor, vitae luctus turpis leo sed magna. In leo dolor, suscipit non mattis in.</div>
-                <!-- Reply -->
-                <ul>
-                    <li>
-                        @*<img src="img/user-avatar.jpg" alt="Image" />*@
-                        <span class="comment-name">Имя Пользователя</span>
-                        <span class="comment-date">Февраль 04, 2019 | <a href="#">Отверить</a></span>
-                        <div class="comment-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam venenatis, ligula quis sagittis euismod, odio ante molestie tortor, eget ullamcorper lacus nunc a ligula. Donec est lacus, aliquet in interdum id, rutrum ac tellus. Ut rutrum, justo et lobortis commodo, est metus ornare tortor, vitae luctus turpis leo sed magna. In leo dolor, suscipit non mattis in.</div>
-                    </li>
-                    <li>
-                        @*<img src="img/user-avatar.jpg" alt="Image" />*@
-                        <span class="comment-name">Имя Пользователя</span>
-                        <span class="comment-date">Февраль 04, 2019 | <a href="#">Отверить</a></span>
-                        <div class="comment-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam venenatis, ligula quis sagittis euismod, odio ante molestie tortor, eget ullamcorper lacus nunc a ligula. Donec est lacus, aliquet in interdum id, rutrum ac tellus. Ut rutrum, justo et lobortis commodo, est metus ornare tortor, vitae luctus turpis leo sed magna. In leo dolor, suscipit non mattis in.</div>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                @*<img src="img/user-avatar.jpg" alt="Image" />*@
-                <span class="comment-name">Имя Пользователя</span>
-                <span class="comment-date">Февраль 04, 2019 | <a href="#">Отверить</a></span>
-                <div class="comment-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam venenatis, ligula quis sagittis euismod, odio ante molestie tortor, eget ullamcorper lacus nunc a ligula. Donec est lacus, aliquet in interdum id, rutrum ac tellus. Ut rutrum, justo et lobortis commodo, est metus ornare tortor, vitae luctus turpis leo sed magna. In leo dolor, suscipit non mattis in.</div>
-            </li>
-            <li>
-                @*<img src="img/user-avatar.jpg" alt="Image" />*@
-                <span class="comment-name">Имя Пользователя</span>
-                <span class="comment-date">Февраль 04, 2019 | <a href="#">Отверить</a></span>
-                <div class="comment-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam venenatis, ligula quis sagittis euismod, odio ante molestie tortor, eget ullamcorper lacus nunc a ligula. Donec est lacus, aliquet in interdum id, rutrum ac tellus. Ut rutrum, justo et lobortis commodo, est metus ornare tortor, vitae luctus turpis leo sed magna. In leo dolor, suscipit non mattis in.</div>
-            </li>
+            @foreach (Comment item in comments)
+            {
+                <li>
+                    <span class="comment-name">@item.Login</span>
+                    <span class="comment-date">@item.MonthRU() @item.CommentDate.Day, @item.CommentDate.Year | <a href="#">Удалить</a></span>
+                    <div  class="comment-content">@item.CommentText</div>
+                </li>
+            }
+                
         </ul>
+
         <!-- Comment Form -->
         <div class="comment-form-container">
             <h6>Написать отзыв</h6>
-            <form action="#" id="comment-form">
-                <div class="input-prepend">
-                    <span class="add-on"><i class="icon-user"></i></span>
-                    <input class="span4" id="prependedInput" size="16" type="text" placeholder="Name">
-                </div>
-                <textarea class="span6"></textarea>
+            @*asp-controller="BooksDescription" asp-action="SendComment"*@
+            <form id="comment-form">
+                <input id="idBook" type="hidden" value="@ViewBag.booksDescription.IdBook" />
+                <textarea id="textComment" class="span6"></textarea>
+
                 <div class="row">
                     <div class="span2">
                         <input type="submit" class="btn btn-inverse" value="Опубликовать">
@@ -132,37 +112,4 @@ public bool IsAuthenticated()
             </form>
         </div>
     </section>
-</div><!-- End gallery-single-->
-
-<script>
-
-    // Ссылка обращается в метод конроллера
-    $('#btnReadBook').click(function () {
-        var Url = "@Url.Action("GetPageContent", "BooksPage", new { IdBook = ViewBag.booksDescription.IdBook, PageNumber = 1 })";
-        $(location).attr('href', Url.replace(/&amp;/g, "&"));
-    });
-
-     // Ссылка обращается в метод конроллера
-    $('#btnAddInUserBooks').click(function () {
-
-        let data = {
-            IdBook: $("#idBook").data("value")
-        };
-
-        console.log(data);
-        $.ajax({
-            // Для обращение к методам одного контроллера из любого друго
-            url: '/BooksDescription/AddInUserBooks',
-            dataType: "json",
-            data: data,
-            success: function (result) {
-                if (result.success === true)
-                    swal(result.responseText, "", "success");
-                else
-                    swal("", result.responseText, "error");
-            }
-        });//ajax
-      
-    });
-
-</script>
+</div>

@@ -33,6 +33,8 @@ namespace LibOnline.Models.Books
         public string BookCategories { get; set; }
         public string ImagePath { get; set; }
         public int IdPage { get; set; }
+        public int CommensCount { get; set; }
+
     }//UserBook
 
     public class UserBookToShow
@@ -46,6 +48,7 @@ namespace LibOnline.Models.Books
         public List<Category> BookCategories { get; set; }
         public string ImagePath { get; set; }
         public int IdPage { get; set; }
+        public int CommensCount { get; set; }
 
 
         public UserBookToShow(UserBook item)
@@ -60,6 +63,7 @@ namespace LibOnline.Models.Books
             ReleasedData = item.ReleasedData;
             ImagePath = item.ImagePath;
             IdPage = item.IdPage;
+            CommensCount = item.CommensCount;
         }//c-tor
 
         private List<Author> AuthorsFromXML(string xmlAuthorsInfo)

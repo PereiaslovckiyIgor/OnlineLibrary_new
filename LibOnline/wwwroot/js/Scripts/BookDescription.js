@@ -26,7 +26,7 @@
         });//ajax
     });
 
-    // AJAX отправка формы
+    // AJAX отправка формы Добавления коментария
     $("#comment-form").submit(function (e) {
 
         e.preventDefault();

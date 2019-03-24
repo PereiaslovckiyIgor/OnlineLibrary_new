@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using LibOnline.Models;
 using LibOnline.Models.Books;
 using Microsoft.AspNetCore.Mvc;

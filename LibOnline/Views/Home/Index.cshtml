@@ -52,13 +52,7 @@
                     </li>
                 }
             }
-            @*@for (var i = 0; i < 6; i++)
-                {
-                    <li class="span2 gallery-item" >
-                        <a asp-controller="BooksDescription" asp-action="BooksDescription"><img src="~/img/Sherlock.jpg" alt="Gallery"></a>
-                        <span class="project-details"><a asp-controller="BooksDescription" asp-action="BooksDescription">Шерлок Холмс</a>Казнь Шерлока Холмса</span>
-                    </li>
-                }*@
+
         </ul>
         <h5><a asp-controller="BooksCategories" asp-action="GetPopularBooks" asp-route-pageNumber="1" class="pull-right"><i class="icon-th"></i>Полностью</a></h5>
     </div>

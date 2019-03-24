@@ -28,13 +28,13 @@
 
     // AJAX отправка формы
     $("#comment-form").submit(function (e) {
-        debugger;
+
         e.preventDefault();
 
         let form_data = {
             IdBook: $("#idBook").data("value"),
             textComment: $('textarea#textComment').val()
-        }
+        };
 
         $.ajax({
             type: "POST",
@@ -53,5 +53,34 @@
         });//ajax
 
     });//function
+
+    // Удаление коментария
+    $('body').on('click', '#btnRemoveComment', function () {
+
+        /*
+           Странный вызов в связи с диномическим созданием кнопок
+            ... 
+            я так думаю ...
+         */ 
+
+        let CommentId = $(this).val();
+
+        $.ajax({
+            url: '/BooksDescription/RemoveComment/',
+            data: {
+                idComment: CommentId
+            },
+            success: function (result) {
+                if (result.success === true)
+                    swal(result.responseText, "", "success").then(okay => {
+                        if (okay) {
+                            window.location.reload();
+                        }
+                    });
+                else
+                    swal("", result.responseText, "error");
+            }//success
+        });//ajax
+    });
 
 });// document ready

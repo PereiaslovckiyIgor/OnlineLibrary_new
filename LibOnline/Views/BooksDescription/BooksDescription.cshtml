@@ -12,12 +12,11 @@
 
 @functions
 {
-        public bool IsAuthenticated()
-        {
-            return Context.User.Identity.IsAuthenticated;
-        }
+    public bool IsAuthenticated()
+    {
+        return Context.User.Identity.IsAuthenticated;
+    }
 }
-
 
 @Html.Partial("_CategoriesPartail")
 
@@ -89,27 +88,42 @@
             {
                 <li>
                     <span class="comment-name">@item.Login</span>
-                    <span class="comment-date">@item.MonthRU() @item.CommentDate.Day, @item.CommentDate.Year | <a href="#">Удалить</a></span>
-                    <div  class="comment-content">@item.CommentText</div>
-                </li>
-            }
-                
+                    <span class="comment-date">
+                        @item.MonthRU() @item.CommentDate.Day, @item.CommentDate.Year
+                        @if (ViewBag.isAdmin)
+                        {
+                            <button id="btnRemoveComment" class="btn btn-mini btn-warning pull-right" value="@item.IdComment" type="button">
+                                <i class="icon-trash"></i>
+                                 Удалить
+                            </button>
+                        }
+                    </span>
+                    <div class="comment-content">@item.CommentText</div>
+               </li>
+             }
+
         </ul>
 
-        <!-- Comment Form -->
-        <div class="comment-form-container">
-            <h6>Написать отзыв</h6>
-            @*asp-controller="BooksDescription" asp-action="SendComment"*@
-            <form id="comment-form">
-                <input id="idBook" type="hidden" value="@ViewBag.booksDescription.IdBook" />
-                <textarea id="textComment" class="span6"></textarea>
+        @if (IsAuthenticated())
+        {
+            <!-- Comment Form -->
+            <div class="comment-form-container">
+                <h6>Написать отзыв</h6>
+                <form id="comment-form">
+                    <input id="idBook" type="hidden" value="@ViewBag.booksDescription.IdBook" />
+                    <textarea id="textComment" class="span6"></textarea>
 
-                <div class="row">
-                    <div class="span2">
-                        <input type="submit" class="btn btn-inverse" value="Опубликовать">
+                    <div class="row">
+                        <div class="span2">
+                            <input type="submit" class="btn btn-inverse" value="Опубликовать">
+                        </div>
                     </div>
-                </div>
-            </form>
-        </div>
+                </form>
+            </div>
+        }
+        else
+        {
+            <h4 class="title-bg" style="text-align:center"><a asp-controller="Account" asp-action="Login">Оставить коментарий</a></h4>
+        }
     </section>
 </div>

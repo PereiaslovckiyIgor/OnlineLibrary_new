@@ -53,7 +53,6 @@ $(document).ready(function () {
     // Кнока сохранения настроек
     $("#btnSaveUserSettings").click(function () {
         $.ajax({
-            // Для обращение к методам одного контроллера из любого друго
             url: '/BooksPage/SaveUserSettings',
             data: {
                 fs_Value: $("#PageText").css("font-size")

@@ -21,6 +21,14 @@ namespace LibOnline.Controllers.Books
         //GetBookDescription 
         public IActionResult GetBookDescription(int IdBook)
         {
+            bool isAdmin = false;
+            // ПОЛУЧИТЬ ИМЯ И РОЛЬ ПОЛЬЗОВАТЕЛЯ
+            if (User.Identity.IsAuthenticated)
+            {
+                string role = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
+                isAdmin = role == "Admin" ? true : false; 
+            }
+
             List<BookDescription> bookDescriptions = new List<BookDescription>();
             List<Comment> comments = new List<Comment>();
 
@@ -36,7 +44,7 @@ namespace LibOnline.Controllers.Books
 
             ViewBag.booksDescription = new BookDescriptionToShow(bookDescriptions[0]);
             ViewBag.booksComments = comments;
-
+            ViewBag.isAdmin = isAdmin;
             return View("BooksDescription");
         }//GetBookDescription
         #endregion
@@ -93,7 +101,8 @@ namespace LibOnline.Controllers.Books
             return (ub != null) ? true : false;
         }//IsBookInUserBooks
         #endregion
-
+        
+        #region Отправить отзыв
         public IActionResult SendComment(int idBook, string textComment)
         {
             string UserName = "", ResponseText;
@@ -126,9 +135,32 @@ namespace LibOnline.Controllers.Books
             return Json(new { success = IsSuccess, responseText = ResponseText });
             //return RedirectToAction("GetBookDescription", "BooksDescription", new { IdBook  = idBook });
         }//GetBookComments
+        #endregion
 
+        #region Удалить отзыв
+        public IActionResult RemoveComment(int idComment)
+        {
+            string ResponseText;
+            bool IsSuccess;
 
-  
+            try
+            {
+                SqlParameter IdComment = new SqlParameter("@IdComment", idComment);
 
+                using (ApplicationContext db = new ApplicationContext())
+                    db.Database.ExecuteSqlCommand($"books.RemoveComment {IdComment}");
+
+                ResponseText = "Отзыв был удален";
+                IsSuccess = true;
+            }
+            catch
+            {
+                ResponseText = "Отзыв не был удален";
+                IsSuccess = false;
+            }// try-catch
+
+            return Json(new { success = IsSuccess, responseText = ResponseText });
+        }//GetBookComments
+        #endregion
     }//BooksDescriptionController
 }//Books Namespace

@@ -34,6 +34,7 @@ namespace LibOnline.Models.Books
         public string ImagePath { get; set; }
         public int IdPage { get; set; }
         public int CommensCount { get; set; }
+        public int PageNumber { get; set; }
 
     }//UserBook
 
@@ -49,6 +50,7 @@ namespace LibOnline.Models.Books
         public string ImagePath { get; set; }
         public int IdPage { get; set; }
         public int CommensCount { get; set; }
+        public int PageNumber { get; set; }
 
 
         public UserBookToShow(UserBook item)
@@ -64,6 +66,7 @@ namespace LibOnline.Models.Books
             ImagePath = item.ImagePath;
             IdPage = item.IdPage;
             CommensCount = item.CommensCount;
+            PageNumber = item.PageNumber;
         }//c-tor
 
         private List<Author> AuthorsFromXML(string xmlAuthorsInfo)

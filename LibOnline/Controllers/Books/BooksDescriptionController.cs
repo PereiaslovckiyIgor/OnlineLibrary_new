@@ -26,7 +26,7 @@ namespace LibOnline.Controllers.Books
             if (User.Identity.IsAuthenticated)
             {
                 string role = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
-                isAdmin = role == "Admin" ? true : false; 
+                isAdmin = role == "Admin" ? true : false;
             }
 
             List<BookDescription> bookDescriptions = new List<BookDescription>();
@@ -50,7 +50,8 @@ namespace LibOnline.Controllers.Books
         #endregion
 
         #region Добавление книги в Избранное
-        public IActionResult AddInUserBooks(int IdBook) {
+        public IActionResult AddInUserBooks(int IdBook)
+        {
 
             string UserName = "", ResponseText;
             bool IsSuccess;
@@ -69,7 +70,9 @@ namespace LibOnline.Controllers.Books
             {
                 ResponseText = "Книга уже есть в вашем списке";
                 IsSuccess = false;
-            }else {
+            }
+            else
+            {
                 try
                 {
                     SqlParameter UserId = new SqlParameter("@UserId", idUser);
@@ -80,7 +83,9 @@ namespace LibOnline.Controllers.Books
 
                     ResponseText = "Книга добавлена в избранное";
                     IsSuccess = true;
-                } catch {
+                }
+                catch
+                {
                     ResponseText = "Ошибка. Книга не добавлена";
                     IsSuccess = false;
                 }// try-catch
@@ -101,7 +106,7 @@ namespace LibOnline.Controllers.Books
             return (ub != null) ? true : false;
         }//IsBookInUserBooks
         #endregion
-        
+
         #region Отправить отзыв
         public IActionResult SendComment(int idBook, string textComment)
         {
@@ -115,22 +120,22 @@ namespace LibOnline.Controllers.Books
                 UserName = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultNameClaimType).Value;
             }//if
 
-                try
-                {
-                    SqlParameter BookId = new SqlParameter("@IdBook", idBook);
-                    SqlParameter TextComment = new SqlParameter("@TextComment", textComment);
+            try
+            {
+                SqlParameter BookId = new SqlParameter("@IdBook", idBook);
+                SqlParameter TextComment = new SqlParameter("@TextComment", textComment);
 
-                    using (ApplicationContext db = new ApplicationContext())
-                        db.Database.ExecuteSqlCommand($"books.CommentPublish {BookId}, {TextComment}, {UserName}");
+                using (ApplicationContext db = new ApplicationContext())
+                    db.Database.ExecuteSqlCommand($"books.CommentPublish {BookId}, {TextComment}, {UserName}");
 
-                    ResponseText = "Ваш отзыв опубликован";
-                    IsSuccess = true;
-                }
-                catch
-                {
-                    ResponseText = "Ваш отзыв опубликован не был";
-                    IsSuccess = false;
-                }// try-catch
+                ResponseText = "Ваш отзыв опубликован";
+                IsSuccess = true;
+            }
+            catch
+            {
+                ResponseText = "Ваш отзыв опубликован не был";
+                IsSuccess = false;
+            }// try-catch
 
             return Json(new { success = IsSuccess, responseText = ResponseText });
             //return RedirectToAction("GetBookDescription", "BooksDescription", new { IdBook  = idBook });

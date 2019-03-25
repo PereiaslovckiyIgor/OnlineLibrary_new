@@ -13,6 +13,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\General\AlertInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Shared\_LoginPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Views\Account\Register.cshtml~RF41a7d89.TMP" />
   </ItemGroup>
 

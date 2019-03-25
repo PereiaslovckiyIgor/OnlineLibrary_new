@@ -24,7 +24,7 @@ namespace LibOnline.Controllers.UserPage
             }//if
 
             List<UserBook> userBooks = new List<UserBook>();
-            List<UserBookToShow> userBooksToShow = new List<UserBookToShow>(); 
+            List<UserBookToShow> userBooksToShow = new List<UserBookToShow>();
 
             SqlParameter userName = new SqlParameter("@UserName", UserName);
             SqlParameter pNumber = new SqlParameter("@PageNumber", pageNumber);
@@ -49,7 +49,7 @@ namespace LibOnline.Controllers.UserPage
             return View("UserPage");
         }//UserPage
         #endregion
-        
+
         #region Удалить книгу из Избраного
         // Удалить книгу из Избранного
         public IActionResult RemoveUserBook(int IdBook)

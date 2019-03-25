@@ -7,41 +7,42 @@
 
 @{
     BookDescriptionToShow description = ViewBag.booksDescription;
-    List<Comment> comments = ViewBag.booksComments;
-}
+    List<Comment>
+    comments = ViewBag.booksComments;
+    }
 
-@functions
-{
+    @functions
+    {
     public bool IsAuthenticated()
     {
-        return Context.User.Identity.IsAuthenticated;
+    return Context.User.Identity.IsAuthenticated;
     }
-}
+    }
 
-@Html.Partial("_CategoriesPartail")
+    @Html.Partial("_CategoriesPartail")
 
-<input type="hidden" id="idBook" data-value="@ViewBag.booksDescription.IdBook" />
+    <input type="hidden" id="idBook" data-value="@ViewBag.booksDescription.IdBook" />
 
-<div class="span9 gallery-single">
-    <div class="row">
-        <div class="span4">
-            <img src="@description.ImagePath" asp-append-version="true" class="align-left thumbnail" alt="image" />
-        </div>
-        <div class="span5">
-            <h2>@description.BookName</h2>
-            @*<p class="lead">For an international ad campaign. Nulla iaculis mattis lorem, quis gravida nunc iaculis ac. Proin tristique tellus in est vulputate luctus</p>*@
-            <div data-spy="scroll" style="height:250px;overflow:auto; position: relative;padding: 10px;">
-                <p align="justify">
-                    @description.BooksDescription
-                </p>
+    <div class="span9 gallery-single">
+        <div class="row">
+            <div class="span4">
+                <img src="@description.ImagePath" asp-append-version="true" class="align-left thumbnail" alt="image" />
             </div>
-            <br>
-            <ul class="project-info">
-                <li><h6>Дата:</h6>@description.ReleasedData.Day/@description.ReleasedData.Month/@description.ReleasedData.Year</li>
-                <li>
-                    <h6>Автор:</h6>
-                    @foreach (Author author in description.BookAuthors)
-                    {
+            <div class="span5">
+                <h2>@description.BookName</h2>
+                @*<p class="lead">For an international ad campaign. Nulla iaculis mattis lorem, quis gravida nunc iaculis ac. Proin tristique tellus in est vulputate luctus</p>*@
+                <div data-spy="scroll" style="height:250px;overflow:auto; position: relative;padding: 10px;">
+                    <p align="justify">
+                        @description.BooksDescription
+                    </p>
+                </div>
+                <br>
+                <ul class="project-info">
+                    <li><h6>Дата:</h6>@description.ReleasedData.Day/@description.ReleasedData.Month/@description.ReleasedData.Year</li>
+                    <li>
+                        <h6>Автор:</h6>
+                        @foreach (Author author in description.BookAuthors)
+                        {
                         <a asp-controller="BooksCategories" asp-action="GetBooksAuthors"
                            asp-route-IdAuthor="@author.IdAuthor"
                            asp-route-pageNumber="1"
@@ -50,14 +51,14 @@
                         </a>
                         if (author != description.BookAuthors.Last())
                         {
-                            @Html.Raw(", ")
+                        @Html.Raw(", ")
                         }
-                    }
-                </li>
-                <li>
-                    <h6>Жанр:</h6>
-                    @foreach (Category category in description.BookCategories)
-                    {
+                        }
+                    </li>
+                    <li>
+                        <h6>Жанр:</h6>
+                        @foreach (Category category in description.BookCategories)
+                        {
                         <a asp-controller="BooksCategories" asp-action="GetBooksCategories"
                            asp-route-IdCategory="@category.IdCategory"
                            asp-route-pageNumber="1">
@@ -65,47 +66,47 @@
                         </a>
                         if (category != description.BookCategories.Last())
                         {
-                            @Html.Raw(", ")
+                        @Html.Raw(", ")
                         }
-                    }
-                </li>
-                <li><h6>Рейтинг:</h6>"Звездный" Виджет (1-5 звезд) : @description.RatingValue</li>
-            </ul>
-            <button id="btnReadBook" class="btn btn-large btn-inverse span2" type="button">Читать</button>
-            @if (IsAuthenticated())
-            {
+                        }
+                    </li>
+                    <li><h6>Рейтинг:</h6>"Звездный" Виджет (1-5 звезд) : @description.RatingValue</li>
+                </ul>
+                <button id="btnReadBook" class="btn btn-large btn-inverse span2" type="button">Читать</button>
+                @if (IsAuthenticated())
+                {
                 <button id="btnAddInUserBooks" class="btn btn-large btn-warning span2" type="button">В избранное</button>
-            }
+                }
+            </div>
         </div>
-    </div>
 
-    <!-- Post Comments
-        ================================================== -->
-    <section class="comments" name="comments">
-        <h4 class="title-bg"><a name="comments"></a>Всего отзывов:  @ViewBag.booksComments.Count </h4>
-        <ul>
-            @foreach (Comment item in comments)
-            {
+        <!-- Post Comments
+            ================================================== -->
+        <section class="comments" name="comments">
+            <h4 class="title-bg"><a name="comments"></a>Всего отзывов:  @ViewBag.booksComments.Count </h4>
+            <ul>
+                @foreach (Comment item in comments)
+                {
                 <li>
                     <span class="comment-name">@item.Login</span>
                     <span class="comment-date">
                         @item.MonthRU() @item.CommentDate.Day, @item.CommentDate.Year
                         @if (ViewBag.isAdmin)
                         {
-                            <button id="btnRemoveComment" class="btn btn-mini btn-warning pull-right" value="@item.IdComment" type="button">
-                                <i class="icon-trash"></i>
-                                 Удалить
-                            </button>
+                        <button id="btnRemoveComment" class="btn btn-mini btn-warning pull-right" value="@item.IdComment" type="button">
+                            <i class="icon-trash"></i>
+                            Удалить
+                        </button>
                         }
                     </span>
                     <div class="comment-content">@item.CommentText</div>
-               </li>
-             }
+                </li>
+                }
 
-        </ul>
+            </ul>
 
-        @if (IsAuthenticated())
-        {
+            @if (IsAuthenticated())
+            {
             <!-- Comment Form -->
             <div class="comment-form-container">
                 <h6>Написать отзыв</h6>
@@ -120,10 +121,11 @@
                     </div>
                 </form>
             </div>
-        }
-        else
-        {
+            }
+            else
+            {
             <h4 class="title-bg" style="text-align:center"><a asp-controller="Account" asp-action="Login">Оставить коментарий</a></h4>
-        }
-    </section>
-</div>
+            }
+        </section>
+    </div>
+s

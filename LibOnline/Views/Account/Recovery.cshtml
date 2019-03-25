@@ -11,7 +11,7 @@
     <section id="content">
         <form asp-action="Recovery" asp-controller="Account" asp-anti-forgery="true">
             @*<div class="validation" asp-validation-summary="ModelOnly"></div>*@
-            
+
             <h1>Востановление пароля</h1>
 
             <div class="form-group">
@@ -43,5 +43,7 @@
         let msg = '@ViewBag.result';
         if (msg === "error")
             swal("Ошибка", "Пароль не востанвлен", msg);
+
+        $("#idMenuItem_login").addClass('active');
     });
 </script>

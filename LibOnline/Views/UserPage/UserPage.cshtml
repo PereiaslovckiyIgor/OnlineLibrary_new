@@ -1,7 +1,9 @@
-﻿@using LibOnline.Models.Books;
+﻿<script src="~/js/Scripts/UserPage.js"></script>
+
+
+@using LibOnline.Models.Books;
 @using LibOnline.Models.Authors;
 @using LibOnline.Models.Categories;
-
 
 
 @{
@@ -12,6 +14,10 @@
 
 @Html.Partial("_CategoriesPartail")
 
+
+<!--Пагинация -->
+<input type="hidden" id="idPageNumber" data-value="@ViewBag.userPagePagination.PageNumber" />
+<input type="hidden" id="idCountPages" data-value="@ViewBag.userPagePagination.CountPages" />
 
 
 <div class="span9 blog">
@@ -25,15 +31,15 @@
             </a>
 
             <h4 class="title-bg">
-                <a asp-controller="BooksDescription" asp-action="GetBooksAuthors" 
+                <a asp-controller="BooksDescription" asp-action="GetBooksAuthors"
                    asp-route-IdBook="@item.IdBook">
                     @item.BookName
                 </a>
             </h4>
             <p align="justify">@item.BooksDescription</p>
 
-            <button class="btn btn-large btn-inverse" type="button" onclick="ContinueToRead(@item.IdBook, @item.IdPage)">Продолжить чтение</button>
-            <button class="btn btn-large btn-danger" type="button"  onclick="RemoveUserBook(@item.IdBook)">Удалить</button>
+            <button class="btn btn-large btn-inverse" type="button" onclick="ContinueToRead(@item.IdBook, @item.PageNumber)">Продолжить чтение</button>
+            <button class="btn btn-large btn-danger" type="button" onclick="RemoveUserBook(@item.IdBook)">Удалить</button>
             <div class="post-summary-footer">
                 <ul class="post-data-3">
                     <li><i class="icon-calendar"></i> @item.ReleasedData.Day/@item.ReleasedData.Month/@item.ReleasedData.Year</li>
@@ -57,7 +63,7 @@
                     </li>
                     <li>
                         <i class="icon-comment"></i>
-                        <a asp-controller="BooksDescription" asp-action="GetBookDescription" 
+                        <a asp-controller="BooksDescription" asp-action="GetBookDescription"
                            asp-route-IdBook="@item.IdBook" asp-fragment="comments">
                             Отзывов @item.CommensCount
                         </a>
@@ -82,45 +88,7 @@
         </article>
     }
 
-    <!-- Pagination -->
-    <div class="pagination">
-        <ul>
-            <li class="active"><a href="#">Prev</a></li>
-            <li class="active"><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">Next</a></li>
-        </ul>
-    </div>
+
+    @*DIV Пагинация*@
+    <div id="pagin" class="m-pagination"></div>
 </div>
-
-<script>
-    // Переход на страницу книги
-    function ContinueToRead(BookId, PageId) {
-        let Url = '@Url.Action("GetPageContent", "BooksPage")?IdBook=' + BookId + '&PageNumber=' + PageId;
-        $(location).attr('href', Url.replace(/&amp;/g, "&"));
-    }//ContinueToRead
-
-    // Удаление книги из избранного
-    function RemoveUserBook(IdBook) {
-        $.ajax({
-            url: '/UserPage/RemoveUserBook',
-            dataType: "json",
-            data: {
-                IdBook: IdBook
-            },
-            success: function (result) {
-                if (result.success === true)
-                    swal(result.responseText, "", "success").then(okay => {
-                        if (okay) {
-                            window.location.reload();
-                        }
-                    });
-                else
-                    swal("Ошибка", result.responseText, "error");
-            }
-        });//ajax
-    }//RemoveUserBook
-
-</script>

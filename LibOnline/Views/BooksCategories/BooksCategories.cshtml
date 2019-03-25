@@ -1,50 +1,44 @@
-﻿@using LibOnline.Models.Books;
+﻿<script src="~/js/Scripts/BooksCategories.js"></script>
+
+@using LibOnline.Models.Books;
 @using LibOnline.Models.Authors;
 
 
-
+<!--Пагинация -->
+<input type="hidden" id="idPageNumber" data-value="@ViewBag.pagination.PageNumber" />
+<input type="hidden" id="idCountPages" data-value="@ViewBag.pagination.CountPages" />
 
 @Html.Partial("_CategoriesPartail")
+
 <div class="span8 gallery">
     <h2 class="title-bg">@ViewBag.pagination.CategoryName</h2>
 
     <div class="row clearfix">
         <ul class="gallery-post-grid holder">
-            @for (var i = 0; i < 24; i++)
+            @foreach (BooksCatogoriesToShow item in ViewBag.booksCategories)
             {
-                @foreach (BooksCatogoriesToShow item in ViewBag.booksCategories)
-                {
-                    <li class="span2 gallery-item">
-                        <a asp-controller="BooksDescription" asp-action="GetBookDescription" asp-route-IdBook="@item.IdBook">
-                            @*
-                                asp-append-version: если имеет значение true, то к пути к файлу скрипта добавляется номер версии
-                                Без него не прогружается Image, хоть путь и правильный
-                            *@
-                            <img asp-append-version="true" src="@item.ImagePath" alt="Gallery">
-                        </a>
-                        <div class="project-details">
-                            <a asp-controller="BooksDescription" asp-action="BooksDescription" style="text-align:center" asp-route-IdBook="@item.IdBook">@item.BookName</a>
-                            <p style="text-align:center;margin-top:5px;margin-bottom:5px;">
-                                @foreach (Author author in item.BookAuthors)
-                                {
-                                    <em>@author.AuthorFullName</em>
-                                }
-                            </p>
-                        </div>
-                    </li>
-                }
-            }
+                <li class="span2 gallery-item">
+                    <a asp-controller="BooksDescription" asp-action="GetBookDescription" asp-route-IdBook="@item.IdBook">
+                        @*
+                            asp-append-version: если имеет значение true, то к пути к файлу скрипта добавляется номер версии
+                            Без него не прогружается Image, хоть путь и правильный
+                        *@
+                        <img asp-append-version="true" src="@item.ImagePath" alt="Gallery">
+                    </a>
+                    <div class="project-details">
+                        <a asp-controller="BooksDescription" asp-action="GetBookDescription" style="text-align:center;height:30pt;overflow: hidden" asp-route-IdBook="@item.IdBook">@item.BookName</a>
+                        <p style="text-align:center;margin-top:5px;margin-bottom:5px;">
+                            @foreach (Author author in item.BookAuthors)
+                            {
+                                <em>@author.AuthorFullName</em>
+                            }
+                        </p>
+                    </div>
+                </li>
+            }<!--foreach-->
         </ul>
     </div>
-    <!-- Pagination -->
-    <div class="pagination">
-        <ul>
-            <li class="active"><a href="#">Назад</a></li>
-            <li class="active"><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">Вперед</a></li>
-        </ul>
-    </div>
+
+    @*DIV Пагинация*@
+    <div id="pagin" class="m-pagination"></div>
 </div><!-- End gallery list-->

@@ -6,6 +6,11 @@ $(document).ready(function () {
     // Возможные размеры 
     let FontSizesArray;
 
+    // Текущая Пагинация
+    let currPage = $("#idPageNumber").data("value");
+    let pagesCount = $("#idCountPages").data("value");
+    let bId = $("#idBook").data("value");
+
     $.ajax({
         // Для обращение к методам одного контроллера из любого друго
         url: '/BooksPage/GetAllFontSizesValues',
@@ -70,7 +75,7 @@ $(document).ready(function () {
     $("#btnUserBookmark").click(function () {
 
         let data = {
-            IdBook: $("#idBook").data("value"),
+            IdBook: bId,
             IdPage: $("#idPage").data("value")
         };
 
@@ -88,4 +93,33 @@ $(document).ready(function () {
         });//ajax
     });//click event    
 
+    // Пагинация
+    $("#pagin").pagination({
+        pageIndex: currPage-1,
+        pageSize: 1,
+        total: pagesCount,
+        debug: true,
+        showInfo: true,
+        showJump: true
+    });
+
+    $("#pagin").on("pageClicked", function (event, data) {
+       
+        let pNum = parseInt(data.pageIndex) + 1;
+        let Url = '/BooksPage/GetPageContent?IdBook=' + bId + '&PageNumber=' + pNum;
+
+        $(location).attr('href', Url);
+    }).on('jumpClicked', function (event, data) {
+
+        let pNum = parseInt(data.pageIndex) + 1;
+        let Url = '/BooksPage/GetPageContent?IdBook=' + bId + '&PageNumber=' + pNum;
+        $(location).attr('href', Url);
+    });
+
+
+
+
+  
 });// $(document).ready
+
+

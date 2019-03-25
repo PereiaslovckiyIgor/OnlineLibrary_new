@@ -1,4 +1,9 @@
-﻿<script src="~/js/Scripts/BookDescription.js"></script>
+﻿<link href="~/css/jquery.rateyo.css" rel="stylesheet" />
+
+<script src="~/js/jquery.rateyo.js"></script>
+<script src="~/js/Scripts/BookDescription.js"></script>
+
+
 
 @using LibOnline.Models.Books;
 @using LibOnline.Models.Authors;
@@ -22,6 +27,7 @@
     @Html.Partial("_CategoriesPartail")
 
     <input type="hidden" id="idBook" data-value="@ViewBag.booksDescription.IdBook" />
+    <input type="hidden" id="idBookRaring" data-value="@ViewBag.booksDescription.RatingValue" />
 
     <div class="span9 gallery-single">
         <div class="row">
@@ -71,6 +77,7 @@
                         }
                     </li>
                     <li><h6>Рейтинг:</h6>"Звездный" Виджет (1-5 звезд) : @description.RatingValue</li>
+                    <li><h6>Рейтинг:</h6><div style="display:inline-block; margin-left:25px" id="rateYo"></div></li>
                 </ul>
                 <button id="btnReadBook" class="btn btn-large btn-inverse span2" type="button">Читать</button>
                 @if (IsAuthenticated())
@@ -128,4 +135,3 @@
             }
         </section>
     </div>
-s

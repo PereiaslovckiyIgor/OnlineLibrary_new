@@ -83,4 +83,21 @@
         });//ajax
     });
 
+
+
+    // "Звездный" рейтинг
+    $("#rateYo").rateYo({
+        fullStar: true,
+        starWidth: "25px",
+        spacing: "10px",
+        rating: $("#idBookRaring").data("value")
+    })
+        .on("rateyo.set", function (e, data) {
+            console.log(data.rating);
+
+            //var rating = data.rating;
+            //$(this).next().text(rating);
+        });
+
+
 });// document ready

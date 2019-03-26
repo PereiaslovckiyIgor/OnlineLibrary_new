@@ -1,0 +1,66 @@
+﻿
+<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar" style="padding-top:10%">
+
+    <ul class="nav menu" style="font-size:20px">
+
+        <li  class="@ViewBag.Admin">
+            <a asp-controller="Admin" asp-action="Index" asp-area="Admin">
+            <svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Статистика
+            </a>
+        </li>
+
+        <li role="presentation" class="divider"></li>
+
+        <li  class="@ViewBag.Books">
+            <a asp-controller="Books" asp-action="Books" asp-area="Admin">
+                <svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document" /></svg> Книги
+            </a>
+        </li>
+        <li class="@ViewBag.Authors">
+            <a asp-controller="Authors" asp-action="Authors" asp-area="Admin">
+                <svg class="glyph stroked pen tip"><use xlink:href="#stroked-pen-tip" /></svg> Авторы
+            </a>
+        </li>
+        <li class="@ViewBag.Categories">
+            <a asp-controller="Categories" asp-action="Categories" asp-area="Admin">
+                <svg class="glyph stroked tag"><use xlink:href="#stroked-tag" /></svg> Категории
+            </a>
+        </li>
+        <li class="@ViewBag.Users">
+            <a asp-controller="Users" asp-action="Users" asp-area="Admin">
+                <svg class="glyph stroked male user "><use xlink:href="#stroked-male-user" /></svg> Пользователи
+            </a>
+        </li>
+        <li class="@ViewBag.Comments">
+            <a asp-controller="Comments" asp-action="Comments" asp-area="Admin">
+                <svg class="glyph stroked two messages"><use xlink:href="#stroked-two-messages" /></svg> Коментарии
+            </a>
+        </li>
+
+        <li role="presentation" class="divider"></li>
+    </ul>
+    @*<li class="parent ">
+            <a href="#">
+                <span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> Dropdown
+            </a>
+            <ul class="children collapse" id="sub-item-1">
+                <li>
+                    <a class="" href="#">
+                        <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 1
+                    </a>
+                </li>
+                <li>
+                    <a class="" href="#">
+                        <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 2
+                    </a>
+                </li>
+                <li>
+                    <a class="" href="#">
+                        <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 3
+                    </a>
+                </li>
+            </ul>
+        </li>*@
+
+
+</div><!--/.sidebar-->

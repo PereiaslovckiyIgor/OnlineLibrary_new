@@ -3,12 +3,17 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <UserSecretsId>aspnet-LibOnline-2413FD64-D6CB-407D-AC0B-40B6958C1F34</UserSecretsId>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\Admin\vendors\**" />
     <Compile Remove="wwwroot\fonts\**" />
+    <Content Remove="wwwroot\Admin\vendors\**" />
     <Content Remove="wwwroot\fonts\**" />
+    <EmbeddedResource Remove="wwwroot\Admin\vendors\**" />
     <EmbeddedResource Remove="wwwroot\fonts\**" />
+    <None Remove="wwwroot\Admin\vendors\**" />
     <None Remove="wwwroot\fonts\**" />
   </ItemGroup>
 
@@ -37,6 +42,20 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.2" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\Admin\_ViewImports.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\_ViewStart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
 
 </Project>

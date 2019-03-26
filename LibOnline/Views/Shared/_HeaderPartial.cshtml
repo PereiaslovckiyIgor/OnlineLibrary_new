@@ -37,6 +37,7 @@ public bool IsAuthenticated()
                     <li class="empty" id="idMenuItem_favorites"><a asp-controller="UserPage" asp-action="UserPage" asp-route-pageNumber="1">Избанное</a></li>
                     <li><a asp-controller="Account" asp-action="LogOut"><b>(@Context.User.Identity.Name)</b> Выход</a></li>
                 }
+                <li><a asp-controller="Admin" asp-action="Index" asp-area="Admin"><b style="color:red">Я</b> Админ</a></li>
             </ul>
         </div>
     </nav>

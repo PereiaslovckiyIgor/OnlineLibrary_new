@@ -1,4 +1,4 @@
-﻿$(document).ready(function (){
+﻿$(document).ready(function () {
 
     let data = {
         IdBook: $("#idBook").data("value")
@@ -61,7 +61,7 @@
            Странный вызов в связи с диномическим созданием кнопок
             ... 
             я так думаю ...
-         */ 
+         */
 
         let CommentId = $(this).val();
 
@@ -85,19 +85,26 @@
 
 
 
-    // "Звездный" рейтинг
+    // "Звездный" рейтинг (Активный, для зарегистр. пользователей)
     $("#rateYo").rateYo({
         fullStar: true,
         starWidth: "25px",
         spacing: "10px",
         rating: $("#idBookRaring").data("value")
-    })
-        .on("rateyo.set", function (e, data) {
-            console.log(data.rating);
+    }).on("rateyo.set", function (e, data) {
+        $.post("/BooksDescription/SetBookRating/", { IdBook: $("#idBook").data("value"), UsreRating: data.rating });
+    });
 
-            //var rating = data.rating;
-            //$(this).next().text(rating);
-        });
+
+    // "Звездный" рейтинг (Не ктивный, для не зарегистр. пользователей)
+    // Просто отображение рейтинга книги 
+    $("#rateYo_readOnly").rateYo({
+        fullStar: true,
+        starWidth: "25px",
+        spacing: "10px",
+        readOnly: true,
+        rating: $("#idBookRaring").data("value")
+    });
 
 
 });// document ready

@@ -39,7 +39,7 @@ public bool IsAuthenticated()
                         <img asp-append-version="true" src="@item.ImagePath" alt="Gallery">
                     </a>
                     <div class="project-details">
-                        <a asp-controller="BooksDescription" asp-action="GetBookDescription" style="text-align:center;height:30pt;overflow:hidden" asp-route-IdAuthor="@item.IdBook">@item.BookName</a>
+                        <a asp-controller="BooksDescription" asp-action="GetBookDescription" style="text-align:center;height:30pt;overflow:hidden" asp-route-IdBook="@item.IdBook">@item.BookName</a>
                         <p style="text-align:center;margin-top:5px;margin-bottom:5px;min-height:30pt">
                             @foreach (Author author in item.BookAuthors)
                             {
@@ -67,7 +67,7 @@ public bool IsAuthenticated()
                         <img asp-append-version="true" src="@item.ImagePath" alt="Gallery">
                     </a>
                     <div class="project-details">
-                        <a asp-controller="BooksDescription" asp-action="GetBookDescription" style="text-align:center;height:30pt;overflow: hidden" asp-route-IdAuthor="@item.IdBook">@item.BookName</a>
+                        <a asp-controller="BooksDescription" asp-action="GetBookDescription" style="text-align:center;height:30pt;overflow: hidden" asp-route-IdBook="@item.IdBook">@item.BookName</a>
                         <p style="text-align:center;margin-top:5px;margin-bottom:5px;height:30pt;">
                             @foreach (Author author in item.BookAuthors)
                             {
@@ -100,7 +100,7 @@ public bool IsAuthenticated()
                     <img asp-append-version="true" src="@item.ImagePath" alt="Gallery">
                 </a>
                 <div class="project-details">
-                    <a asp-controller="BooksDescription" asp-action="GetBookDescription" style="text-align:center" asp-route-IdAuthor="@item.IdBook">@item.BookName</a>
+                    <a asp-controller="BooksDescription" asp-action="GetBookDescription" style="text-align:center" asp-route-IdBook="@item.IdBook">@item.BookName</a>
                     <p style="text-align:center;margin-top:5px;margin-bottom:5px;">
                         @foreach (Author author in item.BookAuthors)
                         {

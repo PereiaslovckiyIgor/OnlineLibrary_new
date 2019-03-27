@@ -168,5 +168,40 @@ namespace LibOnline.Controllers.Books
         }//GetBookComments
         #endregion
 
+
+        public IActionResult SetBookRating(int IdBook, int UsreRating)
+        {
+
+            string UserName = "";
+            bool IsSuccess;
+
+
+            // ПОЛУЧИТЬ ИМЯ И РОЛЬ ПОЛЬЗОВАТЕЛЯ
+            if (User.Identity.IsAuthenticated)
+            {
+                UserName = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultNameClaimType).Value;
+            }//if
+
+            // Получит ID пользователя
+            int idUser = new Utils().GetUserIdByUserName(UserName);
+
+            try
+            {
+                SqlParameter IdUser = new SqlParameter("@TextComment", idUser);
+                SqlParameter idBook = new SqlParameter("@IdBook", IdBook);
+                SqlParameter usreRating = new SqlParameter("@RatigValue", UsreRating);
+
+                using (ApplicationContext db = new ApplicationContext())
+                    db.Database.ExecuteSqlCommand($"books.SetRating  {IdUser}, {idBook}, {usreRating}");
+
+                IsSuccess = true;
+            }
+            catch
+            {
+                IsSuccess = false;
+            }// try-catch
+
+            return Json(new { success = IsSuccess });
+        }//SetBookRating
     }//BooksDescriptionController
 }//Books Namespace

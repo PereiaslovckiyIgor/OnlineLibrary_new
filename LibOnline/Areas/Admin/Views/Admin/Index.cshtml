@@ -1,4 +1,6 @@
-﻿@{
+﻿@model LibOnline.Areas.Admin.Models.Statistics.Statistics;
+
+@{
     Layout = "_Layout";
     ViewBag.Admin = "active";
 }
@@ -13,7 +15,7 @@
                         <svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document" /></svg>
                     </div>
                     <div class="col-sm-9 col-lg-7 widget-right">
-                        <div class="large" style="text-align:center">120</div>
+                        <div class="large" style="text-align:center">@Model.BookCount</div>
                         <div class="text-muted" style="text-align:center">Книги</div>
                     </div>
                 </div>
@@ -26,7 +28,7 @@
                         <svg class="glyph stroked pen tip"><use xlink:href="#stroked-pen-tip" /></svg>
                     </div>
                     <div class="col-sm-9 col-lg-7 widget-right">
-                        <div class="large" style="text-align:center">24</div>
+                        <div class="large" style="text-align:center">@Model.AuthorsCount</div>
                         <div class="text-muted" style="text-align:center">Авторы</div>
                     </div>
                 </div>
@@ -39,7 +41,7 @@
                         <svg class="glyph stroked empty-message"><use xlink:href="#stroked-empty-message"></use></svg>
                     </div>
                     <div class="col-sm-9 col-lg-7 widget-right">
-                        <div class="large" style="text-align:center">52</div>
+                        <div class="large" style="text-align:center">@Model.CommentsCount</div>
                         <div class="text-muted" style="text-align:center">Отзывы</div>
                     </div>
                 </div>
@@ -53,7 +55,7 @@
                         <svg class="glyph stroked male user "><use xlink:href="#stroked-male-user" /></svg>
                     </div>
                     <div class="col-sm-9 col-lg-7 widget-right">
-                        <div class="large" style="text-align:center">1</div>
+                        <div class="large" style="text-align:center">@Model.UsersCount</div>
                         <div class="text-muted" style="text-align:center">Пользователи</div>
                     </div>
                 </div>

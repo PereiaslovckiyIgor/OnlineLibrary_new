@@ -3,15 +3,15 @@
 
     <ul class="nav menu" style="font-size:20px">
 
-        <li  class="@ViewBag.Admin">
+        <li class="@ViewBag.Admin">
             <a asp-controller="Admin" asp-action="Index" asp-area="Admin">
-            <svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Статистика
+                <svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Статистика
             </a>
         </li>
 
         <li role="presentation" class="divider"></li>
 
-        <li  class="@ViewBag.Books">
+        <li class="@ViewBag.Books">
             <a asp-controller="Books" asp-action="Books" asp-area="Admin">
                 <svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document" /></svg> Книги
             </a>
@@ -39,28 +39,15 @@
 
         <li role="presentation" class="divider"></li>
     </ul>
-    @*<li class="parent ">
-            <a href="#">
-                <span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> Dropdown
-            </a>
-            <ul class="children collapse" id="sub-item-1">
-                <li>
-                    <a class="" href="#">
-                        <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 1
-                    </a>
-                </li>
-                <li>
-                    <a class="" href="#">
-                        <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 2
-                    </a>
-                </li>
-                <li>
-                    <a class="" href="#">
-                        <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 3
-                    </a>
-                </li>
-            </ul>
-        </li>*@
-
-
+  
 </div><!--/.sidebar-->
+
+@*<script>
+    $(window).on('resize', function () {
+        if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+    })
+    $(window).on('resize', function () {
+        if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+    })
+</script>*@
+

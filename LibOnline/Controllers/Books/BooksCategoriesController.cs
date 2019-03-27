@@ -76,6 +76,7 @@ namespace LibOnline.Controllers
             ViewBag.booksCategories = books;
             ViewBag.pagination = menuPagination[0];
             ViewBag.pagination.CategoryName = "Популярное";
+            ViewBag.ActiveClassPop = "active";
 
             return View("BooksCategories");
         }//GetPopularBooks
@@ -106,6 +107,8 @@ namespace LibOnline.Controllers
             ViewBag.booksCategories = books;
             ViewBag.pagination = menuPagination[0];
             ViewBag.pagination.CategoryName = "Новое";
+            ViewBag.ActiveClassNew = "active";     
+
 
             return View("BooksCategories");
         }//GetNewBooks

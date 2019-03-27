@@ -23,18 +23,18 @@ public bool IsAuthenticated()
     <nav class="navigation">
         <div class="navbar">
             <ul class="nav">
-                <li class="empty" id="idMenuItem_home"><a asp-controller="Home" asp-action="Index" onclick="setSelectedItem(1)">Главная</a></li>
+                <li class="@ViewBag.Home"><a asp-controller="Home" asp-action="Index">Главная</a></li>
                 @*<li><a asp-controller="BooksCategories" asp-action="BooksCategories" asp-route-pageNumber="1">Топ 100</a></li>*@
-                <li class="empty" id="idMenuItem_popBooks"><a asp-controller="BooksCategories" asp-action="GetPopularBooks" asp-route-pageNumber="1">Популярное</a></li>
-                <li class="empty" id="idMenuItem_newBooks"><a asp-controller="BooksCategories" asp-action="GetNewBooks" asp-route-pageNumber="1">Новое</a></li>
+                <li class="@ViewBag.CategoriesPop"><a asp-controller="BooksCategories" asp-action="GetPopularBooks" asp-route-pageNumber="1">Популярное</a></li>
+                <li class="@ViewBag.CategoriesNew"><a asp-controller="BooksCategories" asp-action="GetNewBooks" asp-route-pageNumber="1">Новое</a></li>
 
                 @if (!IsAuthenticated())
                 {
-                    <li class="empty" id="idMenuItem_login"><a asp-controller="Account" asp-action="Login">Вход</a></li>
+                    <li class="@ViewBag.Login"><a asp-controller="Account" asp-action="Login">Вход</a></li>
                 }
                 else
                 {
-                    <li class="empty" id="idMenuItem_favorites"><a asp-controller="UserPage" asp-action="UserPage" asp-route-pageNumber="1">Избанное</a></li>
+                    <li class="@ViewBag.UserPage"><a asp-controller="UserPage" asp-action="UserPage" asp-route-pageNumber="1">Избанное</a></li>
                     <li><a asp-controller="Account" asp-action="LogOut"><b>(@Context.User.Identity.Name)</b> Выход</a></li>
                 }
                 <li><a asp-controller="Admin" asp-action="Index" asp-area="Admin"><b style="color:red">Я</b> Админ</a></li>
@@ -42,73 +42,3 @@ public bool IsAuthenticated()
         </div>
     </nav>
 </div><!-- End Header -->
-@*<script>
-
-        $(document).ready(function () {
-            debugger;
-
-            $('.nav .empty').removeClass('active');
-
-            (function (item) {
-                debugger;
-                switch (item) {
-                    case 'home': {
-                        $("#idMenuItem_home").addClass('active');
-                        break;
-                    }
-                    case 'popBooks': {
-                        $("#idMenuItem_popBooks").addClass('active');
-                        break;
-                    }
-                    case 'newBooks': {
-                        $("#idMenuItem_newBooks").addClass('active');
-                          break;
-                    } case 'login': {
-                        $("#idMenuItem_login").addClass('active');
-                         break;
-                    } case 'favorites': {
-                        $("#idMenuItem_favorites").addClass('active');
-                         break;
-                    }//case
-
-                }///switch
-
-            })(localStorage.getItem('MenuItem'));
-
-            $("#idMenuItem_home").click(function () {
-                localStorage.setItem('MenuItem', 'home');
-            });
-
-            $("#idMenuItem_popBooks").click(function () {
-                localStorage.setItem('MenuItem', 'popBooks');
-            });
-
-            $("#idMenuItem_newBooks").click(function () {
-                localStorage.setItem('MenuItem', 'newBooks');
-            });
-
-            $("#idMenuItem_login").click(function () {
-                localStorage.setItem('MenuItem', 'login');
-            });
-
-            $("#idMenuItem_favorites").click(function () {
-                localStorage.setItem('MenuItem', 'favorites');
-            });
-
-
-            //$('.nav .empty').click(function (e) {
-            //    debugger;
-
-            //    // Локал сторидж хранит активный элемент
-            //    // а после загрузки страницы его активирует
-
-            //    var selectedMenuItem = this.value;
-            //    ocalStorage.setItem('MenuItem', selectedMenuItem);
-
-
-
-            //    $('.nav .empty').removeClass('active');
-            //    $(this).addClass('active');
-            //})
-        });
-    </script>*@

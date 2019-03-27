@@ -1,5 +1,9 @@
 ﻿@model LibOnline.Models.Account.RegisterModel
 
+@{
+    ViewBag.Login = "active";
+}
+
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
@@ -43,8 +47,5 @@
         let msg = '@ViewBag.result';
         if (msg === "error")
             swal("Ошибка", "Пользователь не был зарагестрирован", msg);
-
-
-        $("#idMenuItem_login").addClass('active');
     });
 </script>

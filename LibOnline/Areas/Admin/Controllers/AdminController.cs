@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using LibOnline.Areas.Admin.Models;
+using LibOnline.Areas.Admin.Models.Statistics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibOnline.Areas.Admin.Controllers
 {
@@ -11,7 +11,13 @@ namespace LibOnline.Areas.Admin.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            Statistics statistics = new Statistics();
+
+            using (ApplicationContext db = new ApplicationContext())
+                statistics = db.statistics.FromSql($"EXECUTE [admin].[getStatistics]").FirstOrDefault();
+
+
+            return View(statistics);
         }
     }
 }

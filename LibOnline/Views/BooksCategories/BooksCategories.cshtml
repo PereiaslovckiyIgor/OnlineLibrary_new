@@ -1,5 +1,10 @@
 ﻿<script src="~/js/Scripts/BooksCategories.js"></script>
 
+@{ 
+    ViewBag.CategoriesPop = ViewBag.ActiveClassPop;
+    ViewBag.CategoriesNew = ViewBag.ActiveClassNew;
+}
+
 @using LibOnline.Models.Books;
 @using LibOnline.Models.Authors;
 

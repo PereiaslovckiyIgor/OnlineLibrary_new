@@ -49,6 +49,9 @@
                     });
                 else
                     swal("", result.responseText, "error");
+                $('html, body').animate({
+                    scrollTop: $("#commentSection").offset().top
+                }, 2000);
             }//success
         });//ajax
 
@@ -56,12 +59,6 @@
 
     // Удаление коментария
     $('body').on('click', '#btnRemoveComment', function () {
-
-        /*
-           Странный вызов в связи с диномическим созданием кнопок
-            ... 
-            я так думаю ...
-         */
 
         let CommentId = $(this).val();
 
@@ -82,7 +79,6 @@
             }//success
         });//ajax
     });
-
 
 
     // "Звездный" рейтинг (Активный, для зарегистр. пользователей)

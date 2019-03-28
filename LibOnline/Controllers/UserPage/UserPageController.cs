@@ -7,12 +7,14 @@ using LibOnline.Models.Books;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LibOnline.Models.General;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibOnline.Controllers.UserPage
 {
     public class UserPageController : Controller
     {
         #region Получить список Избраного
+        [Authorize]
         public IActionResult UserPage(int pageNumber)
         {
             string UserName = "";
@@ -52,6 +54,7 @@ namespace LibOnline.Controllers.UserPage
 
         #region Удалить книгу из Избраного
         // Удалить книгу из Избранного
+        [Authorize]
         public IActionResult RemoveUserBook(int IdBook)
         {
             string UserName = "", ResponseText;

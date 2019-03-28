@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LibOnline.Areas.Admin.Models;
 using LibOnline.Areas.Admin.Models.Aythor;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,7 @@ namespace LibOnline.Areas.Admin.Controllers
     [Area("Admin")]
     public class AuthorsController : Controller
     {
+        [Authorize(Roles = "Admin")]
         public IActionResult Authors()
         {
             return View();

@@ -1,12 +1,11 @@
-﻿
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+﻿<nav class="navbar navbar-inverse navbar-fixed-top navbar-header" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
 
-            <a asp-controller="Home" asp-action="Index" asp-area="" class="navbar-brand"><span>LibOnline</span> Читай бесплатно</a>
+            <a asp-controller="Home" asp-action="Index" asp-area="" class="navbar-brand"><span>LibOnline</span></a>
 
             <ul class="user-menu">
-                <li class="dropdown pull-right">
+                <li class="dropdown right">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> @Context.User.Identity.Name <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a asp-controller="Account" asp-action="LogOut" asp-area=""> Выход </a></li>
@@ -15,5 +14,6 @@
             </ul>
         </div>
 
-    </div><!-- /.container-fluid -->
+    </div>
 </nav>
+

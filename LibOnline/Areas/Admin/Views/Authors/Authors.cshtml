@@ -1,4 +1,36 @@
-﻿<script src="~/Admin/Scripts/Authors.js"></script>
+﻿@using LibOnline.Areas.Admin.Models.Aythor;
+@model List<Author>;
+@*<link href="~/jqwidgets/styles/jqx.base.css" rel="stylesheet" />
+    <link href="~/jqwidgets/styles/jqx.energyblue.css" rel="stylesheet" />
+
+
+    <script type="text/javascript" src="../../scripts/jquery.js"></script>*@
+
+<script src="~/jqwidgets/jqxcore.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxcore.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxdata.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxbuttons.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxscrollbar.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxmenu.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxlistbox.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxdropdownlist.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.selection.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.columnsresize.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.filter.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.sort.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.pager.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.grouping.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxcheckbox.js"></script>
+
+<script type="text/javascript" src="~/jqwidgets/jqxbuttons.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxcheckbox.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxinput.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxvalidator.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxnotification.js"></script>
+
+<script src="~/jqwidgets/globalization/globalize.js"></script>
+<script src="~/jqwidgets/globalization/globalize.culture.ru-RU.js"></script>
 
 @{
     Layout = "_Layout";
@@ -6,11 +38,268 @@
 }
 
 
-<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+<div id="mainDiv" class="col-sm-offset-3" style="visibility:hidden;">
 
-    <div id="authorsGrid"></div>
-
-
+    <div style="margin-top:5%">
 
 
+        <button id="btnAddNewAuthor" style="height:25pt;margin:10pt;">Добавить</button>
+        <button id="btnAuthorUpdate" style="height:25pt">Изменить</button>
+
+        <div id="jqxgrid"></div>
+    </div>
+
+
+    <div id="dialodAddAuthor" class="none-visible">
+        <div>
+            <div>
+                @Html.Label("Автор")<br>
+                <input type="text" id="txtAuthorFullNameInsert" />
+            </div>
+            <br> <br>
+            <div class="button-pos">
+                <button id="btnConfirmAddAuthor" class="pull-right" style="height:25pt;margin:5pt;">Подтвердить</button>
+                <button id="btnCanselAddAuthor" class="pull-right" style="height:25pt;margin:5pt;">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dialodUpdateAuthor" class="none-visible">
+        <div>
+            @Html.Label("Автор")<br>
+            <div style="position:relative;display:table;width:100%">
+                <div style="float:left;width:70%;"><input type="text" id="txtAuthorFullNameUpdate" /></div>
+                <div style="float:left;width:29%;">
+                    <div id='jqxcheckbox'> Активен </div><div>
+                    </div>
+                </div>
+                <br> <br><br>
+                <div class="button-pos">
+                    <button id="btnConfirmUpdateAuthor" class="pull-right" style="height:25pt;margin:5pt;">Подтвердить</button>
+                    <button id="btnCanselUpdateAuthor" class="pull-right" style="height:25pt;margin:5pt;">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="messageNotification" style="margin-top:35%">
+        <div id="jqxNotificationShow"></div>
+    </div>
 </div>
+    <script>
+    $(document).ready(function () {
+
+        $("#mainDiv").css('visibility', 'visible');
+
+        CreateTable();
+        padeElemsInit();
+
+        AddAthor();
+        AddСancel();
+
+        onlyLetters();
+
+    });// $(document).ready
+
+    // Инициализация большинства элементов на странице
+    function padeElemsInit() {
+
+        $("#btnAddNewAuthor, #btnAuthorUpdate, #btnCanselAddAuthor, #btnConfirmAddAuthor, #btnConfirmUpdateAuthor, #btnCanselUpdateAuthor")
+            .jqxButton({ template: "primary" });
+        //$("#btnAuthorUpdate").jqxButton({ template: "primary" });
+
+        //$("#btnCanselAddAuthor").jqxButton({ template: "primary" });
+        //$("#btnConfirmAddAuthor").jqxButton({ template: "primary" });
+
+        $("#txtAuthorFullNameInsert").jqxInput({ placeHolder: "Полное имя автора", height: 30, width: '100%', minLength: 1 });
+
+        $("#txtAuthorFullNameUpdate").jqxInput({ placeHolder: "Полное имя автора", height: 30, minLength: 1 });
+        $("#jqxcheckbox").jqxCheckBox({ height: 25 });
+
+
+        $('#btnAddNewAuthor').click(function (e) {
+            $('#dialodAddAuthor').dialog('open');
+        });
+
+        $('#btnAuthorUpdate').click(function (e) {
+            $('#dialodUpdateAuthor').dialog('open');
+        });
+
+    }//padeElemsInit
+
+        // Обработчик событий на клик кнопки, подтверждающей добавление
+    function AddAthor() {
+        $('#btnConfirmAddAuthor').click(function (e) {
+            if (!$('#dialodAddAuthor').jqxValidator('validate')) {
+                return;
+            }
+            $.ajax({
+                url: '/Admin/Authors/AuthorInsert/',
+                data: {
+                    AuthorFullName: $.trim($("#txtAuthorFullNameInsert").val())
+                },
+                contentType: 'application/json',
+                success: function (result) {
+                    debugger;
+                    showNotification(result.responseText, result.success);
+                    $('#jqxgrid').jqxGrid('updatebounddata');
+                },
+                complete: function (result) {
+                    $('#dialodAddAuthor').dialog('close');
+                }
+            });
+        });//click
+    }//AddAthor
+
+    // Обработчик событий на клик кнопки, отклонающий добавление
+    function AddСancel() {
+        $('#btnCanselAddAuthor').click(function (e) {
+        $('#dialodAddAuthor').jqxValidator('hide');
+        $('#dialodAddAuthor').dialog('close');
+    });
+    }//Add
+
+    // Создание таблицы
+    function CreateTable() {
+        $("#jqxgrid").jqxGrid(
+            {
+                showfilterrow: true,
+                filterable: true,
+                source: GetData(),
+                theme: 'energyblue',
+                width: '80%',
+                height: '100%',
+                pageable: true,
+                pagesizeoptions: ['10'],
+                //localization: getLocalization('ru'),
+                columns: [
+                    { text: '№', datafield: 'idAuthor', align: 'center', type: 'number', filterable: false, hidden: true },
+                    { text: 'Автор', datafield: 'authorFullName', width: '65%', align: 'center', type: 'string' },
+                    { text: 'Активен', datafield: 'isActive', columntype: 'checkbox', filtertype: 'bool', width: '35%', align: 'center' }
+                ]
+            });
+
+    }//CreateTable
+
+    // Получение данных из контроллера
+    function GetData() {
+        var source = {
+            datatype: 'json',
+            datafield: [
+                { name: 'idAuthor' },
+                { name: 'authorFullName' },
+                { name: 'isActive' },
+            ],
+            url: '@Url.Action("GetAuthors", "Authors", new { area = "Admin" }).ToString()',/*'/Admin/Authors/GetAuthors/',*/
+            id: 'idAuthor',
+        };
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            downloadComplete: function (edata, textStatus, jqXHR) {
+            }
+        });
+        return dataAdapter;
+    }//GetData
+
+
+
+    //Создание модального окна Добавление
+    $('#dialodAddAuthor').dialog({
+        autoOpen: false,
+        modal: true,
+        width: 400,
+        height: 200,
+        resizable: false,
+        dialogClass: 'modal-dialog',
+        title: 'Добавить Автора',
+        close: function () {
+            $('#dialodAddAuthor input[type=text]').val('');
+            $('#dialodAddAuthor').jqxValidator('hide');
+        }
+    });
+
+    //Создание модального окна изменение
+    $('#dialodUpdateAuthor').dialog({
+        autoOpen: false,
+        modal: true,
+        width: 400,
+        height: 200,
+        resizable: false,
+        dialogClass: 'modal-dialog',
+        title: 'Изменить Автора',
+        close: function () {
+            $('#dialodUpdateAuthor input[type=text]').val('');
+            $('#dialodUpdateAuthor').jqxValidator('hide');
+        }
+    });
+
+
+    // Валидация При Добавлении
+    $('#dialodAddAuthor').jqxValidator({
+        focus: false,
+        rules:
+            [
+                {
+                    input: '#txtAuthorFullNameInsert',
+                    message: 'Поле  должно быть заполнено!',
+                    action: 'keyup',
+                    rule: 'required'
+                },
+                {
+                    input: '#txtAuthorFullNameInsert',
+                    message: 'Текст от 2 до 10 символов',
+                    action: 'keyup',
+                    rule: 'length=2,100'
+                }
+
+
+            ]
+    });
+
+
+    // Валидация При Изменении
+    $('#dialodUpdateAuthor').jqxValidator({
+        rules:
+            [
+                {
+                    input: '#txtAuthorFullNameInsert',
+                    message: 'Поле  должно быть заполнено!',
+                    action: 'keyup',
+                    rule: 'required'
+                },
+                {
+                    input: '#txtAuthorFullNameInsert',
+                    message: 'Текст от 2 до 10 символов',
+                    action: 'keyup',
+                    rule: 'length=2,100'
+                }
+            ]
+    });
+
+
+
+    // Только русские символы и пробел на полях ввода
+    function onlyLetters() {
+        $("#txtAuthorFullNameInsert, #txtAuthorFullNameUpdate").on("input", function () {
+            var regexp = /[^а-яА-ЯёЁ .-]/g;
+            if ($(this).val().match(regexp)) {
+                $(this).val($(this).val().replace(regexp, ''));
+            }
+        });
+    };
+
+    // alert
+        function showNotification(notificationText, isSucces) {
+
+        let template;
+        isSucces == true ? template = 'success' : template = 'error';
+
+        $("#jqxNotificationShow").text(notificationText);
+        $("#messageNotification").jqxNotification({
+            width: 250, position: "top-right", opacity: 0.9,
+            autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: template
+        }).jqxNotification('open');
+
+    } //showNotification
+    </script>
+

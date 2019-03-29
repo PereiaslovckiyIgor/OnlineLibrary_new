@@ -14,5 +14,16 @@ namespace LibOnline.Areas.Admin.Models.Aythor
         public int IdAuthor { get; set; }
         public string AuthorFullName { get; set; }
         public bool IsActive { get; set; }
+
+        public Author()
+        {
+
+        }
+
+        public Author(string suthorFullName, bool isActive)
+        {
+            AuthorFullName = suthorFullName;
+            IsActive = isActive;
+        }
     }//Author
 }

@@ -31,6 +31,12 @@
 
 
   <ItemGroup>
+    <PackageReference Include="jQWidgets.AspNetCore.Mvc.TagHelpers" Version="2.0.1" />
+    <PackageReference Include="jQWidgets_Framework" Version="7.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Lib.AspNetCore.Mvc.JqGrid.Core" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.1" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" PrivateAssets="All" />

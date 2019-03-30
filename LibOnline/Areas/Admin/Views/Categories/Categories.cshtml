@@ -1,8 +1,89 @@
-﻿@{
+﻿@using LibOnline.Areas.Admin.Models.Category;
+@model List<Category>;
+
+
+
+<script src="~/jqwidgets/jqxcore.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxcore.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxdata.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxbuttons.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxscrollbar.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxmenu.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxlistbox.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxdropdownlist.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.selection.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.columnsresize.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.filter.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.sort.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.pager.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.grouping.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxcheckbox.js"></script>
+
+<script type="text/javascript" src="~/jqwidgets/jqxbuttons.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxcheckbox.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxinput.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxvalidator.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxnotification.js"></script>
+
+<script src="~/jqwidgets/globalization/globalize.js"></script>
+<script src="~/jqwidgets/globalization/globalize.culture.ru-RU.js"></script>
+<script src="~/jqwidgets/Localisation/Localisation.js"></script>
+
+<script src="~/Admin/js/Scripts/Categories.js"></script>
+
+@{
     Layout = "_Layout";
     ViewBag.Categories = "active";
 }
 
-<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-    <h2>Категории</h2>
+
+<div id="mainDiv" class="col-sm-offset-3" style="visibility:hidden;">
+
+    <div style="margin-top:5%">
+
+
+        <button id="btnAddNewCategory" style="height:25pt;margin:10pt;">Добавить</button>
+        <button id="btnCategoryUpdate" style="height:25pt">Изменить</button>
+
+        <div id="jqxgrid"></div>
+    </div>
+
+
+    <!--Insert Aithor-->
+    <div id="dialodAddCategory" style="display:none">
+        <div>
+            <div>
+                @Html.Label("Жанр")<br>
+                <input type="text" id="txtCategoryFullNameInsert" />
+            </div>
+
+            <div style="position:absolute; bottom:10px; right:10px">
+                <button id="btnConfirmAddCategory" class="pull-right" style="height:25pt;margin:5pt;">Подтвердить</button>
+                <button id="btnCanselAddCategory" class="pull-right" style="height:25pt;margin:5pt;">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <!--Update Category-->
+    <div id="dialodUpdateCategory" style="display:none">
+        <div>
+            <input type="hidden" id="idCategoryForUpdate" />
+            @Html.Label("Жанр")<br>
+            <input type="text" id="txtCategoryFullNameUpdate" />
+        </div>
+
+        <div>
+            <input type="checkbox" id='jqxcheckbox' /> Активен
+        </div>
+
+        <div style="position:absolute; bottom:10px; right:10px">
+            <button id="btnConfirmUpdateCategory" class="pull-right" style="height:25pt;margin:5pt;">Подтвердить</button>
+            <button id="btnCanselUpdateCategory" class="pull-right" style="height:25pt;margin:5pt;">Отмена</button>
+        </div>
+    </div>
+
+    <div id="messageNotification" style="margin-top:35%; display:none">
+        <div id="jqxNotificationShow"></div>
+    </div>
 </div>

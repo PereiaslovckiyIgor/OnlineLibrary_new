@@ -20,18 +20,20 @@ namespace LibOnline.Areas.Admin.Controllers
         }
 
         // Получить списко всех авторов
+        [Authorize(Roles = "Admin")]
         public IActionResult GetAuthors()
         {
 
             List<Author> authors = new List<Author>();
 
             using (ApplicationContext db = new ApplicationContext())
-                authors = db.authors.OrderBy(a => a.AuthorFullName).ToList();
+                authors = db.authors.OrderByDescending(a => a.IdAuthor).ToList();
 
             return Json(authors);
         }//GetAuthors
 
         // Добовление автора
+        [Authorize(Roles = "Admin")]
         public IActionResult AuthorInsert(string AuthorFullName) {
 
             string ResponseText;
@@ -62,5 +64,33 @@ namespace LibOnline.Areas.Admin.Controllers
 
             return Json(new { success = IsSuccess, responseText = ResponseText });
         }//AuthorInsert
+
+        // Изменить автора
+        [Authorize(Roles = "Admin")]
+        public IActionResult AuthorUpdate(Author author) {
+            string ResponseText;
+            bool IsSuccess;
+
+            try
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    if (author != null)
+                        db.authors.Update(author);
+
+                    db.SaveChanges();
+                    ResponseText = "Данные успешно изменены";
+                    IsSuccess = true;
+                }//using
+            }
+            catch {
+                ResponseText = "Ошибка на сервере.";
+                IsSuccess = false;
+
+            }//try-catch
+
+             return Json(new { success = IsSuccess, responseText = ResponseText });
+        }//author
+
     }
 }

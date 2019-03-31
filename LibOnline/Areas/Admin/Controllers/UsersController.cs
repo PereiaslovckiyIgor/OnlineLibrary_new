@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using LibOnline.Areas.Admin.Models;
 using LibOnline.Areas.Admin.Models.Access;
 using Microsoft.EntityFrameworkCore;
+using System.Data.SqlClient;
 
 namespace LibOnline.Areas.Admin.Controllers
 {
@@ -24,9 +25,9 @@ namespace LibOnline.Areas.Admin.Controllers
 
             return View(role);
         }//Users
-
-        [Authorize(Roles = "Admin")]
+        
         // Получить всех пользователей и их роли
+        [Authorize(Roles = "Admin")]
         public IActionResult GetUsersAndRoles()
         {
 
@@ -38,7 +39,34 @@ namespace LibOnline.Areas.Admin.Controllers
                 return Json(users);            
         }//GetUsersAndRoles
 
+        // Обновить Доступ пользователя И/ИЛИ его роль
+        [Authorize(Roles = "Admin")]
+        public IActionResult UpdateUserAndRole(int IdUser, int IdRole, bool IsActive)
+        {
+            string ResponseText;
+            bool IsSuccess;
 
+            try
+            {
+                SqlParameter idUser = new SqlParameter("@IdUser", IdUser);
+                SqlParameter idRole = new SqlParameter("@IdRole", IdRole);
+                SqlParameter isActive = new SqlParameter("@IsActive", IsActive);
+
+
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    db.Database.ExecuteSqlCommand($"admin.UpdateUserAndRole {IdUser}, {IdRole}, {IsActive}");
+
+                    ResponseText = "Данные успешно изменены";
+                    IsSuccess = true;
+                }//using
+            }
+            catch {
+                ResponseText = "Ошибка на сервере.";
+                IsSuccess = false;
+            }// tre-catch
+            return Json(new { success = IsSuccess, responseText = ResponseText });
+        }//UpdateUserAndRole
 
     }//UsersController
 }//namespace

@@ -12,7 +12,9 @@ namespace LibOnline.Areas.Admin.Models.Statistics
         [Key]
         public int BookCount { get; set; }
         public int AuthorsCount { get; set; }
-        public int CommentsCount { get; set; }
+        public int AllCommentsCount { get; set; }
+        public int PublichCommentsCount { get; set; }
+        public int VerificatedCommentsCount { get; set; }
         public int UsersCount { get; set; }
     }//Statistics
 }

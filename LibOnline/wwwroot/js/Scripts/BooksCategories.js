@@ -29,17 +29,17 @@ function setPaginarion(currPage, pagesCount) {
 function clickPagination() {
     $("#pagin").on("pageClicked", function (event, data) {
 
-        let Url = getLincedStr(data);
+        let Url = getLinkedStr(data);
         $(location).attr('href', Url);
     }).on('jumpClicked', function (event, data) {
 
-        let Url = getLincedStr(data);
+        let Url = getLinkedStr(data);
         $(location).attr('href', Url);
     });
 }
 
 
-function getLincedStr(data) {
+function getLinkedStr(data) {
 
     let Url;
     let pNum = parseInt(data.pageIndex) + 1;

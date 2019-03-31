@@ -35,11 +35,38 @@
 
 <script src="~/Admin/js/Scripts/Users.js"></script>
 
+<script src="~/chosen/chosen.jquery.js"></script>
+<link href="~/chosen/chosen.css" rel="stylesheet" />
 
 <div id="mainDiv" class="col-sm-offset-3" style="visibility:hidden;">
 
     <div style="margin-top:5%">
+
+        <button id="btnUserUpdate" style="height:25pt;margin:10pt;">Изменить</button>
+
         <div id='jqxgrid'></div>
+    </div>
+
+    <!--Update User-UserRole-->
+    <div id="dialodUpdateUser" style="display:none">
+        <div>
+
+            <label for="selUesrRole" style="margin-top:10pt;">Роль:</label>
+            <select id="selUesrRole" class="chosen-select">
+                @foreach (var item in Model)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+
+            <label for="selIsActiveUser" style="margin-top:15pt;">Доступ:</label>
+            <select id="selIsActiveUser" class="chosen-select"></select>
+
+            <div style="position:absolute; bottom:10px; right:10px">
+                <button id="btnConfirmUpdateUser" class="pull-right" style="height:25pt;margin:5pt;">Подтвердить</button>
+                <button id="btnCanselUpdateUser" class="pull-right" style="height:25pt;margin:5pt;">Отмена</button>
+            </div>
+        </div>
     </div>
 
 

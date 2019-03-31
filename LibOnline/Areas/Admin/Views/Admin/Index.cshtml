@@ -8,58 +8,105 @@
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <br>
     <div class="row">
-        <div class="col-xs-12 col-md-6 col-lg-3">
-            <div class="panel panel-blue panel-widget ">
-                <div class="row no-padding">
-                    <div class="col-sm-3 col-lg-5 widget-left">
-                        <svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document" /></svg>
+        <table>
+            <tr>
+                <td>
+                    <div class="col-xs-12 col-md-6 col-lg-3">
+                        <div class="panel panel-blue panel-widget ">
+                            <div class="row no-padding">
+                                <div class="col-sm-3 col-lg-5 widget-left">
+                                    <svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document" /></svg>
+                                </div>
+                                <div class="col-sm-9 col-lg-7 widget-right">
+                                    <div class="large" style="text-align:center">@Model.BookCount</div>
+                                    <div class="text-muted" style="text-align:center">Книги</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-sm-9 col-lg-7 widget-right">
-                        <div class="large" style="text-align:center">@Model.BookCount</div>
-                        <div class="text-muted" style="text-align:center">Книги</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="col-xs-12 col-md-6 col-lg-3" >
+                        <div class="panel panel-teal panel-widget">
+                            <div class="row no-padding">
+                                <div class="col-sm-3 col-lg-5 widget-left">
+                                    <svg class="glyph stroked pen tip"><use xlink:href="#stroked-pen-tip" /></svg>
+                                </div>
+                                <div class="col-sm-9 col-lg-7 widget-right">
+                                    <div class="large" style="text-align:center">@Model.AuthorsCount</div>
+                                    <div class="text-muted" style="text-align:center">Авторы</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-12 col-md-6 col-lg-3">
-            <div class="panel panel-teal panel-widget">
-                <div class="row no-padding">
-                    <div class="col-sm-3 col-lg-5 widget-left">
-                        <svg class="glyph stroked pen tip"><use xlink:href="#stroked-pen-tip" /></svg>
-                    </div>
-                    <div class="col-sm-9 col-lg-7 widget-right">
-                        <div class="large" style="text-align:center">@Model.AuthorsCount</div>
-                        <div class="text-muted" style="text-align:center">Авторы</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-12 col-md-6 col-lg-3">
-            <div class="panel panel-orange panel-widget">
-                <div class="row no-padding">
-                    <div class="col-sm-3 col-lg-5 widget-left">
-                        <svg class="glyph stroked empty-message"><use xlink:href="#stroked-empty-message"></use></svg>
-                    </div>
-                    <div class="col-sm-9 col-lg-7 widget-right">
-                        <div class="large" style="text-align:center">@Model.CommentsCount</div>
-                        <div class="text-muted" style="text-align:center">Отзывы</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                </td>
+            </tr>
 
-        <div class="col-xs-12 col-md-6 col-lg-3">
-            <div class="panel panel-red panel-widget">
-                <div class="row no-padding">
-                    <div class="col-sm-3 col-lg-5 widget-left">
-                        <svg class="glyph stroked male user "><use xlink:href="#stroked-male-user" /></svg>
+            <tr>
+                <td>
+                    <div class="col-xs-12 col-md-6 col-lg-3">
+                        <div class="panel panel-orange panel-widget">
+                            <div class="row no-padding">
+                                <div class="col-sm-3 col-lg-5 widget-left">
+                                    <svg class="glyph stroked empty-message"><use xlink:href="#stroked-empty-message"></use></svg>
+                                </div>
+                                <div class="col-sm-9 col-lg-7 widget-right">
+                                    <div class="large" style="text-align:center">@Model.AllCommentsCount</div>
+                                    <div class="text-muted" style="text-align:center">Отзывы</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-sm-9 col-lg-7 widget-right">
-                        <div class="large" style="text-align:center">@Model.UsersCount</div>
-                        <div class="text-muted" style="text-align:center">Пользователи</div>
+
+                    <div class="col-xs-12 col-md-6 col-lg-3">
+                        <div class="panel panel-orange panel-widget">
+                            <div class="row no-padding">
+                                <div class="col-sm-3 col-lg-5 widget-left">
+                                    <svg class="glyph stroked empty-message"><use xlink:href="#stroked-empty-message"></use></svg>
+                                </div>
+                                <div class="col-sm-9 col-lg-7 widget-right">
+                                    <div class="large" style="text-align:center">@Model.PublichCommentsCount</div>
+                                    <div class="text-muted" style="text-align:center">Опубликовано</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
+
+
+                    <div class="col-xs-12 col-md-6 col-lg-3">
+                        <div class="panel panel-orange panel-widget">
+                            <div class="row no-padding">
+                                <div class="col-sm-3 col-lg-5 widget-left">
+                                    <svg class="glyph stroked empty-message"><use xlink:href="#stroked-empty-message"></use></svg>
+                                </div>
+                                <div class="col-sm-9 col-lg-7 widget-right">
+                                    <div class="large" style="text-align:center">@Model.VerificatedCommentsCount</div>
+                                    <div class="text-muted" style="text-align:center">Новых</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="col-xs-12 col-md-6 col-lg-3">
+                        <div class="panel panel-red panel-widget">
+                            <div class="row no-padding">
+                                <div class="col-sm-3 col-lg-5 widget-left">
+                                    <svg class="glyph stroked male user "><use xlink:href="#stroked-male-user" /></svg>
+                                </div>
+                                <div class="col-sm-9 col-lg-7 widget-right">
+                                    <div class="large" style="text-align:center">@Model.UsersCount</div>
+                                    <div class="text-muted" style="text-align:center">Пользователи</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div><!--/.row-->
 </div>	<!--/.main-->

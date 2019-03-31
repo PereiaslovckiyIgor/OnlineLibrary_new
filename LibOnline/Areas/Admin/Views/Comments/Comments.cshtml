@@ -21,17 +21,45 @@
 <script type="text/javascript" src="~/jqwidgets/jqxinput.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxvalidator.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxnotification.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxtextarea.js"></script>
 
 <script src="~/jqwidgets/globalization/globalize.js"></script>
 <script src="~/jqwidgets/globalization/globalize.culture.ru-RU.js"></script>
 <script src="~/jqwidgets/Localisation/Localisation.js"></script>
 
+<script src="~/Admin/js/Scripts/Comments.js"></script>
 
 @{
     Layout = "_Layout";
     ViewBag.Comments = "active";
 }
 
-<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+<div id="mainDiv" class="col-sm-offset-3" style="visibility:hidden;">
+    <div style="margin-top:5%">
 
+
+        <button id="btnVerificatComment" style="height:25pt;margin:10pt;">Проверить</button>
+
+        <div id="jqxgrid"></div>
+    </div>
+
+
+    <div id="dialodVerificatComment" style="display:none">
+
+        <textarea id="jqxTextArea"></textarea>
+
+        <div style="position:absolute; bottom:10px; right:10px">
+            <button id="btnForbitVerification" class="pull-right" style="height:25pt;margin:5pt;color:orangered">Заблокировать</button>
+            <button id="btnAllowVerification" class="pull-right" style="height:25pt;margin:5pt;">Подтвердить</button>
+            <button id="btnCanselVerification" class="pull-right" style="height:25pt;margin:5pt;">Отмена</button>
+        </div>
+    </div>
+
+
+
+    <div id="messageNotification" style="margin-top:35%; display:none">
+        <div id="jqxNotificationShow"></div>
+    </div>
 </div>
+
+

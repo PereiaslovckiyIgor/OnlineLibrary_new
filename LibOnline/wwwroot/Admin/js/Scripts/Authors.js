@@ -8,7 +8,7 @@ CreateTable();
 padeElemsInit();
 
 AddAthor();
-AddСancel();
+AddCancel();
 
 
 UpdateAuthorConfirm();
@@ -40,10 +40,10 @@ $("#txtAuthorFullNameInsert").jqxInput({placeHolder: "Полное имя авт
     //Если не выбрана ни обна запись, то выход
     let rowindex = $('#jqxgrid').jqxGrid('getselectedrowindex');
         if (rowindex === -1) {
-    showNotification('Выберите строку!', false);
-}
-UpdateAuthor(rowindex);
-});
+        showNotification('Выберите строку!', false);
+        }
+            UpdateAuthor(rowindex);
+    });
 
 }//padeElemsInit
 
@@ -71,7 +71,7 @@ function AddAthor() {
 }//AddAthor
 
 // Обработчик событий на клик кнопки, отклонающий добавление
-function AddСancel() {
+function AddCancel() {
     $('#btnCanselAddAuthor').click(function (e) {
         $('#dialodAddAuthor').jqxValidator('hide');
         $('#dialodAddAuthor').dialog('close');

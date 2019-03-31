@@ -9,6 +9,8 @@ namespace LibOnline.Areas.Admin.Models
         public DbSet<Category.Category> сategories { get; set; }
         public DbSet<Access.User> users { get; set; }
         public DbSet<Access.Role> roles { get; set; }
+        public DbSet<Comments.Comment> comments { get; set; }
+        public DbSet<Comments.Comments> allComments { get; set; }
 
 
 

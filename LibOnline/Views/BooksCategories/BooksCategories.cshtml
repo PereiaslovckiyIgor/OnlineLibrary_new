@@ -1,6 +1,6 @@
 ﻿<script src="~/js/Scripts/BooksCategories.js"></script>
 
-@{ 
+@{
     ViewBag.CategoriesPop = ViewBag.ActiveClassPop;
     ViewBag.CategoriesNew = ViewBag.ActiveClassNew;
 }
@@ -12,6 +12,7 @@
 <!--Пагинация -->
 <input type="hidden" id="idPageNumber" data-value="@ViewBag.pagination.PageNumber" />
 <input type="hidden" id="idCountPages" data-value="@ViewBag.pagination.CountPages" />
+
 
 @Html.Partial("_CategoriesPartail")
 

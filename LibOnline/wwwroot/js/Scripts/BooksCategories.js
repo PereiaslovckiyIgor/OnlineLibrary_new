@@ -29,16 +29,28 @@ function setPaginarion(currPage, pagesCount) {
 function clickPagination() {
     $("#pagin").on("pageClicked", function (event, data) {
 
-        let pNum = parseInt(data.pageIndex) + 1;
-        let Url = window.location.pathname + '?pageNumber=' + pNum;
-        //let Url = '/BooksCategories/GetPopularBooks?pageNumber=' + pNum;
-
+        let Url = getLincedStr(data);
         $(location).attr('href', Url);
     }).on('jumpClicked', function (event, data) {
-        
-        let pNum = parseInt(data.pageIndex) + 1;
-        let Url = window.location.pathname + '?pageNumber=' + pNum;
-        //let Url = '/BooksCategories/GetPopularBooks?pageNumber=' + pNum;
+
+        let Url = getLincedStr(data);
         $(location).attr('href', Url);
     });
+}
+
+
+function getLincedStr(data) {
+
+    let Url;
+    let pNum = parseInt(data.pageIndex) + 1;
+    let urlPathname = window.location.pathname;
+
+    if (urlPathname.search('GetBooksAuthors') === -1)
+        Url = urlPathname + '?pageNumber=' + pNum;
+    else {
+        let cNum = $("#idPageNumber").data("value");
+        let str = window.location.search;
+        Url = urlPathname + str.replace('pageNumber=' + cNum, 'pageNumber=' + pNum);
+    }//if-else
+    return Url;
 }

@@ -7,6 +7,8 @@ namespace LibOnline.Areas.Admin.Models
         public DbSet<Statistics.Statistics> statistics { get; set; }
         public DbSet<Aythor.Author> authors { get; set; }
         public DbSet<Category.Category> сategories { get; set; }
+        public DbSet<Access.User> users { get; set; }
+        public DbSet<Access.Role> roles { get; set; }
 
 
 

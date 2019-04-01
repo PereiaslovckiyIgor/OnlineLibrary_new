@@ -3,6 +3,114 @@
     ViewBag.Books = "active";
 }
 
-<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-    <h2>Книги</h2>
+
+<script src="~/jqwidgets/jqxcore.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxcore.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxdata.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxbuttons.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxscrollbar.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxmenu.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxlistbox.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxdropdownlist.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.selection.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.columnsresize.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.filter.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.sort.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.pager.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.grouping.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxcheckbox.js"></script>
+
+<script type="text/javascript" src="~/jqwidgets/jqxbuttons.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxcheckbox.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxinput.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxvalidator.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxnotification.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxfileupload.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxtabs.js"></script>
+
+<script src="~/chosen/chosen.jquery.js"></script>
+<link href="~/chosen/chosen.css" rel="stylesheet" />
+
+<script src="~/jqwidgets/globalization/globalize.js"></script>
+<script src="~/jqwidgets/globalization/globalize.culture.ru-RU.js"></script>
+<script src="~/jqwidgets/Localisation/Localisation.js"></script>
+
+<script src="~/Admin/js/Scripts/Books.js"></script>
+
+<div id="mainDiv" class="col-sm-offset-3" style="visibility:hidden;">
+
+    <div style="margin-top:5%">
+
+
+        <button id="btnAddNewBook" style="height:25pt;margin:10pt;">Добавить Книгу</button>
+        <button id="btnUpdateBook" style="height:25pt">Изменить Книгу</button>
+
+        <div id="jqxgrid"></div>
+    </div>
+
+    <div id="test"></div>
+
+    <!--Insert Book-->
+    <div id="dialodAddNewBook" style="display:none">
+        <div>
+
+            <div id='jqxtabs'>
+                <ul style='margin-left: 20px;'>
+                    <li>Изображение</li>
+                    <li>Авторы и жанры</li>
+                    <li>Описание и книга</li>
+                </ul>
+                <div>
+                    <table>
+                        <tr>
+                            <td>
+                                <img id="imgNewBook" asp-append-version="true"
+                                     style="height:200pt;width:150pt; margin:20pt"
+                                     src="~/img/generalBook.jpg" />
+                            </td>
+                            <td>
+                                <div id="jqxFileUpload"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <div style="margin-left:25%; margin-top:5%;">
+                        <label for="selAddAuthors"> Добавть Автора(-ов) </label>
+                        <select id="selAddAuthors" multiple class="chosen-select" data-placeholder="Автор">
+                            @foreach (var item in ViewBag.authors)
+                            {
+                                <option value="@item.IdAuthor">@item.AuthorFullName</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div style="margin-left:25%;margin-top:5%;">
+                        <label for="selAddAuthors"> Добавить Жанр(-ы) </label>
+                        <select id="selAddCategories" multiple class="chosen-select" data-placeholder="Жанр">
+                            @foreach (var item in ViewBag.categories)
+                            {
+                                <option value="@item.IdCategory">@item.CategoryName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    Content 3
+                </div>
+            </div>
+
+            @*<div>
+
+                </div>*@
+
+            <div style="position:absolute; bottom:10px; right:10px">
+                <button id="btnConfirmAddBook" class="pull-right" style="height:25pt;margin:5pt;">Подтвердить</button>
+                <button id="btnCanselAddBook" class="pull-right" style="height:25pt;margin:5pt;">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+
 </div>

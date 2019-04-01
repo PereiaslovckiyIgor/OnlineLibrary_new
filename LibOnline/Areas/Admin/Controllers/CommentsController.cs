@@ -33,16 +33,59 @@ namespace LibOnline.Areas.Admin.Controllers
 
         // Получить текс отзыва
         [Authorize(Roles = "Admin")]
-        public IActionResult GetCommentText(int IdComments) {
+        public IActionResult GetCommentText(int IdComments)
+        {
 
             string commText;
             using (ApplicationContext db = new ApplicationContext())
                 commText = db.allComments.FirstOrDefault(comm => comm.IdComments == IdComments).CommentText;
 
 
-                return Json(new { commentText = commText });
+            return Json(new { commentText = commText });
         }//GetCommentText
 
+        // Проверить отзыв
+        [Authorize(Roles = "Admin")]
+        public IActionResult AllowVerification(int idComments, bool IsPuplic, bool IsVerificated)
+        {
+            string ResponseText;
+            bool IsSuccess;
+
+            try
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    Comments comments = db.allComments.FirstOrDefault(comm => comm.IdComments == idComments);
+
+                    if (comments != null)
+                    {
+
+                        comments.IsPuplic = IsPuplic;
+                        comments.IsVerificated = IsVerificated;
+
+
+                        db.allComments.Update(comments);
+                        db.SaveChanges();
+
+                        ResponseText = "Отзыв проверен";
+                        IsSuccess = true;
+                    }
+                    else
+                    {
+                        ResponseText = "Отзыв не найден";
+                        IsSuccess = false;
+                    }
+                }//using
+            }
+            catch
+            {
+                ResponseText = "Ошибка на сервере.";
+                IsSuccess = false;
+
+            }//try-catch
+
+            return Json(new { success = IsSuccess, responseText = ResponseText });
+        }//AllowVerification
 
 
     }//CommentsController

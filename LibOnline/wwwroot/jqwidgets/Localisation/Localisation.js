@@ -23,3 +23,14 @@ var localCalendar = {
     openDelay: 2000,
     closeDelay: 2000
 };
+
+
+
+var localizationFileUpload = {
+    theme: 'energyblue',
+    browseButton: 'Искать',
+    uploadButton: 'Выбрать',
+    cancelButton: 'Отмена',
+    uploadFileTooltip: 'Загрузить',
+    cancelFileTooltip: 'Отмена'
+};

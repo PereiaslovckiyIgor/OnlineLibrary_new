@@ -6,30 +6,33 @@ $(document).ready(function () {
 
     padeElemsInit();
 
+
+    AllowVerification();
+    ForbitVerification();
     VerificationCancel();
 
     CreateTable();
 
-});
-// Инициализация большинства элементов на странице
+});// Инициализация большинства элементов на странице
+
 function padeElemsInit() {
 
     $('#jqxTextArea').jqxTextArea({ height: '80%', width: '100%', disabled: true });
 
     $("#btnVerificatComment, #btnAllowVerification, #btnCanselVerification")
-    .jqxButton({ template: "primary", width:'100pt' });
+        .jqxButton({ template: "primary", width: '100pt' });
 
     $('#btnForbitVerification').jqxButton({ template: "danger" });
 
-// Кнопка диалога проверки коментария
+    // Кнопка диалога проверки коментария
     $('#btnVerificatComment').click(function () {
 
         //Если не выбрана ни обна запись, то выход
-    let rowindex = $('#jqxgrid').jqxGrid('getselectedrowindex');
-    if (rowindex === -1) {
-        showNotification('Выберите строку!', false);
-    }//if
-    VerificatComment(rowindex);
+        let rowindex = $('#jqxgrid').jqxGrid('getselectedrowindex');
+        if (rowindex === -1) {
+            showNotification('Выберите строку!', false);
+        }//if
+        VerificatComment(rowindex);
     });//click
 
 }//padeElemsInit
@@ -77,7 +80,7 @@ function CreateTable() {
                 { text: '№', datafield: 'idUser', align: 'center', type: 'number', filterable: false, hidden: true },
                 { text: 'Пользователь', datafield: 'login', width: '10%', align: 'center', type: 'string' },
 
-                { text: 'Дата', datafield: 'commentDate', width: '10%', align: 'center', type: 'string' },
+                { text: 'Дата', datafield: 'commentDate', width: '10%', align: 'center', filterable: false },
 
                 { text: 'Опубликован', datafield: 'isPuplic', columntype: 'checkbox', filtertype: 'bool', width: '10%', align: 'center' },
                 { text: 'Проверенно', datafield: 'isVerificated', columntype: 'checkbox', filtertype: 'bool', width: '10%', align: 'center' }
@@ -110,6 +113,72 @@ function GetData() {
     return dataAdapter;
 }//GetData
 
+// отзыв прошел проверку 
+function AllowVerification() {
+    $('#btnAllowVerification').click(function () {
+
+        let rowindex = $('#jqxgrid').jqxGrid('getselectedrowindex');
+        let row = $('#jqxgrid').jqxGrid('getrowdata', rowindex);
+
+
+        // Данные для обновления
+        let data = {
+            IdComments: row.idComments,
+            IsPuplic: true,
+            IsVerificated: true
+        };
+
+        SaveVerificationResults(data, row);
+
+    });
+}//CommentAccepted
+
+// отзыв не прошел проверку 
+function ForbitVerification() {
+    $('#btnForbitVerification').click(function () {
+
+        let rowindex = $('#jqxgrid').jqxGrid('getselectedrowindex');
+        let row = $('#jqxgrid').jqxGrid('getrowdata', rowindex);
+
+
+        // Данные для обновления
+        let data = {
+            IdComments: row.idComments,
+            IsPuplic: false,
+            IsVerificated: true
+        };
+
+        SaveVerificationResults(data, row);
+
+    });
+}//CommentAccepted
+
+// отправка данных в контроллер (решения верификации)
+function SaveVerificationResults(data) {
+    let rowindex = $('#jqxgrid').jqxGrid('getselectedrowindex');
+    let row = $('#jqxgrid').jqxGrid('getrowdata', rowindex);
+
+    $.ajax({
+        url: '/Admin/Comments/AllowVerification/',
+        contentType: 'application/json',
+        data: data,
+        success: function (result) {
+
+            row.isPuplic = data.IsPuplic;
+            row.isVerificated = data.IsVerificated;
+
+            $('#jqxgrid').jqxGrid('updaterow', row['uid'], row);
+
+            showNotification(result.responseText, result.success);
+        },
+
+        complete: function (result) {
+            $('#dialodVerificatComment').dialog('close');
+        }
+    });
+
+}//SaveVerificationResults
+
 // Обработчик событий на клик кнопки, отклонающий верификацию
 function VerificationCancel() {
     $('#btnCanselVerification').click(function (e) {
@@ -132,7 +201,6 @@ function showNotification(notificationText, isSucces) {
 } //showNotification
 
 
-
 window.onload = function () {
     //Создание модального окна Верификации
     $('#dialodVerificatComment').dialog({
@@ -144,7 +212,7 @@ window.onload = function () {
         dialogClass: 'modal-dialog',
         title: 'Верификация отзыва',
         close: function () {
-            
+
         }
     });
-}
+};

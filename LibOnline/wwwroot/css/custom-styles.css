@@ -180,7 +180,7 @@ ul.nav li.dropdown:hover ul.dropdown-menu{ display: block; }
 / Gallery
 **************************************/
 .gallery-title { margin-bottom:15px; }
-.gallery-item { margin-bottom:15px; margin-top:15px; }
+.gallery-item { margin-bottom:15px; margin-top:15px; height:275pt}
 
 .gallery-hover-6col,
 .gallery-hover-4col,

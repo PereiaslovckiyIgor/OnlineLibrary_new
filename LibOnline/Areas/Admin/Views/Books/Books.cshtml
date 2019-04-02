@@ -4,14 +4,21 @@
 }
 
 
+
 <script src="~/jqwidgets/jqxcore.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxcore.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxdata.js"></script>
+
+<script src="~/jqwidgets/jqxdatetimeinput.js"></script>
+<script src="~/jqwidgets/jqxcalendar.js"></script>
+
+
 <script type="text/javascript" src="~/jqwidgets/jqxbuttons.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxscrollbar.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxmenu.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxlistbox.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxdropdownlist.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxdropdownbutton.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxgrid.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxgrid.selection.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxgrid.columnsresize.js"></script>
@@ -21,13 +28,22 @@
 <script type="text/javascript" src="~/jqwidgets/jqxgrid.grouping.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxcheckbox.js"></script>
 
-<script type="text/javascript" src="~/jqwidgets/jqxbuttons.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxcheckbox.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxinput.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxvalidator.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxnotification.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxfileupload.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxtabs.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxmaskedinput.js"></script>
+
+
+
+<script type="text/javascript" src="~/jqwidgets/jqxcolorpicker.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxwindow.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxeditor.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxtooltip.js"></script>
+
+
 
 <script src="~/chosen/chosen.jquery.js"></script>
 <link href="~/chosen/chosen.css" rel="stylesheet" />
@@ -57,17 +73,41 @@
 
             <div id='jqxtabs'>
                 <ul style='margin-left: 20px;'>
+                    <li>Название и описание</li>
+                    <li>Книга и год </li>
                     <li>Изображение</li>
                     <li>Авторы и жанры</li>
-                    <li>Описание и книга</li>
                 </ul>
+                <div>
+                    <div style="margin:5pt;">
+                        <input id='input' />
+                    </div>
+
+                    <div style="height:85%;margin-left:5pt;">
+                        <textarea id="editor"></textarea>
+                    </div>
+                </div>
+                <div>
+                    <table style="margin-top:10%">
+                        <tr>
+                            <td style="padding-left:5%">
+                                <label>Выберите файл</label>
+                                <div id="jqxBookFileUpload"></div>
+                            <td>
+                            <td style="padding-left:10%">
+                                <label>Год Издания</label>
+                                <div id='jqxDateTimeInput'></div>
+                            <td>
+                        </tr>
+                    </table>
+                </div>
                 <div>
                     <table>
                         <tr>
                             <td>
                                 <img id="imgNewBook" asp-append-version="true"
                                      style="height:200pt;width:150pt; margin:20pt"
-                                     src="~/img/generalBook.jpg" />
+                                     src="~/LibData/img/generalBook.jpg" />
                             </td>
                             <td>
                                 <div id="jqxFileUpload"></div>
@@ -96,21 +136,20 @@
                         </select>
                     </div>
                 </div>
-                <div>
-                    Content 3
-                </div>
             </div>
+        </div>
 
-            @*<div>
 
-                </div>*@
-
-            <div style="position:absolute; bottom:10px; right:10px">
-                <button id="btnConfirmAddBook" class="pull-right" style="height:25pt;margin:5pt;">Подтвердить</button>
-                <button id="btnCanselAddBook" class="pull-right" style="height:25pt;margin:5pt;">Отмена</button>
-            </div>
+        <div style="position:absolute; bottom:10px; right:10px">
+            <button id="btnConfirmAddBook" class="pull-right" style="height:25pt;margin:5pt;">Подтвердить</button>
+            <button id="btnCanselAddBook" class="pull-right" style="height:25pt;margin:5pt;">Отмена</button>
         </div>
     </div>
 
 
+    <div id="messageNotification" style="margin-top:35%; display:none">
+        <div id="jqxNotificationShow"></div>
+    </div>
 </div>
+
+

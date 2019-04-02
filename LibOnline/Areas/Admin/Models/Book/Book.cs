@@ -16,4 +16,17 @@ namespace LibOnline.Areas.Admin.Models.Book
         public string ReleasedData  { get; set; }
         public bool IsActive  { get; set; }
     }
+
+    public class BookToInsert
+    {
+        [Key]
+        public string BookName { get; set; }
+        public DateTime ReleasedData { get; set; }
+        public string BooksDescription { get; set; }
+        public string ImagePath { get; set; }
+        public string BookPath { get; set; }
+        public string IdAuthor { get; set; }
+        public string IdCategory { get; set; }
+    }//BookToInsert
+
 }

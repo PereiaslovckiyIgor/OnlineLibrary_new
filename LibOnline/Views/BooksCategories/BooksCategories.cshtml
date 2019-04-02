@@ -33,7 +33,7 @@
                     </a>
                     <div class="project-details">
                         <a asp-controller="BooksDescription" asp-action="GetBookDescription" style="text-align:center;height:30pt;overflow: hidden" asp-route-IdBook="@item.IdBook">@item.BookName</a>
-                        <p style="text-align:center;margin-top:5px;margin-bottom:5px;">
+                        <p style="text-align:center;margin-top:5px;margin-bottom:5px;min-height:30pt;">
                             @foreach (Author author in item.BookAuthors)
                             {
                                 <em>@author.AuthorFullName</em>

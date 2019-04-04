@@ -12,7 +12,7 @@
 
 @{
     BookDescriptionToShow description = ViewBag.booksDescription;
-    List<Comment>comments = ViewBag.booksComments;
+    List<Comment> comments = ViewBag.booksComments;
 }
 
 @functions
@@ -38,7 +38,7 @@ public bool IsAuthenticated()
             <h2>@description.BookName</h2>
             <div data-spy="scroll" style="height:250px;overflow:auto; position: relative;padding: 10px;">
                 <p align="justify">
-                    @description.BooksDescription
+                    @Html.Raw(@description.BooksDescription)
                 </p>
             </div>
             <br>

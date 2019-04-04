@@ -42,8 +42,9 @@
 <script type="text/javascript" src="~/jqwidgets/jqxwindow.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxeditor.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxtooltip.js"></script>
-
-
+<script type="text/javascript" src="~/jqwidgets/jqxbuttongroup.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxradiobutton.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxswitchbutton.js"></script>
 
 <script src="~/chosen/chosen.jquery.js"></script>
 <link href="~/chosen/chosen.css" rel="stylesheet" />
@@ -58,9 +59,42 @@
 
     <div style="margin-top:5%">
 
+        @*<button id="btnAddNewBook" style="height:25pt;margin:10pt;">Добавить Книгу</button>*@
+        <table>
+            <tr>
+                <td>
+                    <div id='Primary' style="height:30pt;margin:10pt;">
+                        <button style="padding:4px 16px; height:20pt; text-align:center" id="btnAddNewBook">
+                            Добавить
+                        </button>
+                    </div>
+                </td>
+                <td>
+                    <div id='Info' style="height:30pt;margin:10pt">
+                        <button style="padding:4px 16px; height:20pt;" id="btnTextUpdate">
+                            Название и Описание
+                        </button>
+                        <button style="padding:4px 16px; height:20pt;" id="btnImageUpdate">
+                            Изображение
+                        </button>
+                        <button style="padding:4px 16px; height:20pt;" id="btnDateUpdate">
+                            Дата публикации
+                        </button>
+                        <button style="padding:4px 16px; height:20pt;" id="btnAuthorUpdate">
+                            Авторы
+                        </button>
+                        <button style="padding:4px 16px; height:20pt;" id="btnCategoryUpdate">
+                            Жанры
+                        </button>
+                        <button style="padding:4px 16px; height:20pt;" id="btnIsActiveUpdate">
+                            Активность
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </table>
 
-        <button id="btnAddNewBook" style="height:25pt;margin:10pt;">Добавить Книгу</button>
-        <button id="btnUpdateBook" style="height:25pt">Изменить Книгу</button>
+
 
         <div id="jqxgrid"></div>
     </div>
@@ -145,6 +179,119 @@
             <button id="btnCanselAddBook" class="pull-right" style="height:25pt;margin:5pt;">Отмена</button>
         </div>
     </div>
+
+    <!---Update Text & Description--->
+    <div id="dialodUpdateBookText" style="display:none">
+
+        <div style="margin:5pt;">
+            <input id='inputUpdate' />
+        </div>
+
+        <div style="height:80%;margin-left:5pt;">
+            <textarea id="bDecriptionUpdate"></textarea>
+        </div>
+
+        <div style="position:absolute; bottom:10px; right:10px">
+            <button id="btnConfirmUpdateTextBook" class="pull-right" style="height:25pt;margin:5pt;">Подтвердить</button>
+            <button id="btnCanselUpdateTextBook" class="pull-right" style="height:25pt;margin:5pt;">Отмена</button>
+        </div>
+    </div>
+
+    <!--Update Date--->
+    <div id="dialodUpdateDate" style="display:none">
+
+        <div style="margin:5pt;">
+            <label>Год Издания</label>
+            <div id='jqxDTI_updateReleasedDate'></div>
+        </div>
+
+        <div style="position:absolute; bottom:10px; right:10px">
+            <button id="btnConfirmUpdateDate" class="pull-right" style="height:25pt;margin:5pt;">Подтвердить</button>
+            <button id="btnCanselUpdateDate" class="pull-right" style="height:25pt;margin:5pt;">Отмена</button>
+        </div>
+    </div>
+
+    <!---Update Authors--->
+    <div id="dialodUpdateAuthors" style="display:none">
+
+        <div style="margin:5pt;">
+            <div style="margin-left:5%; margin-top:5%;">
+                <label for="selUpdateAuthors"> Изменить Автора(-ов) </label>
+                <select id="selUpdateAuthors" multiple class="chosen-selectUpdate" data-placeholder="Автор">
+                    @*@foreach (var item in ViewBag.authors)
+                    {
+                        <option value="@item.IdAuthor">@item.AuthorFullName</option>
+                    }*@
+                </select>
+            </div>
+        </div>
+
+        <div style="position:absolute; bottom:10px; right:10px">
+            <button id="btnConfirmUpdateAuthor" class="pull-right" style="height:25pt;margin:5pt;">Подтвердить</button>
+            <button id="btnCanselUpdateAithor" class="pull-right" style="height:25pt;margin:5pt;">Отмена</button>
+        </div>
+    </div>
+
+
+    <!---Update Categories--->
+    <div id="dialodUpdateCategory" style="display:none">
+
+        <div style="margin:5pt;">
+            <div style="margin-left:5%; margin-top:5%;">
+                <label for="selUpdateCategories"> Изменить Жанр(-ы) </label>
+                <select id="selUpdateCategories" multiple class="chosen-selectUpdate" data-placeholder="Автор">
+                    @*@foreach (var item in ViewBag.categories)
+                    {
+                        <option value="@item.IdCategory">@item.CategoryName</option>
+                    }*@
+                </select>
+            </div>
+        </div>
+
+        <div style="position:absolute; bottom:10px; right:10px">
+            <button id="btnConfirmUpdateCategory" class="pull-right" style="height:25pt;margin:5pt;">Подтвердить</button>
+            <button id="btnCanselUpdateCategory" class="pull-right" style="height:25pt;margin:5pt;">Отмена</button>
+        </div>
+    </div>
+
+    <!---Update IsActive--->
+    <div id="dialodUpdateIsActive" style="display:none">
+
+        <div style="margin:5pt;">
+            <div style="margin-left:5%; margin-top:5%;">
+                <b>Активность</b>
+                <div style="margin-top: 10px;" id="switchButton"></div>
+            </div>
+        </div>
+
+        <div style="position:absolute; bottom:10px; right:10px">
+            <button id="btnConfirmUpdateIsActive" class="pull-right" style="height:25pt;margin:5pt;">Подтвердить</button>
+            <button id="btnCanselUpdateIsActive" class="pull-right" style="height:25pt;margin:5pt;">Отмена</button>
+        </div>
+    </div>
+
+
+    <!---Update Image--->
+    <div id="dialodUpdateImage" style="display:none">
+        <table>
+            <tr>
+                <td>
+                    <img id="imgUpdateBook" asp-append-version="true"
+                         style="height:200pt;width:150pt; margin:20pt"
+                         src="~/LibData/img/generalBook.jpg" />
+                </td>
+                <td>
+                    <div id="jqxFileUploadUpdate"></div>
+                </td>
+            </tr>
+        </table>
+        <div style="position:absolute; bottom:10px; right:10px">
+            <button id="btnConfirmUpdateImage" class="pull-right" style="height:25pt;margin:5pt;">Подтвердить</button>
+            <button id="btnCanselUpdateImage" class="pull-right" style="height:25pt;margin:5pt;">Отмена</button>
+        </div>
+    </div>
+
+
 
 
     <div id="messageNotification" style="margin-top:35%; display:none">

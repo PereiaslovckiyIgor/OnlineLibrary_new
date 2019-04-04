@@ -38,7 +38,7 @@ function clickPagination() {
     });
 }
 
-
+// Динамически формируется строка нужному URL
 function getLinkedStr(data) {
 
     let Url;

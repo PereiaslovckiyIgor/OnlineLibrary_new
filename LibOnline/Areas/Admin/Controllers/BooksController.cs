@@ -12,6 +12,7 @@ using LibOnline.Areas.Admin.Models.Category;
 using System.Text;
 using System.IO;
 using System.Data.SqlClient;
+using System.Xml.Linq;
 
 namespace LibOnline.Areas.Admin.Controllers
 {
@@ -51,7 +52,6 @@ namespace LibOnline.Areas.Admin.Controllers
             return authors;
         }//GetAuthors
 
-
         // Все Жанры
         private List<Category> GetСategories()
         {
@@ -90,16 +90,26 @@ namespace LibOnline.Areas.Admin.Controllers
                           .ExecuteSqlCommand($"[admin].[AddBook] {bookName}, {releasedData},{booksDescription},{imagePath},{bookPath},{idAuthor},{idCategory}");
 
 
-
-                    ResponseText = "Книга успешно добавлена";
-                    IsSuccess = true;
+                    if (ParseBookOnPages(bookToInsert.BookPath))
+                    {
+                        ResponseText = "Книга успешно добавлена";
+                        IsSuccess = true;
+                    }
+                    else
+                    {
+                        ResponseText = "Книга добавлена но страницы нет!";
+                        IsSuccess = false;
+                    }
                 }
-                catch {
+                catch
+                {
                     ResponseText = "Ошибка на сервере";
                     IsSuccess = false;
 
                 }//try-catch
-            }else {
+            }
+            else
+            {
                 ResponseText = "Эта книга уже есть в библиотеке";
                 IsSuccess = false;
             }//if-else
@@ -107,11 +117,10 @@ namespace LibOnline.Areas.Admin.Controllers
             return Json(new { success = IsSuccess, responseText = ResponseText });
         }//AddNewBook
 
-
         // Парсинг  книги на старницы
-        private List<string> ParseBookOnPages(string txtBookFileName)
+        private bool ParseBookOnPages(string txtBookFileName)
         {
-            List<string> pages = new List<string>();
+            List<Page> pages = new List<Page>();
 
             string path = $"{Directory.GetCurrentDirectory()}{@"\wwwroot\LibData\txt\"}";
             string[] rows = System.IO.File.ReadAllLines(path + txtBookFileName);
@@ -132,10 +141,10 @@ namespace LibOnline.Areas.Admin.Controllers
                 tmp.AddRange(list.GetRange(start, offset));
 
                 foreach (var item in tmp)
-                    sb.Append("\t"+ item+"\r\n");
+                    sb.Append("&nbsp;" + item + "\r\n");
 
 
-                pages.Add(sb.ToString());
+                pages.Add(new Page(i + 1, sb.ToString()));
                 start += offset;
 
 
@@ -143,40 +152,299 @@ namespace LibOnline.Areas.Admin.Controllers
                     offset = list.Count - start;
 
             }//for
-            
-            
-            
-            /*
-            
-            И создать класс Page
 
-            XElement xEmp =
-                            new XElement("Pages",
-                                str.Select(p =>
-                                    new XElement("page",
-                                        new XElement("FirstName", p.number),
-                                        new XElement("LastName", p.value))));
-             
-             
-             
-             */
+            bool resul = true; ;
+            try
+            {
+                // Формируем 'XML' файл для пердачи в процедуру      
+                XElement xEmp = new XElement("Pages",
+                                    pages.Select(p =>
+                                        new XElement("page",
+                                         new XElement("PageText", p.PageText),
+                                         new XElement("PageNumber", p.PageNumber))));
 
-            return pages;
+                string strss = xEmp.ToString();
+
+                SqlParameter x_Emp = new SqlParameter("@xEmp", strss);
+
+                using (ApplicationContext db = new ApplicationContext())
+                    db.Database.ExecuteSqlCommand($"[admin].[InsertPages] {x_Emp}");
+
+
+
+            }
+            catch (Exception ex)
+            {
+                //string e = ex.Message;
+                resul = false;
+            }
+            return resul;
         }//ParseBookOnPages
 
         // Проверка на наличие книги при добовлении
         private bool IsBookNotExists(string bookNmae)
         {
 
-            Book book = new Book();
+            bool isExists;
 
             using (ApplicationContext db = new ApplicationContext())
-                book = db.books.FirstOrDefault(b => b.BookName == bookNmae && b.IsActive == true);
-
-
-
-            return book == null ? true : false;
+            {
+                if (db.bookMains.Any(b => b.BookName == bookNmae && b.IsActive == true))
+                    isExists = false;
+                else
+                    isExists = true;
+            }
+            return isExists;
         }//IsBookNotExists
+
+
+        public IActionResult GetBookTextToUpdate(int IdBook)
+        {
+            BookMain book = new BookMain();
+            using (ApplicationContext db = new ApplicationContext())
+                book = db.bookMains.FirstOrDefault(b => b.IdBook == IdBook);
+
+            return Json(new { bookName = book.BookName, booksDescription = book.BooksDescription });
+        }//GetBookTextToUpdate
+
+        [HttpPost]
+        public IActionResult UpdateBookText(int IdBook, string BookName, string BookDescription)
+        {
+            string ResponseText;
+            bool IsSuccess;
+
+            try
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    BookMain bookMain = db.bookMains.FirstOrDefault(b => b.IdBook == IdBook);
+
+                    if (bookMain != null)
+                    {
+                        bookMain.BookName = BookName;
+                        bookMain.BooksDescription = BookDescription;
+                        db.SaveChanges();
+                    }
+
+
+                    ResponseText = "Описание книги изменено";
+                    IsSuccess = true;
+                }//using
+            }
+            catch
+            {
+                ResponseText = "Описание книги не изменено";
+                IsSuccess = true;
+            }
+            return Json(new { success = IsSuccess, responseText = ResponseText });
+        }//UpdateBookText
+
+        // Получить картинку для изменения
+        public IActionResult GetImageToUpdate(int IdBook)
+        {
+            Image image = new Image();
+            SqlParameter idBook = new SqlParameter("@IdBook", IdBook);
+
+            using (ApplicationContext db = new ApplicationContext())
+                image = db.images.FromSql($"EXECUTE [admin].GetImagetoUpdate {idBook}").FirstOrDefault();
+
+            return Json(new { idImage = image.IdImage, imagePath = image.ImagePath.Split('/').Last()});
+        }//GetImageToUpdate
+
+        // Обновить  Изображение книги
+        public IActionResult BookImageUpdate(string ImgName, int IdBook) {
+
+            string ResponseText;
+            bool IsSuccess;
+
+
+            SqlParameter imgName = new SqlParameter("@ImgName", "~/LibData/img/"+ImgName);
+            SqlParameter idBook = new SqlParameter("@IdBook", IdBook);
+
+            try
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                    db.Database.ExecuteSqlCommand($"EXECUTE [admin].BooktImageUpdate {imgName}, {idBook}");
+
+                ResponseText = "Изображение книги изменено";
+                IsSuccess = true;
+            }
+            catch {
+                ResponseText = "Изображение книги не изменено";
+                IsSuccess = false;
+
+            }//try-catch
+
+            return Json(new { success = IsSuccess, responseText = ResponseText });
+        }//BookImageUpdate
+
+        // Обновить дату
+        public IActionResult ReleasedDataUpdate(int IdBook, DateTime ReleasedData)
+        {
+            string ResponseText;
+            bool IsSuccess;
+
+            try
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    BookMain bookMain = db.bookMains.FirstOrDefault(b => b.IdBook == IdBook);
+
+                    if (bookMain != null)
+                    {
+                        bookMain.ReleasedData = ReleasedData;
+                        db.SaveChanges();
+                    }
+
+
+                    ResponseText = "Дата изменена";
+                    IsSuccess = true;
+                }//using
+            }
+            catch
+            {
+                ResponseText = "Дата не изменена";
+                IsSuccess = true;
+            }
+            return Json(new { success = IsSuccess, responseText = ResponseText });
+
+
+        }//ReleasedDataUpdate
+
+        // Получить всех автров у книги
+        public IActionResult GetAuthorsToUpdate(int IdBook)
+        {
+            List<BooksAuthors> bAuthors = new List<BooksAuthors>();
+            List<Author> authors = GetAuthors();
+
+            using (ApplicationContext db = new ApplicationContext())
+                bAuthors = db.booksAuthors.Where(ba => ba.IdBook == IdBook).ToList();
+
+
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach (var item in authors)
+            {
+                if (bAuthors.Find(ba => ba.IdAuthor == item.IdAuthor) != null)
+                    stringBuilder.Append("<option selected value="+ item.IdAuthor + ">" + item.AuthorFullName + "</option>");
+                else
+                    stringBuilder.Append("<option value=" + item.IdAuthor + ">" + item.AuthorFullName + "</option>");
+            }
+
+
+            return Json(stringBuilder.ToString());
+        }//GetAuthorsToUpdate
+
+        // Обновить авторов у книги
+        public IActionResult BookAuthorsUpdate(int IdBook, string Authors)
+        {
+            string ResponseText;
+            bool IsSuccess;
+
+
+            SqlParameter idBook = new SqlParameter("@IdBook", IdBook);
+            SqlParameter authors = new SqlParameter("@Authors", Authors);
+
+            try
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                    db.Database.ExecuteSqlCommand($"EXECUTE[admin].BookAuthorsUpdate {idBook}, {authors}");
+
+                ResponseText = "Авторы изменены";
+                IsSuccess = true;
+            }
+            catch
+            {
+                ResponseText = "Авторы не изменены";
+                IsSuccess = false;
+
+            }//try-catch
+
+            return Json(new { success = IsSuccess, responseText = ResponseText });
+        }//Authors
+
+        // Получить все жанры у книги
+        public IActionResult GetCategoriesToUpdate(int IdBook)
+        {
+            List<BookCategories> bCategories = new List<BookCategories>();
+            List<Category> categories = GetСategories();
+
+            using (ApplicationContext db = new ApplicationContext())
+                bCategories = db.booksCategories.Where(bc => bc.IdBook == IdBook).ToList();
+
+
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach (var item in categories)
+            {
+                if (bCategories.Find(ba => ba.IdCategory == item.IdCategory) != null)
+                    stringBuilder.Append("<option selected value=" + item.IdCategory + ">" + item.CategoryName + "</option>");
+                else
+                    stringBuilder.Append("<option value=" + item.IdCategory + ">" + item.CategoryName + "</option>");
+            }
+
+            return Json(stringBuilder.ToString());
+        }//GetAuthorsToUpdate
+
+        // Обновить жанры у книги
+        public IActionResult BookCategoriesUpdate(int IdBook, string Categories)
+        {
+            string ResponseText;
+            bool IsSuccess;
+
+
+            SqlParameter idBook = new SqlParameter("@IdBook", IdBook);
+            SqlParameter categories = new SqlParameter("@Categories", Categories);
+
+            try
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                    db.Database.ExecuteSqlCommand($"EXECUTE[admin].BookCategoriesUpdate {idBook}, {categories}");
+
+                ResponseText = "Жанры изменены";
+                IsSuccess = true;
+            }
+            catch
+            {
+                ResponseText = "Жанры не изменены";
+                IsSuccess = false;
+
+            }//try-catch
+
+            return Json(new { success = IsSuccess, responseText = ResponseText });
+        }//Authors
+
+        // Заблокировать / Активировать книгу
+        public IActionResult IsActiveToUpdate(int IdBook, bool IsActive)
+        {
+            string ResponseText;
+            bool IsSuccess;
+
+            try
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    BookMain bookMain = db.bookMains.FirstOrDefault(b => b.IdBook == IdBook);
+
+                    if (bookMain != null)
+                    {
+                        bookMain.IsActive = IsActive;
+                        db.SaveChanges();
+                    }
+
+
+                    ResponseText = "Активность изменена";
+                    IsSuccess = true;
+                }//using
+            }
+            catch
+            {
+                ResponseText = "Активность не изменена";
+                IsSuccess = true;
+            }
+            return Json(new { success = IsSuccess, responseText = ResponseText });
+
+
+
+        }//IsActiveToUpdate
 
     }//BooksController
 }//namespace

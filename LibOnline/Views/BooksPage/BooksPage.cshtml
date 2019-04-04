@@ -34,14 +34,14 @@ public bool IsAuthenticated()
     }
     <div id="PageText" class="project-details project-details-page" style="font-size:@ViewBag.Page.TextFontSize">
         <p>
-            @ViewBag.Page.PageContent
-        </p>
+            @Html.Raw(@ViewBag.Page.PageContent)
+       </p>
 
-        <p class="pageNamber"> @ViewBag.Page.PageNumber стр.</p>
-    </div>
+       <p class="pageNamber"> @ViewBag.Page.PageNumber стр.</p>
+   </div>
 
 
-    @*DIV Пагинация*@
-    <div id="pagin" class="m-pagination"></div>
+        @*DIV Пагинация*@
+        <div id="pagin" class="m-pagination"></div>
 
 </div>

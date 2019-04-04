@@ -12,7 +12,11 @@ namespace LibOnline.Areas.Admin.Models
         public DbSet<Comments.Comment> comments { get; set; }
         public DbSet<Comments.Comments> allComments { get; set; }
         public DbSet<Book.Book> books { get; set; }
+        public DbSet<Book.BookMain> bookMains { get; set; }
         public DbSet<Book.BookToInsert> bookToInserts { get; set; }
+        public DbSet<Book.Image> images { get; set; }
+        public DbSet<Book.BooksAuthors> booksAuthors { get; set; }
+        public DbSet<Book.BookCategories> booksCategories { get; set; }
 
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)

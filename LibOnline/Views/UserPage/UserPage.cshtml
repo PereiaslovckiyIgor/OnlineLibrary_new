@@ -37,7 +37,9 @@
                     @item.BookName
                 </a>
             </h4>
-            <p align="justify">@item.BooksDescription</p>
+            <p align="justify">
+                @Html.Raw(@item.BooksDescription)
+            </p>
 
             <button class="btn btn-large btn-inverse" type="button" onclick="ContinueToRead(@item.IdBook, @item.PageNumber)">Продолжить чтение</button>
             <button class="btn btn-large btn-danger" type="button" onclick="RemoveUserBook(@item.IdBook)">Удалить</button>

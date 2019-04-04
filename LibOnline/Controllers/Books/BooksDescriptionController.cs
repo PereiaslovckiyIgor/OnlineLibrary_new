@@ -75,7 +75,7 @@ namespace LibOnline.Controllers.Books
             {
                 try
                 {
-                    SqlParameter UserId = new SqlParameter("@UserId", idUser);
+                    SqlParameter UserId = new SqlParameter("@IdUser", idUser);
                     SqlParameter BookId = new SqlParameter("@IdBook", IdBook);
 
                     using (ApplicationContext db = new ApplicationContext())

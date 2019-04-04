@@ -18,15 +18,17 @@ public bool IsAuthenticated()
 }
 
 
-
-
 @Html.Partial("_CategoriesPartail")
 @*http://coderhs.com/archive/raty_star*@
 <!-- Page Content
 ================================================== -->
 <div class="span6">
     <!--Begin page content column-->
-    <h2 class="title-bg">Популярное</h2>
+    <h2 class="title-bg"  
+        rel="popover" title="Поулярное" data-content="Сперва популярные книги" data-animation="true">
+        Популярное
+    </h2>
+
     <div class="row clearfix">
         <ul class="gallery-post-grid holder">
             @foreach (BooksCatogoriesToShow item in ViewBag.popularBooks)
@@ -54,7 +56,10 @@ public bool IsAuthenticated()
         <h5><a asp-controller="BooksCategories" asp-action="GetPopularBooks" asp-route-pageNumber="1" class="pull-right"><i class="icon-th"></i>Полностью</a></h5>
     </div>
 
-    <h2 class="title-bg">Новое</h2>
+    <h2 class="title-bg"
+         rel="popover" title="Новинки" data-content="Книги изданные за последние два года " data-animation="true">
+        Новинки
+    </h2>
     <div class="row clearfix">
         <ul class="gallery-post-grid holder">
             @foreach (BooksCatogoriesToShow item in ViewBag.newBooks)

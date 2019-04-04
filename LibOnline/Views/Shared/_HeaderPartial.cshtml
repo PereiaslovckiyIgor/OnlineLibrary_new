@@ -22,11 +22,10 @@ public bool IsAuthenticated()
     @*Main Navigation*@
     <nav class="navigation">
         <div class="navbar">
-            <ul class="nav">
+            <ul class="nav" id="idHeader">
                 <li class="@ViewBag.Home"><a asp-controller="Home" asp-action="Index">Главная</a></li>
-                @*<li><a asp-controller="BooksCategories" asp-action="BooksCategories" asp-route-pageNumber="1">Топ 100</a></li>*@
                 <li class="@ViewBag.CategoriesPop"><a asp-controller="BooksCategories" asp-action="GetPopularBooks" asp-route-pageNumber="1">Популярное</a></li>
-                <li class="@ViewBag.CategoriesNew"><a asp-controller="BooksCategories" asp-action="GetNewBooks" asp-route-pageNumber="1">Новое</a></li>
+                <li class="@ViewBag.CategoriesNew"><a asp-controller="BooksCategories" asp-action="GetNewBooks" asp-route-pageNumber="1">Новинки</a></li>
 
                 @if (!IsAuthenticated())
                 {
@@ -34,11 +33,12 @@ public bool IsAuthenticated()
                 }
                 else
                 {
-                    <li class="@ViewBag.UserPage"><a asp-controller="UserPage" asp-action="UserPage" asp-route-pageNumber="1">Избанное</a></li>
+                    <li class="@ViewBag.UserPage"><a asp-controller="UserPage" asp-action="UserPage" asp-route-pageNumber="1">Моя Библиотека</a></li>
                     <li><a asp-controller="Account" asp-action="LogOut"><b>(@Context.User.Identity.Name)</b> Выход</a></li>
                 }
-                <li><a asp-controller="Admin" asp-action="Index" asp-area="Admin"><b style="color:red">Я</b> Админ</a></li>
+                    <li id="idAdminLI" style="display:none"><a asp-controller="Admin" asp-action="Index" asp-area="Admin"><b style="color:red">Я</b> Админ</a></li>
             </ul>
         </div>
     </nav>
 </div><!-- End Header -->
+

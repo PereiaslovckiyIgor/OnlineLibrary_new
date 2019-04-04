@@ -19,6 +19,20 @@ public bool IsAuthenticated()
 
 <div class="span10 offset1">
 
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bread">
+            <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">
+                <i class="icon-home"></i>Главная</a>
+            </li>
+            <li class="breadcrumb-item"><a asp-action="GetBookDescription" asp-controller="BooksDescription" asp-route-IdBook="@ViewBag.Page.IdBook">
+                <i class="icon-book"></i>@ViewBag.Page.BookName</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                <i class="icon-file"></i>Страница: @ViewBag.pagePagination.PageNumber
+            </li>
+        </ol>
+    </nav>
+
     <br>
 
     @if (IsAuthenticated())
@@ -33,15 +47,15 @@ public bool IsAuthenticated()
         </h6>
     }
     <div id="PageText" class="project-details project-details-page" style="font-size:@ViewBag.Page.TextFontSize">
-        <p>
+        <p style="text-align:justify">
             @Html.Raw(@ViewBag.Page.PageContent)
-       </p>
+        </p>
 
-       <p class="pageNamber"> @ViewBag.Page.PageNumber стр.</p>
-   </div>
+        <p class="pageNamber"> @ViewBag.Page.PageNumber стр.</p>
+    </div>
 
 
-        @*DIV Пагинация*@
-        <div id="pagin" class="m-pagination"></div>
+    @*DIV Пагинация*@
+    <div id="pagin" class="m-pagination"></div>
 
 </div>

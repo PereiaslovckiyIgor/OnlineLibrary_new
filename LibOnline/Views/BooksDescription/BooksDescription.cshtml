@@ -94,7 +94,7 @@ public bool IsAuthenticated()
             <button id="btnReadBook" class="btn btn-large btn-inverse span2" type="button">Читать</button>
             @if (IsAuthenticated())
             {
-                <button id="btnAddInUserBooks" class="btn btn-large btn-warning span2" type="button">В избранное</button>
+                <button id="btnAddInUserBooks" class="btn btn-large btn-warning span2" style="display:none" type="button">В избранное</button>
             }
         </div>
     </div>
@@ -105,6 +105,29 @@ public bool IsAuthenticated()
     <div id="commentSection"></div>
     <section class="comments" name="comments">
         <h4 class="title-bg"><a name="comments"></a>Всего отзывов:  @ViewBag.booksComments.Count </h4>
+
+        @if (IsAuthenticated())
+        {
+            <!-- Comment Form -->
+            <div class="comment-form-container">
+                <h6>Оставить отзыв</h6>
+                <form id="comment-form">
+                    <input id="idBook" type="hidden" value="@ViewBag.booksDescription.IdBook" />
+                    <textarea id="textComment" class="span6"></textarea>
+
+                    <div class="row">
+                        <div class="span2">
+                            <input type="submit" class="btn btn-inverse" value="Опубликовать">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        }
+        else
+        {
+            <h4 class="title-bg" style="text-align:center"><a asp-controller="Account" asp-action="Login">Оставить коментарий</a></h4>
+        }
+
         <ul>
             @foreach (Comment item in comments)
             {
@@ -125,27 +148,5 @@ public bool IsAuthenticated()
             }
 
         </ul>
-
-        @if (IsAuthenticated())
-        {
-            <!-- Comment Form -->
-            <div class="comment-form-container">
-                <h6>Написать отзыв</h6>
-                <form id="comment-form">
-                    <input id="idBook" type="hidden" value="@ViewBag.booksDescription.IdBook" />
-                    <textarea id="textComment" class="span6"></textarea>
-
-                    <div class="row">
-                        <div class="span2">
-                            <input type="submit" class="btn btn-inverse" value="Опубликовать">
-                        </div>
-                    </div>
-                </form>
-            </div>
-        }
-        else
-        {
-            <h4 class="title-bg" style="text-align:center"><a asp-controller="Account" asp-action="Login">Оставить коментарий</a></h4>
-        }
     </section>
 </div>

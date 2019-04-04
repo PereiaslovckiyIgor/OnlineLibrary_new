@@ -1400,3 +1400,10 @@ a.accordion-toggle {
         height: 100%;
     }
 }
+
+
+.bread > li + li:before {
+    /*color: #cccccc;*/
+    content: "/";
+    padding: 0 5px;
+}

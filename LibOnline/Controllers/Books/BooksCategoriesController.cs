@@ -144,5 +144,42 @@ namespace LibOnline.Controllers
             return View("BooksCategories");
         }//GetBooksAuthors
         #endregion
+
+        [HttpPost]
+        public IActionResult Search([FromForm]string Search) {
+
+            if (string.IsNullOrWhiteSpace(Search)) return Redirect("~/Home/Index");
+
+            Search = Search.TrimStart();
+            Search = Search.TrimEnd();
+
+
+            List<BooksCategories> newBooks = new List<BooksCategories>();
+            List<BooksCatogoriesToShow> books = new List<BooksCatogoriesToShow>();
+            List<MenuPagination> menuPagination = new List<MenuPagination>();
+
+
+  
+            SqlParameter search = new SqlParameter("@IdAuthor", Search);
+            SqlParameter pNumber = new SqlParameter("@PageNumber", 1);
+            SqlParameter rowPage = new SqlParameter("@RowspPage", 24);
+
+
+            using (ApplicationContext db = new ApplicationContext())
+                newBooks = db.booksCategories.FromSql($"EXECUTE books.SerchForm {Search}, {pNumber}, {rowPage}").ToList();
+
+            newBooks.ForEach(item => books.Add(new BooksCatogoriesToShow(item)));
+
+
+            using (ApplicationContext db = new ApplicationContext())
+                menuPagination = db.menuPagination.FromSql($"EXECUTE books.SerchPadination {search}, {1}, {pageElems}").ToList();
+
+
+            ViewBag.booksCategories = books;
+            ViewBag.pagination = menuPagination[0];
+            ViewBag.pagination.CategoryName = "ПОИСК: " + Search;
+
+            return View("BooksCategories");
+        }
     }
 }

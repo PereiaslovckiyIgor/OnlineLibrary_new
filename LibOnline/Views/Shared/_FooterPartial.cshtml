@@ -9,15 +9,11 @@
                     <div class="span6"><span class="left">Бесплатная онлайн библиотека 2018 - 2019</span></div>
                     <div class="span6">
                         <span class="right">
-                            <a href="#">Главная</a>
+                            <a asp-action="Index" asp-controller="Home">Главная</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-                            <a href="#">Избранное</a>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-                            <a href="#">Топ 100</a>
+                            <a asp-controller="BooksCategories" asp-action="GetPopularBooks" asp-route-pageNumber="1">Популярное</a>
                             &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-                            <a href="#">Популярное</a>
-                            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-                            <a href="#">Новое</a>
+                            <a asp-controller="BooksCategories" asp-action="GetNewBooks" asp-route-pageNumber="1">Новинки</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 
                         </span>

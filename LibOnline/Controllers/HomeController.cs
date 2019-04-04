@@ -6,6 +6,7 @@ using LibOnline.Models;
 using LibOnline.Models.Categories;
 using Microsoft.EntityFrameworkCore;
 using LibOnline.Models.Books;
+using System.Security.Claims;
 
 namespace LibOnline.Controllers
 {
@@ -79,6 +80,18 @@ namespace LibOnline.Controllers
             return books;
         }//getNewBooks
 
+        public IActionResult ImAdmin() {
+            bool isAdmin = false;
+            // ПОЛУЧИТЬ ИМЯ И РОЛЬ ПОЛЬЗОВАТЕЛЯ
+            if (User.Identity.IsAuthenticated)
+            {
+                string role = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
+                isAdmin = role == "Admin" ? true : false;
+            }
+            return Json(new { imAdmin = isAdmin });
+        }//ImAdmin
+
+
         public IActionResult About()
         {
             //ViewData["Message"] = "Your application description page.";
@@ -97,5 +110,8 @@ namespace LibOnline.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+
     }
 }

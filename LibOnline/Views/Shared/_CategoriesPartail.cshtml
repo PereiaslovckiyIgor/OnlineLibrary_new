@@ -2,8 +2,9 @@
     <div class="span3 sidebar page-left-sidebar">
 
         <div class="input-append">
-            <form action="#">
-                <input id="appendedInputButton" size="16" type="text" placeholder="Поиск"><button class="btn" type="button"><i class="icon-search"></i></button>
+            <form asp-action="Search" asp-controller="BooksCategories" method="post">
+                <input id="appendedInputButton" size="16" type="text" placeholder="Поиск" name="Search">
+                <button class="btn" type="submit"><i class="icon-search"></i></button>
             </form>
         </div>
 
@@ -31,6 +32,13 @@
                 });
             $('#ulAllCategories').html(categoriesHTML);
         }//RenderCategoriesList
+
+
+        function SearchForm() {
+            debugger;
+
+
+        }
 
     });// document.ready
     </script>

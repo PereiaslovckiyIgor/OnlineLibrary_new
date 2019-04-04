@@ -16,35 +16,46 @@
 
 @Html.Partial("_CategoriesPartail")
 
+
 <div class="span8 gallery">
     <h2 class="title-bg">@ViewBag.pagination.CategoryName</h2>
+    @if (ViewBag.booksCategories.Count == 0)
+    {
+    <blockquote style="margin-left:10%;">
+        <p style="margin-top:25%">
+            Извините, по Вашему запросу ничего не найдено ...
+        </p>
+    </blockquote>
+    }
+    else
+    {
+        <div class="row clearfix">
+            <ul class="gallery-post-grid holder">
+                @foreach (BooksCatogoriesToShow item in ViewBag.booksCategories)
+                {
+                    <li class="span2 gallery-item">
+                        <a asp-controller="BooksDescription" asp-action="GetBookDescription" asp-route-IdBook="@item.IdBook">
+                            @*
+                                asp-append-version: если имеет значение true, то к пути к файлу скрипта добавляется номер версии
+                                Без него не прогружается Image, хоть путь и правильный
+                            *@
+                            <img asp-append-version="true" src="@item.ImagePath" alt="Gallery">
+                        </a>
+                        <div class="project-details">
+                            <a asp-controller="BooksDescription" asp-action="GetBookDescription" style="text-align:center;height:30pt;overflow: hidden" asp-route-IdBook="@item.IdBook">@item.BookName</a>
+                            <p style="text-align:center;margin-top:5px;margin-bottom:5px;min-height:30pt;">
+                                @foreach (Author author in item.BookAuthors)
+                                {
+                                    <em>@author.AuthorFullName</em>
+                                }
+                            </p>
+                        </div>
+                    </li>
+                }<!--foreach-->
+            </ul>
+        </div>
 
-    <div class="row clearfix">
-        <ul class="gallery-post-grid holder">
-            @foreach (BooksCatogoriesToShow item in ViewBag.booksCategories)
-            {
-                <li class="span2 gallery-item">
-                    <a asp-controller="BooksDescription" asp-action="GetBookDescription" asp-route-IdBook="@item.IdBook">
-                        @*
-                            asp-append-version: если имеет значение true, то к пути к файлу скрипта добавляется номер версии
-                            Без него не прогружается Image, хоть путь и правильный
-                        *@
-                        <img asp-append-version="true" src="@item.ImagePath" alt="Gallery">
-                    </a>
-                    <div class="project-details">
-                        <a asp-controller="BooksDescription" asp-action="GetBookDescription" style="text-align:center;height:30pt;overflow: hidden" asp-route-IdBook="@item.IdBook">@item.BookName</a>
-                        <p style="text-align:center;margin-top:5px;margin-bottom:5px;min-height:30pt;">
-                            @foreach (Author author in item.BookAuthors)
-                            {
-                                <em>@author.AuthorFullName</em>
-                            }
-                        </p>
-                    </div>
-                </li>
-            }<!--foreach-->
-        </ul>
-    </div>
-
-    @*DIV Пагинация*@
-    <div id="pagin" class="m-pagination"></div>
+        @*DIV Пагинация*@
+        <div id="pagin" class="m-pagination"></div>
+    }
 </div><!-- End gallery list-->
